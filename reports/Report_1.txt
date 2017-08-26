@@ -1,0 +1,14 @@
+1: An orphan process is a process whose parent has finished or otherwise terminated, though the 
+   child (now orphan) is still running. A zombie process is a process that has finished or 
+   terminated but still has an entry in the process table.
+
+   In other words, an orphan process' parent has died, and a zombie process is dead, but may not 
+   fully realize it yet.
+
+2: When a child process calls exec(), the address space of the child process is replaced with the 
+   command provided to exec(). While the PID of the child process remains the same, the
+   instructions within the process are essentially overwritten with the instructions for the 
+   command specified in the call to exec(). For instance, if exec() was used to call ls, the
+   instructions the child inherited from its parent process are replaced with the instructions
+   for ls, and ls is executed. When ls (or whatever command called) is finished, the child process
+   terminates.

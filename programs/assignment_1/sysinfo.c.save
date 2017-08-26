@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main(int nargs, char *args[]){
+
+	//declarations
+	int fork;
+	int ppid;
+	int cpid;
+	int fd[2];
+
+	//set up pipe to send info
+	pipe(fd);
+	
+	fork = fork();
+	if(fork < 0){
+		fprintf(stderr, "fork failed");
+		exit(-1);
+	} else if(fork > 0){
+		//in the parent
+		ppid = getpid();
+		printf("Parent PID = %d\n", ppid);
+		//after printing, wait for the child to finish then exit
+		wait(NULL);
+		exit(0);
+	} else if(fork == 0) {
+		//we are in the child
+		cpid = getpid();
+		printf("Child PID = %d\n", cpid);
+		char[] cmd = "/bin/ls";
+		execl(cmd, cmd, NULL);
+	}
+
+}
