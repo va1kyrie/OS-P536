@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-process process_ring_poll(int *pol, int ind, int len, int ival, int mrnd){
+process process_ring_poll(int pol[], int ind, int len, int ival, int mrnd){
   //code
   int last = ival+1;  //starter val to indicate you haven't started calc.
   int rnd = 0;
@@ -30,7 +30,7 @@ process process_ring_poll(int *pol, int ind, int len, int ival, int mrnd){
   return 0;
 }
 
-process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, int mrnds){
+process process_ring_sync(pid32 pids[], int ind, int len, int val, pid32 parent, int mrnds){
   //code
   int last = val+1;
   int rnd = 0;
