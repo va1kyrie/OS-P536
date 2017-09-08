@@ -63,9 +63,9 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         return SHELL_ERROR;
       }
       if(0 == strncmp("poll", args[j+1], 5)){
-        r = POLL;
+        i = POLL;
       }else if(0 == strncmp("sync", args[j+1], 5)){
-        r = SYNC;
+        i = SYNC;
       }else{
         fprintf(stderr, "%s: -i expected either 'sync' or 'poll'\n", args[0]);
         return SHELL_ERROR;
