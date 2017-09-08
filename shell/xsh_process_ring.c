@@ -38,7 +38,7 @@ xsh_process_ring(int nargs, char *args[]){
         print_usage();
         printf("-p received invalid integer\n");
         return SHELL_ERROR;
-      }else if(!(0 <= p && p <= 64)){
+      }else if(!(MINP <= p && p <= MAXP)){
         print_usage();
         printf("-p expected a number between %d and %d\n", MINP, MAXP);
         return SHELL_ERROR;
@@ -113,8 +113,12 @@ xsh_process_ring(int nargs, char *args[]){
         int pol[p];
         pol[0] = val;
         int len = p;
+        char name[6] = "proc_";
+        char str[12];
         for(i = 0; i < p; i++){
           //start queueing up processes
+          name[5] = sprintf(str, "%d", i);
+          resume(create(process_ring_poll, 1024, 20, name, *pol, i, p));
         }
       }else if(i == SYNC){
         //else if sync is chosen
