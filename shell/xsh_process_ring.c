@@ -22,19 +22,16 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       //if flag is '-p'
       if(!(j+1 < nargs)){
         //if no argument after flag
-        print_usage();
-        printf("-p flag expected an argument\n");
+        fprintf(stderr, "%s: -p flag expected an argument\n", args[0]);
         return SHELL_ERROR;
       }
 
       p = atoi(args[j+1]);
       if(p == 0){
-        print_usage();
-        printf("-p received invalid integer\n");
+        fprintf(stderr, "%s: -p received invalid integer\n", args[0]);
         return SHELL_ERROR;
       }else if(!(MINP <= p && p <= MAXP)){
-        print_usage();
-        printf("-p expected a number between %d and %d\n", MINP, MAXP);
+        fprintf(stderr, "%s: -p expected a number between %d and %d\n", args[0], MINP, MAXP);
         return SHELL_ERROR;
       }
       j++;
@@ -42,18 +39,15 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       //if flag is '-r'
       if(!(j+1<nargs)){
         //no argument after flag
-        print_usage();
-        printf("-r flag expected an argument\n");
+        fprintf(stderr, "%s: -r flag expected an argument\n", args[0]);
         return SHELL_ERROR;
       }
       r = atoi(args[j+1]);
       if(r == 0){
-        print_usage();
-        printf("-r received invalid integer\n");
+        fprintf(stderr, "%s: -r received invalid integer\n", args[0]);
         return SHELL_ERROR;
       }else if(r < 0){
-        print_usage();
-        printf("-r expected positive integer\n");
+        fprintf(stderr, "%s: -r flag expected a positive integer\n", args[0]);
         return SHELL_ERROR;
       }
       i++;
@@ -61,8 +55,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       //if flag is '-i'
       if(!(j+1<nargs)){
         //no argument after flag
-        print_usage();
-        printf("-i flag expected an argument\n");
+        fprintf(stderr, "%s: -i flag expected an argument\n", args[0]);
         return SHELL_ERROR;
       }
       if(0 == strncmp("poll", args[j+1], 5)){
@@ -70,8 +63,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       }else if(0 == strncmp("sync", args[j+1], 5)){
         r = SYNC;
       }else{
-        print_usage();
-        printf("-i expected either 'sync' or 'poll'\n");
+        fprintf(stderr, "%s: -i expected either 'sync' or 'poll'\n", args[0]);
         return SHELL_ERROR;
       }
       i++;
@@ -85,8 +77,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       "[poll/sync]\n --help (this text)\n", MAXR, MINP, MAXP);
     }else{
       //else it's invalid
-      print_usage();
-      printf("invalid arguments given\n");
+      fprintf(stderr, "%s: invalid arguments given\n", args[0]);
       return SHELL_ERROR;
     }
   }
