@@ -5,3 +5,7 @@
  #include <stdio.h>
  #include <string.h>
  #include <process_ring.h>
+
+xsh_process_ring(int nargs, char *args[]){
+  char *endp;
+}
