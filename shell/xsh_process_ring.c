@@ -110,8 +110,10 @@ xsh_process_ring(int nargs, char *args[]){
   if(i == POLL){
     //if polling is chosen
     volatile int pol[p];
-    for(i = 0; i < p; i++){
-      pol[i] = val;
+    pol[0] = val;
+    for(i = 1; i < p; i++){
+      pol[i] = val+1; //initialize all the other inboxes to larger number to
+                      //avoid out-of-order operations
     }
     int len = p;
     char name[6] = "proc_";
