@@ -14,7 +14,7 @@ process process_ring_poll(volatile int *pol, int ind, int len, int ival, int mrn
   if(len == 1){
     //special case if we're only making one process
     int j;
-    for(j = ival; j > -1; j++){
+    for(j = ival; j > -1; j--){
       printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, j);
       rnd++;
     }
@@ -48,7 +48,7 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
   if(len == 1){
     //again, if we only have one process we need a special case
     int j;
-    for(j = val; j > -1; j++){
+    for(j = val; j > -1; j--){
       printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, j);
       rnd++;
     }
