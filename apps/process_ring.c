@@ -54,7 +54,7 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
       rnd++;
     }
   }else{
-    while(last < 0 && rnd < mrnds){
+    while(last > 0 && rnd < mrnds){
       last = receive();
       printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
       if(ind+1 == len){
