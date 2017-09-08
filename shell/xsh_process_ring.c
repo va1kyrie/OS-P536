@@ -21,8 +21,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   int j;
   for(j = 1; j < nargs; j++){
     printf("arg[%d] == %s\n", j, args[j]);
-    printf("strncmp result: %d\n", strncmp("-p", args[j], 3));
-    if(0 == strncmp("-p", args[j], 3)){
+    if(0 == strncmp("-p", args[j], 2)){
       //if flag is '-p'
       if(!(j+1 < nargs)){
         //if no argument after flag
@@ -39,7 +38,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         return SHELL_ERROR;
       }
       j++;
-    }else if(0 == strncmp("-r", args[j], 3)){
+    }else if(0 == strncmp("-r", args[j], 2)){
       //if flag is '-r'
       if(!(j+1<nargs)){
         //no argument after flag
@@ -55,7 +54,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         return SHELL_ERROR;
       }
       i++;
-    }else if(0 == strncmp("-i", args[j], 3)){
+    }else if(0 == strncmp("-i", args[j], 2)){
       //if flag is '-i'
       if(!(j+1<nargs)){
         //no argument after flag
@@ -71,7 +70,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         return SHELL_ERROR;
       }
       i++;
-    }else if(0 == strncmp("--help", args[j], 7)){
+    }else if(0 == strncmp("--help", args[j], 6)){
       //if it's the help flag
       printf("process_ring - count down to 0 from an integer in a number of"
       "rounds using a number of processes.\n\n - the starting number depends on"
