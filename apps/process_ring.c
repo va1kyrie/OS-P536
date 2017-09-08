@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-process process_ring_poll(int *pol, int ind, int len, int ival, int mrnd){
+process process_ring_poll(volatile int *pol, int ind, int len, int ival, int mrnd){
   //code
   int last = ival+1;  //starter val to indicate you haven't started calc.
   int rnd = 0;
