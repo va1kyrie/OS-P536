@@ -46,6 +46,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         return SHELL_ERROR;
       }
       r = atoi(args[j+1]);
+      printf("r == %d\n", r);
       if(r == 0){
         fprintf(stderr, "%s: -r received invalid integer\n", args[0]);
         return SHELL_ERROR;
