@@ -6,11 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <process_ring.h>
-<<<<<<< HEAD
-//#include <process_ring.c>
-=======
 //#include "process_ring.c"
->>>>>>> d29c167a8161f0160ae6020ea2a8ba5e51af2db3
 
 shellcmd xsh_process_ring(int nargs, char *args[]){
   int i = POLL;
@@ -25,6 +21,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   int j;
   for(j = 1; j < nargs; j++){
     printf("arg[1] == %s\n", args[1]);
+    printf("strncmp result: %d\n", strncmp("-p", args[1], 3));
     if(0 == strncmp("-p", args[j], 3)){
       //if flag is '-p'
       if(!(j+1 < nargs)){
