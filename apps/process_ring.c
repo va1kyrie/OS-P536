@@ -12,7 +12,7 @@ process process_ring_poll(int *pol, int ind, int len, int ival, int mrnd){
   int rnd = 0;
   while(last >= 0 && rnd < mrnd){
     //poll to see if there's a new value to print
-    int tmp = *pol[ind];
+    int tmp = pol[ind];
     if(last != tmp && tmp >= 0){
       printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, tmp);
       if(ind+1 == len){
