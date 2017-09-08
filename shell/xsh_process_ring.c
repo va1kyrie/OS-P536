@@ -18,7 +18,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
 
   //get flags (if they exist)
   int j;
-  for(j = 1; j < nargs; j++;){
+  for(j = 1; j < nargs; j++){
     if(0 == strncmp("-p", args[j], 3)){
       //if flag is '-p'
       if(!(j+1 < nargs)){
