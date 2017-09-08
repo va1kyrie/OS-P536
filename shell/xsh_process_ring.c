@@ -108,7 +108,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     for(j = 0; j < p; j++){
       //start queueing up processes
       name[5] = sprintf(str, "%d", j);
-      resume(create(process_ring_poll, 1024, 20, name, 5, pol, j, p, val, r));
+      resume(create(process_ring_poll, 1024, 20, name, 5, &pol, j, p, val, r));
     }
     //wait for polling to finish - last element needs to reach 0
     while(pol[p] > 0);
@@ -118,7 +118,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     pid32 parent = getpid();
     for(j = 0; j < p; j++){
       name[5] = sprintf(str, "%d", j);
-      pids[j] = create(process_ring_sync, 1024, 20, name, 6, pids, j, p, val, parent, r);
+      pids[j] = create(process_ring_sync, 1024, 20, name, 6, &pids, j, p, val, parent, r);
       resume(pids[j]);
     }
     for(j = 0; j < p; j++){
