@@ -95,42 +95,42 @@ xsh_process_ring(int nargs, char *args[]){
       printf("invalid arguments given\n");
       return SHELL_ERROR;
     }
+  }
 
-    //done parsing arguments, move on to process prep and call
-    val = (p*r)-1;
-    printf("Number of Processes: %d\n", p);
-    printf("Number of Rounds: %d\n", r);
-    start = gettime(&now);
-    if (start == SYSERR) {
-      fprintf(stderr,
-        "%s: could not obtain the current date\n",
-        args[0]);
-        return 1;
-      }
-      // start setting up and queueing up processes
-      if(i == POLL){
-        //if polling is chosen
-        int pol[p];
-        pol[0] = val;
-        int len = p;
-        char name[6] = "proc_";
-        char str[12];
-        for(i = 0; i < p; i++){
-          //start queueing up processes
-          name[5] = sprintf(str, "%d", i);
-          resume(create(process_ring_poll, 1024, 20, name, *pol, i, p));
-        }
-      }else if(i == SYNC){
-        //else if sync is chosen
-      }
-      finish = gettime(&now);
-      if (finish == SYSERR) {
-        fprintf(stderr,
-          "%s: could not obtain the current date\n",
-          args[0]);
-          return 1;
-        }
-      }
-
-      return 0;
+  //done parsing arguments, move on to process prep and call
+  val = (p*r)-1;
+  printf("Number of Processes: %d\n", p);
+  printf("Number of Rounds: %d\n", r);
+  start = gettime(&now);
+  if (start == SYSERR) {
+    fprintf(stderr, "%s: could not obtain the current date\n", args[0]);
+    return 1;
+  }
+  // start setting up and queueing up processes
+  if(i == POLL){
+    //if polling is chosen
+    volatile int pol[p];
+    for(i = 0; i < p; i++){
+      pol[i] = val;
     }
+    int len = p;
+    char name[6] = "proc_";
+    char str[12];
+    for(i = 0; i < p; i++){
+      //start queueing up processes
+      name[5] = sprintf(str, "%d", i);
+      resume(create(process_ring_poll, 1024, 20, name, *pol, i, p, val,r-1));
+    }
+    //wait for polling to finish - last element needs to reach 0
+    while(pol[p-1] < 0);
+  }else if(i == SYNC){
+    //else if sync is chosen
+  }
+  finish = gettime(&now);
+  if (finish == SYSERR) {
+    fprintf(stderr, "%s: could not obtain the current date\n", args[0]);
+    return 1;
+  }
+  printf("Elapsed Seconds: %d\n", finish-start);
+  return 0;
+}
