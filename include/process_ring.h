@@ -5,10 +5,6 @@
 #include "../apps/process_ring.c"
 
 //FUNCTION DEFINITIONS
-shellcmd xsh_process_ring(int, char*);
-// process process_ring_poll();
-// process process_ring_sync();
-int parse_args(int, char[]);
 
 
 //VARIABLE DEFINITIONS
