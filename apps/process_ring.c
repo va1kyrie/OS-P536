@@ -6,6 +6,6 @@
 #include <string.h>
 #include <stdio.h>
 
-process process_ring(){
+process process_ring(int *pol, int ind, int len){
   //code
 }
