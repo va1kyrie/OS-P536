@@ -18,6 +18,7 @@ process process_ring_poll(volatile int *pol, int ind, int len, int ival, int mrn
       printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, j);
       rnd++;
     }
+    pol[ind] = 0;
   }else{
     //else we have multiple children
     while(last >= 0 && rnd < mrnd){
