@@ -6,7 +6,7 @@
 #include <string.h>
 #include <process_ring.h>
 
-xsh_process_ring(int nargs, char *args[]){
+shellcmd xsh_process_ring(int nargs, char *args[]){
   int i = POLL;
   int p = DEFAULTP;
   int r = DEFAULTR;
@@ -16,18 +16,18 @@ xsh_process_ring(int nargs, char *args[]){
   int finish;
 
   //get flags (if they exist)
-  int i;
-  for(i = 1; i < nargs; i++;){
-    if(0 == strncmp("-p", args[i], 3)){
+  int j;
+  for(j = 1; j < nargs; j++;){
+    if(0 == strncmp("-p", args[j], 3)){
       //if flag is '-p'
-      if(!(i+1 < nargs)){
+      if(!(j+1 < nargs)){
         //if no argument after flag
         print_usage();
         printf("-p flag expected an argument\n");
         return SHELL_ERROR;
       }
 
-      p = atoi(args[i+1]);
+      p = atoi(args[j+1]);
       if(p == 0){
         print_usage();
         printf("-p received invalid integer\n");
@@ -37,16 +37,16 @@ xsh_process_ring(int nargs, char *args[]){
         printf("-p expected a number between %d and %d\n", MINP, MAXP);
         return SHELL_ERROR;
       }
-      i++;
-    }else if(0 == strncmp("-r", args[i], 3)){
+      j++;
+    }else if(0 == strncmp("-r", args[j], 3)){
       //if flag is '-r'
-      if(!(i+1<nargs)){
+      if(!(j+1<nargs)){
         //no argument after flag
         print_usage();
         printf("-r flag expected an argument\n");
         return SHELL_ERROR;
       }
-      r = atoi(args[i+1]);
+      r = atoi(args[j+1]);
       if(r == 0){
         print_usage();
         printf("-r received invalid integer\n");
@@ -57,17 +57,17 @@ xsh_process_ring(int nargs, char *args[]){
         return SHELL_ERROR;
       }
       i++;
-    }else if(0 == strncmp("-i", args[i], 3)){
+    }else if(0 == strncmp("-i", args[j], 3)){
       //if flag is '-i'
-      if(!(i+1<nargs)){
+      if(!(j+1<nargs)){
         //no argument after flag
         print_usage();
         printf("-i flag expected an argument\n");
         return SHELL_ERROR;
       }
-      if(0 == strncmp("poll", args[i+1], 5)){
+      if(0 == strncmp("poll", args[j+1], 5)){
         r = POLL;
-      }else if(0 == strncmp("sync", args[i+1], 5)){
+      }else if(0 == strncmp("sync", args[j+1], 5)){
         r = SYNC;
       }else{
         print_usage();
@@ -75,7 +75,7 @@ xsh_process_ring(int nargs, char *args[]){
         return SHELL_ERROR;
       }
       i++;
-    }else if(0 == strncmp("--help", args[i], 7)){
+    }else if(0 == strncmp("--help", args[j], 7)){
       //if it's the help flag
       printf("process_ring - count down to 0 from an integer in a number of
       rounds using a number of processes.\n\n - the starting number depends on
@@ -107,15 +107,15 @@ xsh_process_ring(int nargs, char *args[]){
     //if polling is chosen
     volatile int pol[p];
     pol[0] = val;
-    for(i = 1; i < p; i++){
-      pol[i] = val+1; //initialize all the other inboxes to larger number to
+    for(j = 1; j < p; j++){
+      pol[j] = val+1; //initialize all the other inboxes to larger number to
                       //avoid out-of-order processing
     }
 
-    for(i = 0; i < p; i++){
+    for(j = 0; j < p; j++){
       //start queueing up processes
-      name[5] = sprintf(str, "%d", i);
-      resume(create(process_ring_poll, 1024, 20, name, 4, pol, i, p, val, r));
+      name[5] = sprintf(str, "%d", j);
+      resume(create(process_ring_poll, 1024, 20, name, 4, pol, j, p, val, r));
     }
     //wait for polling to finish - last element needs to reach 0
     while(pol[p] > 0);
@@ -123,12 +123,12 @@ xsh_process_ring(int nargs, char *args[]){
     //else if sync is chosen
     pid32 pids[p];
     pid32 parent = getpid();
-    for(i = 0; i < p; i++){
-      name[5] = sprintf(str, "%d", i);
-      pids[i] = create(process_ring_sync, 1024, 20, name, 5, pids, i, p, val, parent, r);
-      resume(pids[i]);
+    for(j = 0; j < p; j++){
+      name[5] = sprintf(str, "%d", j);
+      pids[j] = create(process_ring_sync, 1024, 20, name, 5, pids, j, p, val, parent, r);
+      resume(pids[j]);
     }
-    for(i = 0; i < p; i++){
+    for(j = 0; j < p; j++){
       receive(); //i have no idea if this is actually gonna work...
     }
   }

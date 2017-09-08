@@ -30,13 +30,13 @@ process process_ring_poll(int *pol, int ind, int len, int ival, int mrnd){
   return 0;
 }
 
-process process_ring_sync(pid32 *pids, int ind, int len, int ival, pid32 parent, int mrnds){
+process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, int mrnds){
   //code
   int last = val+1;
-  int round = 0;
-  while(last < 0 && round < mrnds){
+  int rnd = 0;
+  while(last < 0 && rnd < mrnds){
     last = receive();
-    printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, tmp);
+    printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
     if(ind+1 == len){
       send(pids[0], last-1);
     }else{
