@@ -6,12 +6,6 @@
 #include <string.h>
 #include <process_ring.h>
 
-parse_args(int32 len, char arg[]){
-  int32 val;
-  char *endp;
-
-}
-
 xsh_process_ring(int nargs, char *args[]){
   int i = POLL;
   int p = DEFAULTP;
