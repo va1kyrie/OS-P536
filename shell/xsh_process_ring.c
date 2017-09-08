@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <process_ring.h>
-#include "apps/process_ring.c"
+#include <process_ring.c>
 
 shellcmd xsh_process_ring(int nargs, char *args[]){
   int i = POLL;
