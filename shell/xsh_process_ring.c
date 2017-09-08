@@ -54,7 +54,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         fprintf(stderr, "%s: -r flag expected a positive integer\n", args[0]);
         return SHELL_ERROR;
       }
-      i++;
+      j++;
     }else if(0 == strncmp("-i", args[j], 2)){
       //if flag is '-i'
       if(!(j+1<nargs)){
@@ -70,7 +70,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         fprintf(stderr, "%s: -i expected either 'sync' or 'poll'\n", args[0]);
         return SHELL_ERROR;
       }
-      i++;
+      j++;
     }else if(0 == strncmp("--help", args[j], 6)){
       //if it's the help flag
       printf("process_ring - count down to 0 from an integer in a number of"
