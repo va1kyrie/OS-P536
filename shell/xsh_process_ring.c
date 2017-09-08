@@ -20,7 +20,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   //get flags (if they exist)
   int j;
   for(j = 1; j < nargs; j++){
-    printf("arg[%d] == %s\n", j, args[j]);
+    //printf("arg[%d] == %s\n", j, args[j]);
     if(0 == strncmp("-p", args[j], 2)){
       //if flag is '-p'
       if(!(j+1 < nargs)){
@@ -46,7 +46,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         return SHELL_ERROR;
       }
       r = atoi(args[j+1]);
-      printf("r == %d\n", r);
+      //printf("r == %d\n", r);
       if(r == 0){
         fprintf(stderr, "%s: -r received invalid integer\n", args[0]);
         return SHELL_ERROR;
