@@ -113,7 +113,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       resume(create(process_ring_poll, 1024, 20, name, 5, &pol, j, p, val, r));
     }
     //wait for polling to finish - last element needs to reach 0
-    while(pol[p] > 0);
+    while(pol[p-1] > 0);
   }else if(i == SYNC){
     //else if sync is chosen
     pid32 pids[p];
