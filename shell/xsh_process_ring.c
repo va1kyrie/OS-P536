@@ -83,7 +83,12 @@ xsh_process_ring(int nargs, char *args[]){
       i++;
     }else if(0 == strncmp("--help", args[i], 7)){
       //if it's the help flag
-      printf("process_ring - count down to 0 from an integer in a number of rounds using a number of processes.\n\n - the starting number depends on the number of rounds (r) and processes (p)\n - default r = 3\n - default p = 2\n -r should be a positive integer less than %d \n - p should be between %d and %d.\n\n flags:\n -p [num_processes]\n -r [num_rounds]\n -i [poll/sync]\n --help (this text)\n", MAXR, MINP, MAXP);
+      printf("process_ring - count down to 0 from an integer in a number of
+      rounds using a number of processes.\n\n - the starting number depends on
+      the number of rounds (r) and processes (p)\n - default r = 3\n - default
+      p = 2\n -r should be a positive integer less than %d \n - p should be
+      between %d and %d.\n\n flags:\n -p [num_processes]\n -r [num_rounds]\n -i
+      [poll/sync]\n --help (this text)\n", MAXR, MINP, MAXP);
     }else{
       //else it's invalid
       print_usage();
@@ -109,7 +114,7 @@ xsh_process_ring(int nargs, char *args[]){
         pol[0] = val;
         int len = p;
         for(i = 0; i < p; i++){
-
+          //start queueing up processes
         }
       }else if(i == SYNC){
         //else if sync is chosen
