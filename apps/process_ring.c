@@ -5,6 +5,7 @@
 #include <xinu.h>
 #include <string.h>
 #include <stdio.h>
+#include <process_ring.h>
 
 process process_ring_poll(volatile int *pol, int ind, int len, int ival, int mrnd){
   //code
