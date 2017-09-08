@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <process_ring.h>
 
-xsh_process_ring(int nargs, char *args[]){
+shellcmd xsh_process_ring(int nargs, char *args[]){
   int i = POLL;
   int p = DEFAULTP;
   int r = DEFAULTR;
