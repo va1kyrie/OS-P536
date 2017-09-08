@@ -2,7 +2,11 @@
  * shell command.
  */
 
+#include "../apps/process_ring.c"
 
+//function defs
+process process_ring_poll(volatile int*, int, int, int, int);
+process process_ring_sync(pid32*, int, int, int, pid32, int);
 
 //VARIABLE DEFINITIONS
 #define MAXP 64     // max number of processes
