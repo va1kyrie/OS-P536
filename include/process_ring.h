@@ -2,9 +2,6 @@
  * shell command.
  */
 
-#include "../apps/process_ring.c"
-
-//FUNCTION DEFINITIONS
 
 
 //VARIABLE DEFINITIONS
