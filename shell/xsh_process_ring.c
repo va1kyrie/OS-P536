@@ -4,6 +4,7 @@
 #include <xinu.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <process_ring.h>
 
 xsh_process_ring(int nargs, char *args[]){
