@@ -2,7 +2,7 @@
  * shell command.
  */
 
-#include "apps/process_ring.c"
+#include "../apps/process_ring.c"
 
 //FUNCTION DEFINITIONS
 shellcmd xsh_process_ring(int, char*);
