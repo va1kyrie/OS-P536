@@ -16,7 +16,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   int start;
   uint32 beg, end;
   int finish;
-  
+
   printf("priority of parent == %d", getprio(getpid()));
 
   //get flags (if they exist)
@@ -128,16 +128,11 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       resume(pids[j]);
     }
     j=0;
-<<<<<<< HEAD
-    while(j<p){
-      receive(); //i have no idea if this is actually gonna work...
-      j++;
-=======
     while(j < p){
+      receive();
       receive(); //i have no idea if this is actually gonna work...
       j++;
       printf("have received %d msgs of %d\n", j, p);
->>>>>>> c15f11a75e9708a9461c9d4c96b3f440febdc541
     }
   }
   finish = gettime(&end);
