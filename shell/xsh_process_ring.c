@@ -128,11 +128,11 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
 
     for(j = 0; j < p; j++){
       name[5] = sprintf(str, "%d", j);
-      pids[j] = create(process_ring_sync, 1024, 20, name, 6, &sems, j, p, &ival, r, done_sem);
+      resume(create(process_ring_sync, 1024, 20, name, 6, &sems, j, p, &ival, r, done_sem));
     }
-    for(j = 0; j < p; j++){
-      resume(pids[j]);
-    }
+    // for(j = 0; j < p; j++){
+    //   resume(pids[j]);
+    // }
     j=0;
     while(j < p){
       wait(done_sem); //i have no idea if this is actually gonna work...
