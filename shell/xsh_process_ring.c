@@ -104,7 +104,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     pol[0] = val;
     for(j = 1; j < p; j++){
       pol[j] = val+1; //initialize all the other inboxes to larger number to
-                      //avoid out-of-order processing
+      //avoid out-of-order processing
     }
 
     for(j = 0; j < p; j++){
@@ -125,8 +125,10 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     for(j = 0; j < p; j++){
       resume(pids[j]);
     }
-    for(j = 0; j < p; j++){
+    j=0;
+    while(j<p){
       receive(); //i have no idea if this is actually gonna work...
+      j++;
     }
   }
   finish = gettime(&now);
