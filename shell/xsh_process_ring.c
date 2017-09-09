@@ -129,7 +129,6 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     }
     j=0;
     while(j < p){
-      receive();
       receive(); //i have no idea if this is actually gonna work...
       j++;
       printf("have received %d msgs of %d\n", j, p);
