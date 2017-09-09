@@ -47,7 +47,7 @@ process process_ring_sync(sid32 *sems, int ind, int len, int *val, int mrnds, si
   if(len == 1){
     //again, if we only have one process we need a special case
     int j;
-    for(j = val; j > -1; j--){
+    for(j = *val; j > -1; j--){
       printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, j);
       rnd++;
     }
