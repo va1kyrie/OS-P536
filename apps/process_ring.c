@@ -43,7 +43,6 @@ process process_ring_poll(volatile int *pol, int ind, int len, int ival, int mrn
 }
 
 process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, int mrnds){
-  //code
   int last = val+1;
   int rnd = 0;
   if(len == 1){
@@ -55,18 +54,18 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
     }
   }else{
     while(last > 0 && rnd < mrnds){
-      printf("pid of proc %d: %d \n", ind, (int) getpid());
+      //printf("pid of proc %d: %d \n", ind, (int) getpid());
       //printf("I am in the while loop on round %d\n", rnd);
       if(last == val+1 && rnd == 0 && ind == 0){
         //special case if first element on first round -- nothing to receive!
         last--;
         printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
       }else{
-        printf("process %d: I am in the while loop in the else on round %d\n", ind, rnd);
+        //printf("process %d: I am in the while loop in the else on round %d\n", ind, rnd);
         last = receive();
       	printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
       }
-      printf("PID of next element: %d\n", (int) pids[ind+1]);
+      //printf("PID of next element: %d\n", (int) pids[ind+1]);
       if(ind+1 == len){
         send(pids[0], last-1);
       }else{
