@@ -8,7 +8,6 @@
 #include <process_ring.h>
 
 process process_ring_poll(volatile int *pol, int ind, int len, int ival, int mrnd){
-  //code
   int last = ival+1;  //starter val to indicate you haven't started calc.
   int rnd = 0;
   if(len == 1){
@@ -67,18 +66,27 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
       }
       rnd++;
       //printf("PID of next element: %d\n", (int) pids[ind+1]);
-      if(last != 0){
+      //if(last != 0){
         if(ind+1 == len){
           send(pids[0], last-1);
         }else{
           send(pids[ind+1], last-1);
         }
+<<<<<<< HEAD
       }
       //printf("process %d about to go around again\n", ind);
+=======
+      //}
+      printf("process %d about to go around again on round %d\n", ind, rnd);
+>>>>>>> c15f11a75e9708a9461c9d4c96b3f440febdc541
     }
   }
 
   //if we're here we're done, leave and never come back
   send(parent, OK);
+<<<<<<< HEAD
+=======
+  printf("process %d sent message home\n", ind);
+>>>>>>> c15f11a75e9708a9461c9d4c96b3f440febdc541
   return OK;
 }
