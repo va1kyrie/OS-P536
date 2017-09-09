@@ -17,7 +17,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   uint32 beg, end;
   int finish;
 
-  printf("priority of parent == %d", getprio(getpid()));
+  //printf("priority of parent == %d", getprio(getpid()));
 
   //get flags (if they exist)
   int j;
@@ -137,7 +137,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     while(j < p){
       wait(done_sem); //i have no idea if this is actually gonna work...
       j++;
-      printf("have received %d msgs of %d\n", j, p);
+      //printf("have received %d msgs of %d\n", j, p);
     }
     for(j=0;j<p;j++){
       semdelete(sems[j]);

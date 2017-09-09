@@ -84,13 +84,13 @@ process process_ring_sync(sid32 *sems, int ind, int len, volatile int *val, int 
         //   send(pids[ind+1], last-1);
         // }
       //}
-      printf("process %d about to go around again on round %d\n", ind, rnd);
+      //printf("process %d about to go around again on round %d\n", ind, rnd);
     }
   }
 
   //if we're here we're done, leave and never come back
   //send(parent, OK);
   signal(done_sem);
-  printf("process %d sent message home\n", ind);
+  //printf("process %d sent message home\n", ind);
   return 0;
 }
