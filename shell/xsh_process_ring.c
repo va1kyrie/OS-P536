@@ -52,6 +52,8 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       }else if(r < 0){
         fprintf(stderr, "%s: -r flag expected a positive integer\n", args[0]);
         return SHELL_ERROR;
+      }else if(r > MAXR){
+        fprintf(stderr, "%s: -r flag expected integer less than %d\n", MAXR);
       }
       j++;
     }else if(0 == strncmp("-i", args[j], 2)){
