@@ -52,6 +52,7 @@ process process_ring_sync(sid32 *sems, int ind, int len, volatile int *val, int 
       rnd++;
     }
   }else{
+    //else there are more than 1 processes and we're using semaphores
     while(last > 0 && rnd < mrnds){
         wait(sems[ind]);
         last = *val;
@@ -66,8 +67,7 @@ process process_ring_sync(sid32 *sems, int ind, int len, volatile int *val, int 
     }
   }
 
-  //if we're here we're done, leave and never come back
-  //send(parent, OK);
+  //if we're here we're done - signal parent
   signal(done_sem);
   return 0;
 }

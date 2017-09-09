@@ -132,7 +132,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
 
     j=0;
     while(j < p){
-      wait(done_sem); //i have no idea if this is actually gonna work...
+      wait(done_sem); //wait for children to all finish
       j++;
     }
     for(j=0;j<p;j++){
