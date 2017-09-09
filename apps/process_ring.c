@@ -57,10 +57,10 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
     while(last > 0 && rnd < mrnds){
       if(last == val+1 && rnd == 0 && ind == 0){
         //special case if first element on first round -- nothing to receive!
-	last--;
+        last--;
         printf("Rind Element %d : Round %d : Value : %d\n", ind, rnd, last);
       }else{
-	last = receive();
+        last = receive();
       	printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
       	if(ind+1 == len){
           send(pids[0], last-1);
