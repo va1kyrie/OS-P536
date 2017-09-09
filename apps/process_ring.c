@@ -73,7 +73,7 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
         }
       }
       rnd++;
-      printf("process %d about to go around again\n", ind);
+      //printf("process %d about to go around again\n", ind);
     }
   }
 
