@@ -42,7 +42,7 @@ process process_ring_poll(volatile int *pol, int ind, int len, int ival, int mrn
   return 0;
 }
 
-process process_ring_sync(pid32 **pids, int ind, int len, int val, pid32 parent, int mrnds){
+process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, int mrnds){
   //code
   int last = val+1;
   int rnd = 0;
@@ -66,11 +66,11 @@ process process_ring_sync(pid32 **pids, int ind, int len, int val, pid32 parent,
         last = receive();
       	printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
       }
-      printf("PID of next element: %d\n", (int) (*pids)[ind+1]);
+      printf("PID of next element: %d\n", (int) pids[ind+1]);
       if(ind+1 == len){
-        send((*pids)[0], last-1);
+        send(pids[0], last-1);
       }else{
-        send((*pids)[ind+1], last-1);
+        send(pids[ind+1], last-1);
       }
       rnd++;
     }
