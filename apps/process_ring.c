@@ -41,7 +41,7 @@ process process_ring_poll(volatile int *pol, int ind, int len, int ival, int mrn
   return 0;
 }
 
-process process_ring_sync(sid32 *sems, int ind, int len, int *val, pid32 parent, int mrnds, sid32 done_sem){
+process process_ring_sync(sid32 *sems, int ind, int len, int *val, int mrnds, sid32 done_sem){
   int last = (*val)+1;
   int rnd = 0;
   if(len == 1){
@@ -65,7 +65,7 @@ process process_ring_sync(sid32 *sems, int ind, int len, int *val, pid32 parent,
         printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
         rnd++;
         *val = last-1;
-        if(int+1 == len){
+        if(ind+1 == len){
           signal(sems[0]);
         }else{
           signal(sems[ind+1]);
