@@ -14,8 +14,10 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   int r = DEFAULTR;
   int val = 0;
   int start;
-  uint32 now;
+  uint32 beg, end;
   int finish;
+  
+  printf("priority of parent == %d", getprio(getpid()));
 
   //get flags (if they exist)
   int j;
@@ -90,7 +92,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   val = (p*r)-1;
   printf("Number of Processes: %d\n", p);
   printf("Number of Rounds: %d\n", r);
-  start = gettime(&now);
+  start = gettime(&beg);
   if (start == SYSERR) {
     fprintf(stderr, "%s: could not obtain the current date\n", args[0]);
     return 1;
@@ -125,15 +127,18 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     for(j = 0; j < p; j++){
       resume(pids[j]);
     }
-    for(j = 0; j < p; j++){
+    j=0;
+    while(j < p){
       receive(); //i have no idea if this is actually gonna work...
+      j++;
+      printf("have received %d msgs of %d\n", j, p);
     }
   }
-  finish = gettime(&now);
+  finish = gettime(&end);
   if (finish == SYSERR) {
     fprintf(stderr, "%s: could not obtain the current date\n", args[0]);
     return 1;
   }
-  printf("Elapsed Seconds: %d\n", finish-start);
+  printf("Elapsed Seconds: %d\n", end-beg);
   return 0;
 }

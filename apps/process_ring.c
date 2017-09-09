@@ -54,7 +54,7 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
   }else{
     while(last > 0 && rnd < mrnds){
       //printf("pid of proc %d: %d \n", ind, (int) getpid());
-      printf("I am in the while loop on round %d\n", rnd);
+      //printf("I am in the while loop on round %d\n", rnd);
       if(last == val+1 && rnd == 0 && ind == 0){
         //special case if first element on first round -- nothing to receive!
         last--;
@@ -64,20 +64,21 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
         last = receive();
       	printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
       }
+      rnd++;
       //printf("PID of next element: %d\n", (int) pids[ind+1]);
-      if(last != 0){
+      //if(last != 0){
         if(ind+1 == len){
           send(pids[0], last-1);
         }else{
           send(pids[ind+1], last-1);
         }
-      }
-      rnd++;
-      //printf("process %d about to go around again\n", ind);
+      //}
+      printf("process %d about to go around again on round %d\n", ind, rnd);
     }
   }
 
   //if we're here we're done, leave and never come back
   send(parent, OK);
-  return 0;
+  printf("process %d sent message home\n", ind);
+  return OK;
 }
