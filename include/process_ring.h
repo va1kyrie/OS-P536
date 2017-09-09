@@ -2,8 +2,6 @@
  * shell command.
  */
 
-//#include "../apps/process_ring.c"
-
 //function defs
 process process_ring_poll(volatile int*, int, int, int, int);
 process process_ring_sync(sid32*, int, int, volatile int*, int, sid32);

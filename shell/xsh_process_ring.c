@@ -118,7 +118,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   }else if(i == SYNC){
     //else if sync is chosen
     sid32 sems[p];
-    sid32 done_sem;
+    sid32 done_sem = semcreate(0); //create semaphore to signal parent
     volatile int ival = val;
     sems[0] = semcreate(1); //first goes free
     for(j = 1; j < p; j++){
