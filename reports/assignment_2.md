@@ -14,4 +14,4 @@ Another mistake I made continuously throughout the assignment at first was reass
 
 ### 3: If you were restarting this assignment, what would you change about how you went about completing this assignment?
 
-I would give myself a lot more time, and I would plan out my implementation a lot more completely. I would especially start earlier so I could take my more subtle bugs and race conditions to another set of eyes, instead of having to rely on myself.
+I would give myself a lot more time, and I would plan out my implementation a lot more completely. I would especially start earlier so I could take my more subtle bugs and race conditions to another set of eyes, instead of having to rely on myself. Most of my mistakes were caused by dumb human error or being rushed and not really knowing what I was doing, and that's definitely on me and how I planned my time.
