@@ -8,7 +8,6 @@
 #include <process_ring.h>
 
 process process_ring_poll(volatile int *pol, int ind, int len, int ival, int mrnd){
-  //code
   int last = ival+1;  //starter val to indicate you haven't started calc.
   int rnd = 0;
   if(len == 1){
@@ -55,7 +54,7 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
   }else{
     while(last > 0 && rnd < mrnds){
       //printf("pid of proc %d: %d \n", ind, (int) getpid());
-      //printf("I am in the while loop on round %d\n", rnd);
+      printf("I am in the while loop on round %d\n", rnd);
       if(last == val+1 && rnd == 0 && ind == 0){
         //special case if first element on first round -- nothing to receive!
         last--;
