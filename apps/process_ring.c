@@ -61,7 +61,7 @@ process process_ring_sync(pid32 *pids, int ind, int len, int val, pid32 parent, 
         last--;
         printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
       }else{
-        printf("I am in the while loop in the else on round %d\n", rnd);
+        printf("process %d: I am in the while loop in the else on round %d\n", ind, rnd);
         last = receive();
       	printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
       }
