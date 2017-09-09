@@ -121,6 +121,8 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     for(j = 0; j < p; j++){
       name[5] = sprintf(str, "%d", j);
       pids[j] = create(process_ring_sync, 1024, 20, name, 6, &pids, j, p, val, parent, r);
+    }
+    for(j = 0; i < p; j++){
       resume(pids[j]);
     }
     for(j = 0; j < p; j++){
