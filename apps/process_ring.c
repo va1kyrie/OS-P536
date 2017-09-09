@@ -53,13 +53,6 @@ process process_ring_sync(sid32 *sems, int ind, int len, volatile int *val, int 
     }
   }else{
     while(last > 0 && rnd < mrnds){
-      //printf("pid of proc %d: %d \n", ind, (int) getpid());
-      //printf("I am in the while loop on round %d\n", rnd);
-      // if(last == val+1 && rnd == 0 && ind == 0){
-      //   //special case if first element on first round -- nothing to receive!
-      //    last--;
-      //   printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
-      // }else{
         wait(sems[ind]);
         last = *val;
         printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, last);
@@ -70,27 +63,11 @@ process process_ring_sync(sid32 *sems, int ind, int len, volatile int *val, int 
         }else{
           signal(sems[ind+1]);
         }
-        //printf("process %d: I am in the while loop in the else on round %d\n", ind, rnd);
-        //last = receive();
-
-
-      //}
-
-      //printf("PID of next element: %d\n", (int) pids[ind+1]);
-      //if(last != 0){
-        // if(ind+1 == len){
-        //   send(pids[0], last-1);
-        // }else{
-        //   send(pids[ind+1], last-1);
-        // }
-      //}
-      //printf("process %d about to go around again on round %d\n", ind, rnd);
     }
   }
 
   //if we're here we're done, leave and never come back
   //send(parent, OK);
   signal(done_sem);
-  //printf("process %d sent message home\n", ind);
   return 0;
 }

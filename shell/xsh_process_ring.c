@@ -17,12 +17,9 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   uint32 beg, end;
   int finish;
 
-  //printf("priority of parent == %d", getprio(getpid()));
-
   //get flags (if they exist)
   int j;
   for(j = 1; j < nargs; j++){
-    //printf("arg[%d] == %s\n", j, args[j]);
     if(0 == strncmp("-p", args[j], 2)){
       //if flag is '-p'
       if(!(j+1 < nargs)){
@@ -130,14 +127,11 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       name[5] = sprintf(str, "%d", j);
       resume(create(process_ring_sync, 1024, 20, name, 6, &sems, j, p, &ival, r, done_sem));
     }
-    // for(j = 0; j < p; j++){
-    //   resume(pids[j]);
-    // }
+
     j=0;
     while(j < p){
       wait(done_sem); //i have no idea if this is actually gonna work...
       j++;
-      //printf("have received %d msgs of %d\n", j, p);
     }
     for(j=0;j<p;j++){
       semdelete(sems[j]);
