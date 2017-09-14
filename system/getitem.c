@@ -12,7 +12,9 @@ pid32	getfirst(
 					/*   valid with no check)	*/
 {
 	intmask mask;
+	pid32 first;
 
+	mask = disable();
 	if(isbadqid(q)){
 		restore(mask);
 		return (qid16)SYSERR;
@@ -25,7 +27,9 @@ pid32	getfirst(
 	}
 
 	head = queuehead(q);
-	return getitem(queuetab[head].qnext);
+	first = getitem(queuetab[head].qnext);
+	restore(mask);
+	return first;
 }
 
 /*------------------------------------------------------------------------
@@ -38,8 +42,10 @@ pid32	getlast(
 					/*   valid with no check)	*/
 {
 	pid32 tail;
+	pid32 last;
 	intmask mask;
 
+	mask = disable();
 	if(isbadqid(q)){
 		restore(mask);
 		return (qid16)SYSERR;
@@ -50,7 +56,9 @@ pid32	getlast(
 	}
 
 	tail = queuetail(q);
-	return getitem(queuetab[tail].qprev);
+	last = getitem(queuetab[tail].qprev);
+	restore(mask);
+	return last;
 }
 
 /*------------------------------------------------------------------------
