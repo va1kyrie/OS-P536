@@ -11,6 +11,13 @@ pid32	getfirst(
 	)				/* Remove a process (assumed	*/
 					/*   valid with no check)	*/
 {
+	intmask mask;
+
+	if(isbadqid(q)){
+		restore(mask);
+		return (qid16)SYSERR;
+	}
+
 	pid32	head;
 
 	if (isempty(q)) {
@@ -31,6 +38,12 @@ pid32	getlast(
 					/*   valid with no check)	*/
 {
 	pid32 tail;
+	intmask mask;
+
+	if(isbadqid(q)){
+		restore(mask);
+		return (qid16)SYSERR;
+	}
 
 	if (isempty(q)) {
 		return EMPTY;
