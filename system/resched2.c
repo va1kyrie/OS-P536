@@ -63,7 +63,7 @@ void	resched2(int nextstate)		/* Assumes interrupts are disabled	*/
  *  resched_cntl  -  Control whether rescheduling is deferred or allowed
  *------------------------------------------------------------------------
  */
-status	resched_cntl(		/* Assumes interrupts are disabled	*/
+status	resched_cntl2(		/* Assumes interrupts are disabled	*/
 	  int32	defer		/* Either DEFER_START or DEFER_STOP	*/
 	)
 {
