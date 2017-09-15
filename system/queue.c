@@ -13,8 +13,8 @@ pid32	enqueue(
 	  qid16		q		/* ID of queue to use		*/
 	)
 {
-	struct qentry*	tail;
-	struct qentry*	prev;		/* Tail & previous node indexes	*/
+	struct qentry	*tail;
+	struct qentry	*prev;		/* Tail & previous node indexes	*/
 
 	if (isbadqid(q) || isbadpid(pid)) {
 		return SYSERR;
