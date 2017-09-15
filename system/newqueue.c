@@ -20,13 +20,13 @@ qid16	newqueue(void)
 
 	/* Initialize head and tail nodes to form an empty queue */
 
-	queuetab[queuehead(q)].qnext = queuetail(q);
-	queuetab[queuehead(q)].qprev = EMPTY;
-	queuetab[queuehead(q)].qkey  = MAXKEY;
-	queuetab[queuetail(q)].qnext = EMPTY;
-	queuetab[queuetail(q)].qprev = queuehead(q);
-	queuetab[queuetail(q)].qkey  = MINKEY;
-	queuetab[queuetail(q)].pid	 = EMPTY;
-	queuetab[queuehead(q)].pid	 = EMPTY;
+	queuetab[queuehead(q)]->qnext = queuetail(q);
+	queuetab[queuehead(q)]->qprev = EMPTY;
+	queuetab[queuehead(q)]->qkey  = MAXKEY;
+	queuetab[queuetail(q)]->qnext = EMPTY;
+	queuetab[queuetail(q)]->qprev = queuehead(q);
+	queuetab[queuetail(q)]->qkey  = MINKEY;
+	queuetab[queuetail(q)]->pid	 = EMPTY;
+	queuetab[queuehead(q)]->pid	 = EMPTY;
 	return q;
 }
