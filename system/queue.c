@@ -25,8 +25,8 @@ pid32	enqueue(
 
 	queuetab[pid].qnext  = tail;	/* Insert just before tail node	*/
 	queuetab[pid].qprev  = prev;
-	queuetab[prev].qnext = queuetab[pid];
-	queuetab[tail].qprev = queuetab[pid];
+	queuetab[prev->pid].qnext = queuetab[pid];
+	queuetab[tail->pid].qprev = queuetab[pid];
 	return pid;
 }
 
