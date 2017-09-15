@@ -28,7 +28,7 @@ status	insert(
 
 	/* Insert process between curr node and previous node */
 
-	prev = queuetab[pcurr]->qprev;	/* Get index of previous node	*/
+	prev = queuetab[pcurr].qprev;	/* Get index of previous node	*/
 	queuetab[pid].qnext = curr;
 	queuetab[pid].qprev = prev;
 	queuetab[pid].qkey = key;
