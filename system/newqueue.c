@@ -26,5 +26,7 @@ qid16	newqueue(void)
 	queuetab[queuetail(q)].qnext = EMPTY;
 	queuetab[queuetail(q)].qprev = queuehead(q);
 	queuetab[queuetail(q)].qkey  = MINKEY;
+	queuetab[queuetail(q)].pid	 = EMPTY;
+	queuetab[queuehead(q)].pid	 = EMPTY;
 	return q;
 }
