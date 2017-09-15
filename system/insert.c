@@ -24,7 +24,7 @@ status	insert(
 	while (queuetab[pcurr].qkey >= key) {
 		pcurr = (queuetab[pcurr].qnext)->pid;
 	}
-	curr = queuetab[pcurr];
+	curr = &(queuetab[pcurr]);
 
 	/* Insert process between curr node and previous node */
 
