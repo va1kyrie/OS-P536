@@ -5,7 +5,7 @@
 /* Default # of queue entries: 2 for ready list plus	*/
 /*			2 for sleep list plus 2 per semaphore		*/
 #ifndef NQENT
-#define NQENT	(4 + NSEM + NSEM)
+#define NQENT	(NPROC + 4 + NSEM + NSEM)
 #endif
 
 #define	EMPTY	(-1)		/* Null value for qnext or qprev index	*/
@@ -23,14 +23,14 @@ extern	struct qentry*	queuetab[];
 
 /* Inline queue manipulation functions */
 
-#define	queuehead(q)	(queuetab[(q)])
-#define	queuetail(q)	(queuetab[(q) + 1])
-#define	firstid(q)		((queuehead(q)->qnext)->pid)
-#define	lastid(q)			((queuetail(q)->qnext)->pid)
+#define	queuehead(q)	(q)
+#define	queuetail(q)	((q) +1)
+#define	firstid(q)		((queuetab[queuehead(q)].qnext)->pid)
+#define	lastid(q)			((queuetab[queuetail(q)].qprev)->pid)
 #define	isempty(q)		(firstid(q) >= NPROC)
 #define	nonempty(q)		(firstid(q) <  NPROC)
-#define	firstkey(q)		((queuehead(q)->qnext)->qkey)
-#define	lastkey(q)		((queuetail(q)->qnext)->qkey)
+#define	firstkey(q)		(queuetab[firstid(q)].qkey)
+#define	lastkey(q)		(queuetab[lastid(q)].qkey)
 
 /* Inline to check queue id assumes interrupts are disabled */
 

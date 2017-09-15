@@ -18,7 +18,7 @@ pid32	getfirst(
 	}
 
 	head = queuehead(q);
-	return getitem(head->qnext);
+	return getitem((queuetab[head].qnext)->pid);
 }
 
 /*------------------------------------------------------------------------
@@ -37,7 +37,7 @@ pid32	getlast(
 	}
 
 	tail = queuetail(q);
-	return getitem(tail->qprev);
+	return getitem((queuetab[tail].qprev)->pid);
 }
 
 /*------------------------------------------------------------------------
@@ -46,25 +46,13 @@ pid32	getlast(
  */
 pid32	getitem(
 	  pid32		pid		/* ID of process to remove	*/
-		qid16		qid
 	)
 {
-	quentry*	prev, next;
+	qentry*	prev, next;
 
-	int i;
-	qentry* curr = queuetab[qid].qnext;
-
-	while (curr->pid != pid && curr->pid != EMPTY) {
-		curr = queuetab[curr].qnext;
-	}
-
-	if(curr->pid == EMPTY){
-		return SYSERR;
-	}
-
-	next = curr->qnext;	/* Following node in list	*/
-	prev = curr->qprev;	/* Previous node in list	*/
-	curr->qnext = next;
-	curr->qprev = prev;
-	return curr->pid;
+	next = queuetab[pid].qnext;	/* Following node in list	*/
+	prev = queuetab[pid].qprev;	/* Previous node in list	*/
+	queuetab[prev->pid].qnext = next;
+	queuetab[next->pid].qprev = prev;
+	return pid;
 }
