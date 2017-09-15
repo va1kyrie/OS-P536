@@ -45,7 +45,7 @@ pid32	getlast(
 	pid32 last;
 	//intmask mask;
 
-	mask = disable();
+	//mask = disable();
 	if(isbadqid(q)){
 		//restore(mask);
 		return (qid16)SYSERR;
