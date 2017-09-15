@@ -18,7 +18,7 @@ pid32	getfirst(
 	}
 
 	head = queuehead(q);
-	return getitem((queuetab[head]->qnext)->pid);
+	return getitem((queuetab[head].qnext)->pid);
 }
 
 /*------------------------------------------------------------------------
