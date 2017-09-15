@@ -36,7 +36,7 @@ status	unsleep(
 
 	/* Increment delay of next process if such a process exists */
 
-	pidnext = queuetab[pid].qnext;
+	pidnext = (queuetab[pid].qnext)->pid;
 	if (pidnext < NPROC) {
 		queuetab[pidnext].qkey += queuetab[pid].qkey;
 	}
