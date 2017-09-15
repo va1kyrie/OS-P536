@@ -12,12 +12,10 @@
 #define	MAXKEY	0x7FFFFFFF	/* Max key that can be stored in queue	*/
 #define	MINKEY	0x80000000	/* Min key that can be stored in queue	*/
 
-typedef struct qentry qentry;
-
 struct	qentry	{		/* One per process plus two per list	*/
 	int32	qkey;		/* Key on which the queue is ordered	*/
-	qentry*	qnext;		/* Index of next process or tail	*/
-	qentry*	qprev;		/* Index of previous process or head	*/
+	struct qentry*	qnext;		/* Index of next process or tail	*/
+	struct qentry*	qprev;		/* Index of previous process or head	*/
 	pid32 pid; // pid of the process in question
 };
 

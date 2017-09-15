@@ -13,7 +13,7 @@ status	insert(
 	)
 {
 	int16	pcurr;			/* Runs through items in a queue*/
-	qentry*	prev,curr;			/* Holds previous node index	*/
+	struct qentry*	prev,curr;			/* Holds previous node index	*/
 
 	if (isbadqid(q) || isbadpid(pid)) {
 		return SYSERR;
