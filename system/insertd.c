@@ -29,11 +29,11 @@ status	insertd(			/* Assumes interrupts disabled	*/
 
 	/* Insert new node between prev and next nodes */
 
-	queuetab[pid].qnext = queuetab[next];
-	queuetab[pid].qprev = queuetab[prev];
+	queuetab[pid].qnext = &queuetab[next];
+	queuetab[pid].qprev = &queuetab[prev];
 	queuetab[pid].qkey = key;
-	queuetab[prev].qnext = queuetab[pid];
-	queuetab[next].qprev = queuetab[pid];
+	queuetab[prev].qnext = &queuetab[pid];
+	queuetab[next].qprev = &queuetab[pid];
 	if (next != queuetail(q)) {
 		queuetab[next].qkey -= key;
 	}
