@@ -50,9 +50,9 @@ pid32	getitem(
 {
 	qentry*	prev, next;
 
-	next = queuetab[pid].qnext;	/* Following node in list	*/
-	prev = queuetab[pid].qprev;	/* Previous node in list	*/
-	queuetab[prev.pid].qnext = next;
-	queuetab[next.pid].qprev = prev;
+	next = queuetab[pid]->qnext;	/* Following node in list	*/
+	prev = queuetab[pid]->qprev;	/* Previous node in list	*/
+	queuetab[prev->pid].qnext = next;
+	queuetab[next->pid].qprev = prev;
 	return pid;
 }
