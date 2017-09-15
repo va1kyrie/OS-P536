@@ -23,10 +23,10 @@ pid32	enqueue(
 	tail = queuetail(q);
 	prev = tail->qprev;
 
-	queuetab[pid]->qnext  = tail;	/* Insert just before tail node	*/
-	queuetab[pid]->qprev  = prev;
-	queuetab[prev]->qnext = queuetab[pid];
-	queuetab[tail]->qprev = queuetab[pid];
+	queuetab[pid].qnext  = tail;	/* Insert just before tail node	*/
+	queuetab[pid].qprev  = prev;
+	queuetab[prev].qnext = queuetab[pid];
+	queuetab[tail].qprev = queuetab[pid];
 	return pid;
 }
 
@@ -47,7 +47,7 @@ pid32	dequeue(
 	}
 
 	pid = getfirst(q);
-	queuetab[pid]->qprev = EMPTY;
-	queuetab[pid]->qnext = EMPTY;
+	queuetab[pid].qprev = EMPTY;
+	queuetab[pid].qnext = EMPTY;
 	return pid;
 }

@@ -37,7 +37,7 @@ pid32	getlast(
 	}
 
 	tail = queuetail(q);
-	return getitem((queuetab[tail]->qprev)->pid);
+	return getitem((queuetab[tail].qprev)->pid);
 }
 
 /*------------------------------------------------------------------------
@@ -51,9 +51,9 @@ pid32	getitem(
 	struct qentry*	prev;
 	struct qentry*	next;
 
-	next = queuetab[pid]->qnext;	/* Following node in list	*/
-	prev = queuetab[pid]->qprev;	/* Previous node in list	*/
-	queuetab[prev->pid]->qnext = next;
-	queuetab[next->pid]->qprev = prev;
+	next = queuetab[pid].qnext;	/* Following node in list	*/
+	prev = queuetab[pid].qprev;	/* Previous node in list	*/
+	queuetab[prev->pid].qnext = next;
+	queuetab[next->pid].qprev = prev;
 	return pid;
 }
