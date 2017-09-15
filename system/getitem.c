@@ -48,10 +48,10 @@ pid32	getitem(
 	  pid32		pid		/* ID of process to remove	*/
 	)
 {
-	struct qentry*	prev, next;
+	struct qentry	prev, next;
 
-	next = queuetab[pid].qnext;	/* Following node in list	*/
-	prev = queuetab[pid].qprev;	/* Previous node in list	*/
+	next = queuetab[pid]->qnext;	/* Following node in list	*/
+	prev = queuetab[pid]->qprev;	/* Previous node in list	*/
 	queuetab[prev.pid].qnext = next;
 	queuetab[next.pid].qprev = prev;
 	return pid;
