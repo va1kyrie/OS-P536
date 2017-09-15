@@ -21,7 +21,7 @@ status	insert(
 
 	pcurr = firstid(q);
 	while (queuetab[pcurr].qkey >= key) {
-		pcurr = (queuetab[curr].qnext)->pid;
+		pcurr = (queuetab[pcurr].qnext)->pid;
 	}
 	curr = queuetab[pcurr];
 
