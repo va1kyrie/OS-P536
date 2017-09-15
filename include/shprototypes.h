@@ -84,3 +84,6 @@ shellcmd xsh_hello		(int, char *[]);
 
 /* in file xsh_process_ring.c */
 shellcmd xsh_process_ring	(int, char *[]);
+
+/* in file xsh_testitem.c */
+shellcmd xsh_testitem		(int, char *[]);
