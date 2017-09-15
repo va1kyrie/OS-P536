@@ -32,7 +32,7 @@ status	insert(
 	queuetab[pid]->qnext = curr;
 	queuetab[pid]->qprev = prev;
 	queuetab[pid]->qkey = key;
-	queuetab[prev]->qnext = queuetab[pid];
-	queuetab[curr]->qprev = queuetab[pid];
+	queuetab[prev->pid]->qnext = queuetab[pid];
+	queuetab[curr->pid]->qprev = queuetab[pid];
 	return OK;
 }
