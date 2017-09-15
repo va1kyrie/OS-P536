@@ -13,14 +13,14 @@ pid32	enqueue(
 	  qid16		q		/* ID of queue to use		*/
 	)
 {
-	qid16	tail, prev;		/* Tail & previous node indexes	*/
+	qentry*	tail, prev;		/* Tail & previous node indexes	*/
 
 	if (isbadqid(q) || isbadpid(pid)) {
 		return SYSERR;
 	}
 
 	tail = queuetail(q);
-	prev = queuetab[tail].qprev;
+	prev = tail->qprev;
 
 	queuetab[pid].qnext  = tail;	/* Insert just before tail node	*/
 	queuetab[pid].qprev  = prev;
