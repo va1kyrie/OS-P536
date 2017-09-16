@@ -68,5 +68,3 @@ struct am335x_timer1ms {
 #define AM335X_TIMER1MS_CLKCTRL_EN		0x00000002
 
 #endif /* ARM_BBB */
-
-

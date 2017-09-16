@@ -12,8 +12,8 @@ status	insertd(			/* Assumes interrupts disabled	*/
 	  int32		key		/* Delay from "now" (in ms.)	*/
 	)
 {
-	int32	next;			/* Runs through the delta list	*/
-	int32	prev;			/* Follows next through the list*/
+	pid32	next;			/* Runs through the delta list	*/
+	pid32	prev;			/* Follows next through the list*/
 
 	if (isbadqid(q) || isbadpid(pid)) {
 		return SYSERR;
