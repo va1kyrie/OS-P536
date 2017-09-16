@@ -27,6 +27,8 @@ pid32	enqueue(
 	queuetab[pid].qprev  = prev;
 	queuetab[prev->pid].qnext = &queuetab[pid];
 	queuetab[tail->pid].qprev = &queuetab[pid];
+	//need to explicitly define the pid now
+	queuetab[pid].pid = pid;
 	return pid;
 }
 

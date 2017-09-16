@@ -36,5 +36,7 @@ status	insert(
 	queuetab[pid].qkey = key;
 	queuetab[prev->pid].qnext = &queuetab[pid];
 	queuetab[curr->pid].qprev = &queuetab[pid];
+	//again, need to explicitly declare pid now
+	queuetab[pid].pid = pid;
 	return OK;
 }
