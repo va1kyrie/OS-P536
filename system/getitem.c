@@ -11,14 +11,12 @@ pid32	getfirst(
 	)				/* Remove a process (assumed	*/
 					/*   valid with no check)	*/
 {
-	pid32	head;
 
 	if (isempty(q)) {
 		return EMPTY;
 	}
 
-	head = queuehead(q);
-	return getitem((queuetab[head].qnext)->pid);
+	return getitem((queuetab[queuehead(q)].qnext)->pid);
 }
 
 /*------------------------------------------------------------------------
@@ -36,8 +34,7 @@ pid32	getlast(
 		return EMPTY;
 	}
 
-	tail = queuetail(q);
-	return getitem((queuetab[tail].qprev)->pid);
+	return getitem((queuetab[queuetail(q)].qprev)->pid);
 }
 
 /*------------------------------------------------------------------------

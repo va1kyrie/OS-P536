@@ -20,7 +20,7 @@ pid32	enqueue(
 		return SYSERR;
 	}
 
-	tail = queuetail(q);
+	tail = &queuetab[queuetail(q)];
 	prev = tail->qprev;
 
 	queuetab[pid].qnext  = tail;	/* Insert just before tail node	*/
