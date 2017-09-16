@@ -86,4 +86,4 @@ shellcmd xsh_hello		(int, char *[]);
 shellcmd xsh_process_ring	(int, char *[]);
 
 //in file xsh_testresched2.c
-shellcmd xsh_testresched (int, char *[]);
+shellcmd xsh_testresched2 (int, char *[]);
