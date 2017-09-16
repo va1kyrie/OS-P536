@@ -12,7 +12,7 @@ status	insert(
 	  int32		key		/* Key for the inserted process	*/
 	)
 {
-	int16	cpid;			/* Runs through items in a queue*/
+	pid32	cpid;			/* Runs through items in a queue*/
 	struct qentry *prev;
 	struct qentry *curr;			/* Holds previous node index	*/
 
