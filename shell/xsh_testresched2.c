@@ -7,7 +7,7 @@
 
 /* xsh_testresched(int, char*): tests resched2
 */
-shellcmd xsh_testresched(int nargs, char *args[]) {
+shellcmd xsh_testresched2(int nargs, char *args[]) {
  resume(create(printing, 1024, 25, "printing-hiprio", 0));
  resched2(PR_READY);
  resume(create(printing, 1024, 20, "printing-sameprio",0));

@@ -31,7 +31,7 @@ const	struct	cmdent	cmdtab[] = {
 	{"udp",		FALSE,	xsh_udpdump},
 	{"udpecho",	FALSE,	xsh_udpecho},
 	{"udpeserver",	FALSE,	xsh_udpeserver},
-	{"testresched", FALSE,	xsh_testresched},
+	{"testresched", FALSE,	xsh_testresched2},
 #endif
 #ifdef MMU
 	{"test_mmu", 	FALSE, 	xsh_mmu},
