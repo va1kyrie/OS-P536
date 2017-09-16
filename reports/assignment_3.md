@@ -2,6 +2,8 @@
 
 ### Question 1
 
+Xinu's implementation of a queue as a series of elements into an array uses less space. In Xinu's implementation, a given process' PID is implicitly declared via its location in ```queuetab[]``` - the PID is the same as the 
+
 ### Question 2
 
 A valid queue ID in Xinu is an integer less than the number of elements in ```queuetab[]``` and, generally, greater than 0. More specifically, a valid queue ID really should be greater than or equal to NPROC, to allow for sufficient entries in ```queuetab[]``` and to prevent accidentally accessing an arbitrary process instead of the head or tail of a particular queue.
