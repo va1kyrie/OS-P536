@@ -47,8 +47,11 @@ stacktab[3] = r3;
 stacktab[12] = lr;
 stacktab[13] = cpsr;
 stacktab[14] = sp;
-
 ```
+
+The advantage of this implementation is clear from the point of view of a debugging developer: the array is a much cleaner conceptual implementation in many ways as compared to the process stack. Putting elements back into their respective registers when resuming a process, while not necessarily _actually_ simpler than when using a stack, may be conceptually easier to understand. From the point of view of the operating system, moving this information off of the stack and into memory puts the information in a less potentially volatile location/more protected location than the process stack.
+
+On the other hand, this requires enough extra memory allocated per procent to hold all the register values and process information, instead of that information being stored on the already-allocated process stack. In this aspect, storing the process information on the process' stack has a distinct advantage.
 
 ### Question 2
 
