@@ -1,7 +1,7 @@
 ## Assignment 4
 
 ### Question 1
-Storing the processor state in the process table instead of on the process stack is an approach akin to Linux's (and other OS's) PCB structure - instead of saving process information inside that process' stack, the information is saved within the structure representing the process in the process table.
+Storing the processor state in the process table instead of on the process stack is an approach akin to Linux's (and other OS's) process control block structure - instead of saving process information inside that process' stack, the information is saved within the structure representing the process in the process table.
 
 With this implementation, the procent struct would look something more like this:
 
@@ -18,7 +18,36 @@ struct procent {		/* Entry in the process table		*/
   umsg32	prmsg;		/* Message sent to this process		*/
   bool8	prhasmsg;	/* Nonzero iff msg is valid		*/
   int16	prdesc[NDESC];	/* Device descriptors for process	*/
+  uint32 stacktab[14];
 };
+```
+where stacktab contains enough elements to store each process and hardware register, the coprocess status, and the stack pointer stack pointer.
+
+When ```ctsw()``` is called in this implementation, instead of pushing and popping values to and from process stacks, it will simply put them into and get them out of the indices of ```stacktab[]```:
+
+```C
+for (i registers):
+  stacktab[i] = register[i];
+end for;
+```
+```C
+for(i registers):
+  register[i] = stacktab[i];
+end for;
+```
+
+In practice, those for loops would likely be replaced by a series of statements for each index of ```stacktab[]```:
+
+```C
+stacktab[0] = r0;
+stacktab[1] = r1;
+stacktab[2] = r2;
+stacktab[3] = r3;
+...
+stacktab[12] = lr;
+stacktab[13] = cpsr;
+stacktab[14] = sp;
+
 ```
 
 ### Question 2
