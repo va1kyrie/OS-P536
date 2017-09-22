@@ -48,7 +48,8 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 	//printf("childpid == %d\n", childpid);
 	//pri16 chprio = resume(childpid);
 
-	printf("parent process: child prio is %d\n", chprio2);
+	printf("parent process: child prio is %d\n", chprio);
+	printf("parent process: child prio is %d\n", resume2(create(childtest, 1024, 35, "child2", 1, parentid)));
 
 	return 0;
 }
