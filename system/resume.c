@@ -26,7 +26,7 @@ pri16	resume(
 	}
 	//prio = prptr->prprio;		/* Record priority to return	*/
 	ready(pid);
-	prio = prptr->prprio;
 	restore(mask);
+	prio = prptr->prprio;
 	return prio;
 }
