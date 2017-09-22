@@ -14,8 +14,9 @@ process childtest(pid32 parentid){
 	}
 	printf("\n");
   //pri16 mychiprio = resume2(create(childtest, 1024, 40, "child2", 1, parentid));
-	suspend(mypid);
 	send(parentid, OK);
+	suspend(mypid);
+
 	resched();
 	printf("process %d is running again\n", mypid);
 	kill(mypid);
