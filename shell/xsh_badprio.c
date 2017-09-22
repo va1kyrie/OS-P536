@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-process printing(pid32 parentid){
+process childtest(pid32 parentid){
 	pid32 mypid = getpid();
 	printf("process %d has priority %d\n", mypid, getprio(mypid));
 	send(parentid, mypid);
@@ -29,7 +29,7 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 
 	pid32 parentid = getpid();
 
-	resume(create(printing, 1024, 20, "child", 1, parentid));
+	resume(create(childtest, 1024, 20, "child", 1, parentid));
 	pid32 childpid = receive();
 	pri16 chprio = resume(childpid);
 
