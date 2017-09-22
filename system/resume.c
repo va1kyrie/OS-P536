@@ -27,7 +27,7 @@ pri16	resume(
 	//prio = prptr->prprio;		/* Record priority to return	*/
 	ready(pid);
 	restore(mask);
-	prio = prptr->prprio;
-	printf("prio of %d is %d\n", pid, prio);
-	return prio;
+	//prio = prptr->prprio;
+	printf("prio of %d is %d\n", pid, prptr->prprio);
+	return prptr->prprio;
 }
