@@ -29,7 +29,8 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 
 	pid32 parentid = getpid();
 
-	resume(create(childtest, 1024, 20, "child", 1, parentid));
+	pri16 childprioinit = resume(create(childtest, 1024, 20, "child", 1, parentid));
+	printf("parent process: child prio is %d initially\n", childprioinit);
 	pid32 childpid = receive();
 	pri16 chprio = resume(childpid);
 
