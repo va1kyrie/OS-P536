@@ -20,7 +20,7 @@ process childtest(pid32 parentid){
 	//printf("process %d is running again\n", mypid);
 	chprio(mypid, 12);
 	kill(mypid);
-	resume(parentid);
+	resume2(parentid);
 	return 0;
 }
 
