@@ -6,7 +6,7 @@
  *  resume  -  Unsuspend a process, making it ready
  *------------------------------------------------------------------------
  */
-pri16	resume(
+pri16	resume2(
 	  pid32		pid		/* ID of process to unsuspend	*/
 	)
 {
