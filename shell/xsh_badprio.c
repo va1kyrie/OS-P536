@@ -10,6 +10,7 @@ process childtest(pid32 parentid){
 	printf("process %d has priority %d\n", mypid, getprio(mypid));
 	send(parentid, mypid);
 	suspend(mypid);
+	printf("process %d is running again\n", mypid);
 	return 0;
 }
 
