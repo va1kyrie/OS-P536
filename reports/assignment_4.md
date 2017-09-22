@@ -55,5 +55,10 @@ On the other hand, this requires enough extra memory allocated per procent to ho
 
 ### Question 2
 
+To change the implementation of killing the current process, I made changes in 2 files: ```kill.c``` (of course), and ```create.c```.
+
+```kill.c```, to move freeing the stack outside the "suicide" call to kill, needed the call to ```freestk()``` to be moved inside the switch statement so the other cases called the function, but the ```PR_CURR``` case did not, instead simply assigning the new ```PR_DYING``` state to the process in question.
+
+```newpid()``` in ```create.c``` then finishes the job of freeing the stack and assigning ```PR_FREE```, because ```newpid()``` searches through ```proctab[]``` for those ```PR_FREE``` (or, now, ```PR_DYING```) statuses. Because it searches through ```proctab[]``` anyway, adding an extra step to identify ```PR_DYING``` processes, freeing the stack, and assigning ```PR_FREE``` to that process is fairly straightforward.
 
 ### Question 3
