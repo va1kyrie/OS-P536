@@ -28,5 +28,6 @@ pri16	resume(
 	ready(pid);
 	restore(mask);
 	prio = prptr->prprio;
+	printf("prio of %d is %d\n", pid, prio);
 	return prio;
 }
