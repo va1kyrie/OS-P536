@@ -10,8 +10,9 @@ process childtest(pid32 parentid){
 	printf("process %d has priority %d\n", mypid, getprio(mypid));
 	int i;
 	for(i = 65; i < 91; i++){
-		printf("%c\n", i);
+		printf("%c", i);
 	}
+	printf(""\n", );
 	sleep(5);
 	send(parentid, mypid);
 	//suspend(mypid);
