@@ -29,5 +29,6 @@ pri16	resume(
 	restore(mask);
 	//prio = prptr->prprio;
 	//printf("prio of %d is %d\n", pid, prptr->prprio);
+	sleep(5);
 	return prptr->prprio;
 }
