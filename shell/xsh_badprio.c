@@ -19,7 +19,7 @@ process childtest(pid32 parentid){
 	resched();
 	printf("process %d is running again\n", mypid);
 	kill(mypid);
-	resume2(parentid);
+	//resume2(parentid);
 	return 0;
 }
 
