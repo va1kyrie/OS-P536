@@ -12,7 +12,7 @@ process childtest(pid32 parentid){
 	for(i = 65; i < 91; i++){
 		printf("%c", i);
 	}
-	printf("\n", );
+	printf("\n");
 	sleep(5);
 	send(parentid, mypid);
 	//suspend(mypid);
