@@ -16,11 +16,13 @@ pri16	resume2(
 
 	mask = disable();
 	if (isbadpid(pid)) {
+		printf("%d not good pid\n", pid);
 		restore(mask);
 		return (pri16)SYSERR;
 	}
 	prptr = &proctab[pid];
 	if (prptr->prstate != PR_SUSP) {
+		printf("%d not suspended\n", pid);
 		restore(mask);
 		return (pri16)SYSERR;
 	}
