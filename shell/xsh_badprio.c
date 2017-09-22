@@ -13,7 +13,7 @@ process childtest(pid32 parentid){
 		printf("%c", i);
 	}
 	printf("\n");
-  pri16 mychiprio = resume2(create(childtest, 1024, 39, "child2", 1, parentid));
+  //pri16 mychiprio = resume2(create(childtest, 1024, 39, "child2", 1, parentid));
 	sleep(5);
 	send(parentid, mypid);
 	//suspend(mypid);
