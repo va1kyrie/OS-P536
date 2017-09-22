@@ -17,6 +17,7 @@ process childtest(pid32 parentid){
 	send(parentid, mypid);
 	//suspend(mypid);
 	//printf("process %d is running again\n", mypid);
+	kill(mypid);
 	return 0;
 }
 
