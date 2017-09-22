@@ -18,7 +18,7 @@ process printing(pid32 parentid){
  * resume() may return a bad priority should it reference prptr-->prprio
  * after calling ready()
  */
-shellcmd xsh_hello(int nargs, char *args[]) {
+shellcmd xsh_badprio(int nargs, char *args[]) {
 
 	//check args
 	if(nargs > 1){
