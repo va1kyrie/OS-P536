@@ -87,3 +87,6 @@ shellcmd xsh_process_ring	(int, char *[]);
 
 //in file xsh_testresched2.c
 shellcmd xsh_testresched2 (int, char *[]);
+
+//in file xsh_badprio.c
+shellcmd xsh_badprio (int, char *[]);
