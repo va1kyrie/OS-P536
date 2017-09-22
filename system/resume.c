@@ -25,7 +25,9 @@ pri16	resume(
 		return (pri16)SYSERR;
 	}
 	prio = prptr->prprio;		/* Record priority to return	*/
+	printf("prio of process %d is %d\n", pid, prio);
 	ready(pid);
+	printf("prio of process %d is now %d\n", pid, prptr->prprio);
 	restore(mask);
 	return prio;
 }
