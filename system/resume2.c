@@ -22,7 +22,7 @@ pri16	resume2(
 	}
 	prptr = &proctab[pid];
 	if (prptr->prstate != PR_SUSP) {
-		printf("%d not suspended\n", pid);
+		//printf("%d not suspended\n", pid);
 		restore(mask);
 		return (pri16)SYSERR;
 	}
@@ -31,6 +31,6 @@ pri16	resume2(
 	restore(mask);
 	//sleep(5);
 	prio = prptr->prprio;
-	printf("prio of %d is %d\n", pid, prptr->prprio);
+	//printf("prio of %d is %d\n", pid, prptr->prprio);
 	return prptr->prprio;
 }
