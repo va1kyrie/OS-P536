@@ -13,12 +13,11 @@ process childtest(pid32 parentid){
 		printf("%c", i);
 	}
 	printf("\n");
-  //pri16 mychiprio = resume2(create(childtest, 1024, 39, "child2", 1, parentid));
-	sleep(5);
+  pri16 mychiprio = resume2(create(childtest, 1024, 40, "child2", 1, parentid));
+	resched();
 	send(parentid, mypid);
 	//suspend(mypid);
 	//printf("process %d is running again\n", mypid);
-	chprio(mypid, 12);
 	kill(mypid);
 	resume2(parentid);
 	return 0;
