@@ -29,7 +29,7 @@ shellcmd xsh_hello(int nargs, char *args[]) {
 
 	pid32 parentid = getpid();
 
-	resume(create(printing, 1024, 20, "child", 1, parentid);
+	resume(create(printing, 1024, 20, "child", 1, parentid));
 	pid32 childpid = receive();
 	pri16 chprio = resume(childpid);
 
