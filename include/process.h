@@ -3,7 +3,7 @@
 /* Maximum number of processes in the system */
 #ifndef NPROC
 #define	NPROC		8
-#endif	
+#endif
 
 #define NUM_PAGE_TABLE_ENTRIES 4096 /* 1 entry per 1MB, so this covers 4G address space */
 
@@ -17,6 +17,7 @@
 #define	PR_SUSP		5	/* Process is suspended			*/
 #define	PR_WAIT		6	/* Process is on semaphore queue	*/
 #define	PR_RECTIM	7	/* Process is receiving with timeout	*/
+#define PR_DYING	8	/* Process has run kill but is not completely dead */
 
 /* Miscellaneous process definitions */
 

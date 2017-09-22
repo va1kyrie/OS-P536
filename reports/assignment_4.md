@@ -55,5 +55,10 @@ On the other hand, this requires enough extra memory allocated per procent to ho
 
 ### Question 2
 
+Prompt: create new process state, PR_DYING, and deallocate the stack after kill is called on the process by the process.
+  - plan: define PR_DYING (done)
+  - find "whatever process searches the process table  for dying processes, free the stack, and move the entry to PR_FREE.
+
+  - idea: simple in kill.c (done already). what file searches proctable for dying processes?
 
 ### Question 3

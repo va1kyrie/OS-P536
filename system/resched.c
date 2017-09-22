@@ -50,7 +50,7 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
 	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
 
 	/* Old process returns here when resumed */
-	
+
 	return;
 }
 
