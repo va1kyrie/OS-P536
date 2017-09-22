@@ -30,5 +30,5 @@ pri16	resume2(
 	//sleep(5);
 	prio = prptr->prprio;
 	printf("prio of %d is %d\n", pid, prptr->prprio);
-	return prio;
+	return prptr->prprio;
 }
