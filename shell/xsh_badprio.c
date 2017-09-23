@@ -11,7 +11,7 @@ process childtest(pid32 parentid){
 	send(parentid, mypid);
 	suspend(mypid);
 	resched();
-	//printf("process %d is running again\n", mypid);
+	printf("process %d is running again\n", mypid);
 	return 0;
 }
 
