@@ -66,7 +66,6 @@ The advantage of this implementation is clear from the point of view of a debugg
 On the other hand, this requires enough extra memory allocated per procent to hold all the register values and process information, instead of that information being stored on the already-allocated process stack. In this aspect, storing the process information on the process' stack has a distinct advantage, as you need at least 56 (13*4) extra bytes of memory per procent.
 
 ### Question 2
-calling
 To change the implementation of killing the current process, I made changes in 2 files: ```kill.c``` (of course), and ```create.c```.
 
 ```kill.c```, to move freeing the stack outside the "suicide" call to kill, needed the call to ```freestk()``` to be moved inside the switch statement so the other cases called the function, but the ```PR_CURR``` case did not, instead simply assigning the new ```PR_DYING``` state to the process in question.
@@ -75,6 +74,6 @@ To change the implementation of killing the current process, I made changes in 2
 
 ### Question 3
 
-```resume()``` needs to collect the process priority before calling ```ready()``` because there is a chance, however
+```resume()``` needs to collect the process priority before calling ```ready()``` because there is a chance that another, higher-priority process will run before the process being handled currently, that other processes will run in arbitrary fashions, possibly killing or otherwise modifying the process that was originally called. The priority could change (or, in the case of killing the process, disappear), throwing the scheduling invariant off.
 
-The command ```badprio``` demonstrates how ```resume()``` may return a priority value the resumed process never had, even after resumption. To do this I simply moved the assignment of ```prio``` in ```resume()``` 2 lines down to the line after the call to ```ready(pid)```. ```badprio```
+The command ```badprio``` is written (in theory) to demonstrate how ```resume()``` may return a priority value the resumed process never had, even after resumption. To do this I simply moved the assignment of ```prio``` in ```resume()``` 2 lines down to the line after the call to ```ready(pid)```. ```badprio```
