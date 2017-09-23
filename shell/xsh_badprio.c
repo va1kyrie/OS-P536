@@ -24,20 +24,22 @@ process childtest(pid32 parentid){
 	return 0;
 }
 
-process childtest2(pid32 parentid){
+process childtest2(pid32 parentid, pid32 otherchild){
 	pid32 mypid = getpid();
 	printf("process %d has priority %d\n", mypid, getprio(mypid));
-	int i;
+	//int i;
 	// for(i = 65; i < 91; i++){
 	// 	printf("%c", i);
 	// }
 	//printf("\n");
-	pid32 chpid = create(childtest, 1024, 40, "childchild", 1, parentid);
-  pri16 mychiprio = resume2(chpid);
-	receive();
-	printf("child process: my child %d has priority %d\n", chpid, mychiprio);
-	chprio(chpid, 50);
-	resume2(chpid);
+	//pid32 chpid = create(childtest, 1024, 40, "childchild", 1, parentid);
+  //pri16 mychiprio = resume2(chpid);
+	//receive();
+	//printf("child process: my child %d has priority %d\n", chpid, mychiprio);
+	//chprio(chpid, 50);
+	//resume2(chpid);
+	kill(otherchild);
+	printf("otherchild dead\n");
 	send(parentid, OK);
 	//suspend(mypid);
 
@@ -64,11 +66,11 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 
 	pid32 parentid = getpid();
 
-	pid32 childpid = create(childtest, 1024, 45, "child", 1, parentid);
+	pid32 childpid = create(childtest, 1024, 35, "child", 1, parentid);
 	resched();
 	pid32 child2 = create(childtest2, 1024, 45, "child2", 1, parentid);
 	pri16 ch1 = resume2(childpid);
-	pri16 ch2 = resume2(child2);
+	//pri16 ch2 = resume2(child2);
 	resched();
 	//printf("parent process: child prio is %d initially\n", childprioinit);
 
