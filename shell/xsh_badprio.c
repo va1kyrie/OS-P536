@@ -15,10 +15,10 @@ process childtest(pid32 parentid){
 	printf("\n");
   //pri16 mychiprio = resume2(create(childtest, 1024, 40, "child2", 1, parentid));
 	send(parentid, OK);
-	//suspend(mypid);
+	suspend(mypid);
 
-	//resched();
-	//printf("process %d is running again\n", mypid);
+	resched();
+	printf("process %d is running again\n", mypid);
 	//kill(mypid);
 	//resume2(parentid);
 	return 0;
@@ -63,9 +63,9 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 	pid32 parentid = getpid();
 
 	pid32 childpid = create(childtest, 1024, 45, "child", 1, parentid);
-	pri16 ch1 = resume2(childpid);
 	resched();
 	pid32 child2 = create(childtest2, 1024, 35, "child2", 1, parentid);
+	pri16 ch1 = resume2(childpid);
 	pri16 ch2 = resume2(child2);
 	resched();
 	//printf("parent process: child prio is %d initially\n", childprioinit);
@@ -74,7 +74,7 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 	receive();
 
 	sleep(5);
-	//pid32 ch1 = resume2(childpid);
+	pid32 ch1 = resume2(childpid);
 	//pid32 ch2 = resume2(child2);
 	//printf("childpid == %d\n", childpid);
 	//pri16 chprio = resume(childpid);
