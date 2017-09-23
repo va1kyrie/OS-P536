@@ -35,7 +35,7 @@ process childtest2(pid32 parentid){
 	pid32 chpid = create(childtest, 1024, 40, "child2", 1, parentid);
   pri16 mychiprio = resume2(chpid);
 	receive();
-	printf("child process: my child %d has priority %d\n", mychiprio,chpid);
+	printf("child process: my child %d has priority %d\n", chpid, mychiprio);
 	send(parentid, OK);
 	//suspend(mypid);
 
