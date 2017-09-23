@@ -48,13 +48,25 @@ stacktab[12] = lr;
 stacktab[13] = cpsr;
 stacktab[14] = sp;
 ```
+and
+
+```C
+r0 = stacktab[0];
+r1 = stacktab[1];
+r2 = stacktab[2];
+r3 = stacktab[3];
+...
+lr = stacktab[12];
+cpsr = stacktab[13];
+sp = stacktab[14];
+```
 
 The advantage of this implementation is clear from the point of view of a debugging developer: the array is a much cleaner conceptual implementation in many ways as compared to the process stack. Putting elements back into their respective registers when resuming a process, while not necessarily _actually_ simpler than when using a stack, may be conceptually easier to understand. From the point of view of the operating system, moving this information off of the stack and into memory puts the information in a less potentially volatile location/more protected location than the process stack.
 
-On the other hand, this requires enough extra memory allocated per procent to hold all the register values and process information, instead of that information being stored on the already-allocated process stack. In this aspect, storing the process information on the process' stack has a distinct advantage.
+On the other hand, this requires enough extra memory allocated per procent to hold all the register values and process information, instead of that information being stored on the already-allocated process stack. In this aspect, storing the process information on the process' stack has a distinct advantage, as you need at least 56 (13*4) extra bytes of memory per procent.
 
 ### Question 2
-
+calling
 To change the implementation of killing the current process, I made changes in 2 files: ```kill.c``` (of course), and ```create.c```.
 
 ```kill.c```, to move freeing the stack outside the "suicide" call to kill, needed the call to ```freestk()``` to be moved inside the switch statement so the other cases called the function, but the ```PR_CURR``` case did not, instead simply assigning the new ```PR_DYING``` state to the process in question.
@@ -62,3 +74,7 @@ To change the implementation of killing the current process, I made changes in 2
 ```newpid()``` in ```create.c``` then finishes the job of freeing the stack and assigning ```PR_FREE```, because ```newpid()``` searches through ```proctab[]``` for those ```PR_FREE``` (or, now, ```PR_DYING```) statuses. Because it searches through ```proctab[]``` anyway, adding an extra step to identify ```PR_DYING``` processes, freeing the stack, and assigning ```PR_FREE``` to that process is fairly straightforward.
 
 ### Question 3
+
+```resume()``` needs to collect the process priority before calling ```ready()``` because there is a chance, however
+
+The command ```badprio``` demonstrates how ```resume()``` may return a priority value the resumed process never had, even after resumption. To do this I simply moved the assignment of ```prio``` in ```resume()``` 2 lines down to the line after the call to ```ready(pid)```. ```badprio```
