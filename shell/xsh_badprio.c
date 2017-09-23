@@ -68,16 +68,17 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 
 	pid32 childpid = create(childtest, 1024, 35, "child", 1, parentid);
 	pid32 child2 = create(childtest2, 1024, 45, "child2", 1, parentid);
-	pri16 ch2 = resume2(child2);
+	pri16 ch2 = resume(child2);
 	resched();
 	//printf("parent process: child prio is %d initially\n", childprioinit);
 
 	receive();
-	pri16 ch1 = resume2(childpid);
+	pri16 ch1 = resume(childpid);
+	resched2();
 	receive();
 
 	sleep(5);
-	ch1 = resume2(childpid);
+	ch1 = resume(childpid);
 	//pid32 ch2 = resume2(child2);
 	//printf("childpid == %d\n", childpid);
 	//pri16 chprio = resume(childpid);
