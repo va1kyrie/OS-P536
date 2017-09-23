@@ -1,36 +1,54 @@
-/* resume.c - resume */
+/* badprio - demonstrating the foibles of resume() */
+
 
 #include <xinu.h>
+#include <stdio.h>
+#include <string.h>
 
-/*------------------------------------------------------------------------
- *  resume  -  Unsuspend a process, making it ready
- *------------------------------------------------------------------------
+process childtest(pid32 parentid){
+	pid32 mypid = getpid();
+	printf("process %d has priority %d\n", mypid, getprio(mypid));
+	int i;
+	for(i = 65; i < 91; i++){
+		printf("%c", i);
+	}
+	printf("\n");
+	sleep(5);
+	send(parentid, mypid);
+	//suspend(mypid);
+	//printf("process %d is running again\n", mypid);
+	kill(mypid);
+	resume(parentid);
+	return 0;
+}
+
+/*
+ * xsh_badprio(int, char*): spawns a child process to demonstrate that
+ * resume() may return a bad priority should it reference prptr-->prprio
+ * after calling ready()
  */
-pri16	resume2(
-	  pid32		pid		/* ID of process to unsuspend	*/
-	)
-{
-	intmask	mask;			/* Saved interrupt mask		*/
-	struct	procent *prptr;		/* Ptr to process' table entry	*/
-	pri16	prio;			/* Priority to return		*/
+shellcmd xsh_badprio(int nargs, char *args[]) {
 
-	mask = disable();
-	if (isbadpid(pid)) {
-		printf("%d not good pid\n", pid);
-		restore(mask);
-		return (pri16)SYSERR;
+	//check args
+	if(nargs > 1){
+		//if there are too many arguments, return error and exit
+		fprintf(stderr, "%s: too many arguments\n", args[0]);
+		return 1;
 	}
-	prptr = &proctab[pid];
-	if (prptr->prstate != PR_SUSP) {
-		//printf("%d not suspended\n", pid);
-		restore(mask);
-		return (pri16)SYSERR;
-	}
-	//prio = prptr->prprio;		/* Record priority to return	*/
-	ready(pid);
-	restore(mask);
-	//sleep(5);
-	prio = prptr->prprio;
-	printf("prio of %d is %d\n", pid, prptr->prprio);
-	return prptr->prprio;
+
+	pid32 parentid = getpid();
+
+	pri16 chprio = resume(create(childtest, 1024, 22, "child", 1, parentid));
+	resched();
+	pri16 chprio2 = resume(create(childtest, 1024, 35, "child2", 1, parentid));
+	resched();
+	//printf("parent process: child prio is %d initially\n", childprioinit);
+	pid32 childpid = receive();
+	receive();
+	//printf("childpid == %d\n", childpid);
+	//pri16 chprio = resume(childpid);
+
+	printf("parent process: child prio is %d\n", chprio2);
+
+	return 0;
 }
