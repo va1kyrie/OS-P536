@@ -78,7 +78,7 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 	//receive();
 
 	sleep(5);
-	ch1 = resume(childpid);
+	pri16 ch1 = resume(childpid);
 	//receive();
 	//pid32 ch2 = resume2(child2);
 	//printf("childpid == %d\n", childpid);
