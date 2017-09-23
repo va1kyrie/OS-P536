@@ -8,17 +8,9 @@
 process childtest(pid32 parentid){
 	pid32 mypid = getpid();
 	printf("process %d has priority %d\n", mypid, getprio(mypid));
-	int i;
-	for(i = 65; i < 91; i++){
-		printf("%c", i);
-	}
-	printf("\n");
-	sleep(5);
 	send(parentid, mypid);
 	//suspend(mypid);
 	//printf("process %d is running again\n", mypid);
-	kill(mypid);
-	resume(parentid);
 	return 0;
 }
 
@@ -38,17 +30,13 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 
 	pid32 parentid = getpid();
 
-	pri16 chprio = resume2(create(childtest, 1024, 35, "child", 1, parentid));
-	resched();
-	pri16 chprio2 = resume2(create(childtest, 1024, 22, "child2", 1, parentid));
-	resched();
-	//printf("parent process: child prio is %d initially\n", childprioinit);
+	pri16 chpriot = resume(create(childtest, 1024, 20, "child", 1, parentid));
+	printf("parent process: child prio is %d initially\n", childprioinit);
 	pid32 childpid = receive();
-	receive();
 	//printf("childpid == %d\n", childpid);
 	//pri16 chprio = resume(childpid);
 
-	printf("parent process: child prio is %d\n", chprio2);
+	printf("parent process: child %d prio is %d\n", childpid, chprio);
 
 	return 0;
 }
