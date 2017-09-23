@@ -32,7 +32,7 @@ process childtest2(pid32 parentid){
 	// 	printf("%c", i);
 	// }
 	//printf("\n");
-	pid32 chpid = create(childtest, 1024, 40, "child2", 1, parentid);
+	pid32 chpid = create(childtest, 1024, 40, "childchild", 1, parentid);
   pri16 mychiprio = resume2(chpid);
 	receive();
 	printf("child process: my child %d has priority %d\n", chpid, mychiprio);
