@@ -49,7 +49,7 @@ struct platform platform;
  */
 
 void	nulluser()
-{	
+{
 	struct	memblk	*memptr;	/* Ptr to memory block		*/
 	uint32	free_mem;		/* Total amount of free memory	*/
 
@@ -125,9 +125,9 @@ static	void	sysinit()
 #ifdef ARM_BBB
 	initevec();
 #endif /* ARM_BBB */
-  
+
 	/* Initialize free memory list */
-	
+
 	meminit();
 
 	/* Initialize system variables */
@@ -150,7 +150,7 @@ static	void	sysinit()
 		prptr->prprio = 0;
 	}
 
-	/* Initialize the Null process entry */	
+	/* Initialize the Null process entry */
 
 	prptr = &proctab[NULLPROC];
 	prptr->prstate = PR_CURR;
@@ -160,7 +160,7 @@ static	void	sysinit()
 	prptr->prstklen = NULLSTK;
 	prptr->prstkptr = 0;
 	currpid = NULLPROC;
-	
+
 	/* Initialize semaphores */
 
 	for (i = 0; i < NSEM; i++) {
@@ -169,6 +169,8 @@ static	void	sysinit()
 		semptr->scount = 0;
 		semptr->squeue = newqueue();
 	}
+
+	/* initialize futures? */ 
 
 	/* Initialize buffer pools */
 
