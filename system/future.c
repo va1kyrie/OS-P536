@@ -1,5 +1,31 @@
 /* future.c - the implementations of the system calls for futures. */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <xinu.h>
+#include <future.h>
+
+//newfq() -- create new queue for futures
+// returns a pointer to the head of the new queue
+struct fentry *newfq(void) {
+  //TODO: IMPLEMENT
+
+  struct fentry head;
+  struct fentry tail;
+
+  //initialize head
+  head.prev = HEAD;
+  head.next = *tail;
+  head.thread = HEAD;
+
+  //initialize tail
+  tail.prev = *head;
+  tail.next = TAIL;
+  tail.thread = TAIL;
+
+  return *head;
+}
+
 
 // allocate a new future in EMPTY state with given mode. uses getmem()
 future_t* future_alloc(future_mode_t mode){
@@ -11,6 +37,12 @@ future_t* future_alloc(future_mode_t mode){
   if(mode == FUTURE_QUEUE){
     alloc->set_queue = newfq();
     alloc->get_queue = newfq();
+  }else if(mode == FUTURE_SHARED){
+    alloc->get_queue = newfq();
+    alloc->set_queue = NULL;
+  }else{
+    alloc->get_queue = NULL;
+    alloc->set_queue = NULL;
   }
 }
 

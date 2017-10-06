@@ -1,6 +1,9 @@
 #ifndef _FUTURE_H_
 #define _FUTURE_H_
 
+#define HEAD -10;
+#define TAIL -20;
+
 typedef enum {
   FUTURE_EMPTY,         //future is allocated
   FUTURE_WAITING,       //future on which a process is actively waiting (via future_get())
@@ -13,20 +16,19 @@ typedef enum {
   FUTURE_QUEUE          //many-to-many relationships. need to implement queue type
 } future_mode_t;
 
-typedef struct{
+struct fentry {
   struct fent *fnext;
   struct fent *fprev;
   pid32 thread;
-  struct future_t future;
-} fent; //need to continue this one
+}; //need to continue this one
 
 typedef struct {
   int value;            //value to be held in the future
   future_state_t state; //may be EMPTY, WAITING, or VALID
   future_mode_t mode;   //mode of opertaion
   pid32 pid;            //pid of thread waiting for value
-  yourtype set_queue;   //for the queue types
-  yourtype get_queue;   //need to implement!!!!
+  struct fentry *set_queue;   //for the queue types
+  struct fentry *get_queue;   //need to implement!!!!
 } future_t;
 
 /* Interface for the Futures system calls */
