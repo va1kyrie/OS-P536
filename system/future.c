@@ -35,10 +35,10 @@ future_t* future_alloc(future_mode_t mode){
   alloc->state = FUTURE_EMPTY;
   alloc->mode = mode;
   if(mode == FUTURE_QUEUE){
-    alloc->set_queue = newfq();
-    alloc->get_queue = newfq();
+    alloc->set_queue = newqueue();
+    alloc->get_queue = newqueue();
   }else if(mode == FUTURE_SHARED){
-    alloc->get_queue = newfq();
+    alloc->get_queue = newqueue();
     alloc->set_queue = NULL;
   }else{
     alloc->get_queue = NULL;
@@ -48,15 +48,15 @@ future_t* future_alloc(future_mode_t mode){
 
 //frees the future. uses freemem()
 syscall future_free(future_t*){
-
+  //TODO: implement this
 }
 
 //get the value of a future set by an operation and change the state of the future from VALID to EMPTY.
 syscall future_get(future_t*, int*){
-
+  //TODO: implement this
 }
 
 //sets value in a future and changes state from EMPTY to VALID.
 syscall future_set(future_t*, int){
-
+  //TODO: implement this
 }
