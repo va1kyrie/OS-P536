@@ -68,9 +68,17 @@ syscall future_get(future_t* future, int* val){
   if(future->state == FUTURE_EMPTY){
     future->state = FUTURE_WAITING;
     if(future->mode == FUTURE_SHARED){
-      //TODO: implement behavior of get when queues are involved
+      //TODO: implement
+
+      //1-to-many relationship
+
+      //conceptually the same as exclusive from this end i think actually -- still have to enqueue in the waiting thing.
     }else if(future->mode == FUTURE_QUEUE){
       //TODO: implement behavior when many-to-many
+
+      //if there is no thread in set_queue, enqueue self and wait
+
+      //if there is at least one thread in set_queue, then dequeue the first and make it ready. then enqeue self (to be dequeued by the setting thread in question)
     }
 
     //because we're waiting, caller has to block
@@ -108,7 +116,23 @@ syscall future_set(future_t* future, int val){
     }
   }else if(future->mode == FUTURE_SHARED){
     //TODO: IMPLEMENT
+
+    //1-many relationship.
+
+    //check if set already -- if so, throw error. (in exclusive mode too?)
+
+    //check if threads are in get_queue -- if they are, make all of them ready
   }else if(future->mode == FUTURE_QUEUE){
     //TODO: IMPLEMENT
+
+    //many-to-many relationship
+
+
+    //check get_queue for waiting threads. if there are, set value, resume first thread in get_queue.
+
+    //else enqueue self into set_queue and wait
   }
+
+  restore(mask);
+  return OK;
 }
