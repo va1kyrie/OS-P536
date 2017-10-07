@@ -82,9 +82,33 @@ syscall future_get(future_t* future, int* val){
   }else if(future->state == FUTURE_READY){
     *val = future->value;
   }
+
+  restore(mask);
+  return OK;
 }
 
 //sets value in a future and changes state from EMPTY to VALID.
-syscall future_set(future_t*, int){
+syscall future_set(future_t* future, int val){
   //TODO: implement this
+
+  intmask mask;
+  struct procent *prptr;
+  //pid32 waiting;
+  mask = disable();
+  //if the mode is exclusive (1-1) then just make sure the future is waiting or empty and set the val and change the state
+  //gotta remember to take the wait state off the process in the get_queue if it's waiting
+  if(future->mode == FUTURE_EXCLUSIVE){
+    if(future->state == FUTURE_EMPTY || future->state == FUTURE_WAITING){
+      //not convinced i need the empty check here, but for sanity's sake i'm keeping it in.
+      future->value = val;
+      future->state = FUTURE_READY;
+      if(!isempty(future->get_queue)){
+        ready(dequeue(future->get_queue));
+      }
+    }
+  }else if(future->mode == FUTURE_SHARED){
+    //TODO: IMPLEMENT
+  }else if(future->mode == FUTURE_QUEUE){
+    //TODO: IMPLEMENT
+  }
 }
