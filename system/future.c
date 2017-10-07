@@ -65,27 +65,26 @@ syscall future_get(future_t* future, int* val){
   struct procent *prptr;
   mask = disable();
 
+  if(future->state == FUTURE_WAITING && (future->mode == FUTURE_QUEUE || future->mode == FUTURE_SHARED){
+    //if the state is waiting and the state is either shared or queue
+
+    //if shared and waiting, just enqueue
+
+    //if queue and waiting, also enqueue?
+    //no, check set_queue first.
+  }
   if(future->state == FUTURE_EMPTY){
     future->state = FUTURE_WAITING;
-    if(future->mode == FUTURE_SHARED){
-      //TODO: implement
-
-      //1-to-many relationship
-
-      //conceptually the same as exclusive from this end i think actually -- still have to enqueue in the waiting thing.
-    }else if(future->mode == FUTURE_QUEUE){
-      //TODO: implement behavior when many-to-many
-
+    if(future->mode == FUTURE_QUEUE){
       //if there is no thread in set_queue, enqueue self and wait
-
       // in other words, do nothing here, just leave the if statement
-
 
       //if there is at least one thread in set_queue, then dequeue the first and make it ready. then enqeue self (to be dequeued by the setting thread in question)
       if(!isempty(set_queue)){
         ready(dequeue(future->set_queue));
       }
     }
+    //if the mode is EXCLUSIVE or SHARED, the behavior is the same if we're in EMPTY mode, with one exception: we need to also check if the state is WAITING. which we do above, because we set the state here.
 
     //because we're waiting, caller has to block
     prptr = &proctab[getpid()];
@@ -103,7 +102,6 @@ syscall future_get(future_t* future, int* val){
 
 //sets value in a future and changes state from EMPTY to VALID.
 syscall future_set(future_t* future, int val){
-  //TODO: implement this
 
   intmask mask;
   struct procent *prptr;
@@ -136,17 +134,13 @@ syscall future_set(future_t* future, int val){
         ready(dequeue(future->get_queue));
       }
     }
-
   }else if(future->mode == FUTURE_QUEUE){
-    //TODO: IMPLEMENT
-
     //many-to-many relationship
-
 
     //check get_queue for waiting threads. if there are, set value, resume first thread in get_queue.
     if(!empty(future->get_queue)){
       future->value = val;
-      future->state = FUTURE_READY
+      future->state = FUTURE_READY;
       ready(dequeue(future->get_queue));
     }else{
       //else enqueue self into set_queue and wait
