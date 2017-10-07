@@ -78,14 +78,20 @@ syscall future_get(future_t* future, int* val){
 
       //if there is no thread in set_queue, enqueue self and wait
 
+      // in other words, do nothing here, just leave the if statement
+
+
       //if there is at least one thread in set_queue, then dequeue the first and make it ready. then enqeue self (to be dequeued by the setting thread in question)
+      if(!isempty(set_queue)){
+        ready(dequeue(future->set_queue));
+      }
     }
 
     //because we're waiting, caller has to block
-    prptr = &proctab[currpid];
+    prptr = &proctab[getpid()];
     prptr->prstate = PR_WAIT;
     prptr->prfut = future;
-    enqueue(currpid, future->get_queue);
+    enqueue(getpid(), future->get_queue);
     resched();
   }else if(future->state == FUTURE_READY){
     *val = future->value;
@@ -115,13 +121,22 @@ syscall future_set(future_t* future, int val){
       }
     }
   }else if(future->mode == FUTURE_SHARED){
-    //TODO: IMPLEMENT
-
     //1-many relationship.
 
     //check if set already -- if so, throw error. (in exclusive mode too?)
+    if(future->state == FUTURE_READY){
+      return SYSERR;
+    }else if(future->state == FUTURE_EMPTY || future->state == FUTURE_WAITING){
+      //else set value
+      future->value = val;
+      future->state = FUTURE_READY;
 
-    //check if threads are in get_queue -- if they are, make all of them ready
+      //check if threads are in get_queue -- if they are, make all of them ready
+      while(!isempty(future->get_queue)){
+        ready(dequeue(future->get_queue));
+      }
+    }
+
   }else if(future->mode == FUTURE_QUEUE){
     //TODO: IMPLEMENT
 
@@ -129,8 +144,17 @@ syscall future_set(future_t* future, int val){
 
 
     //check get_queue for waiting threads. if there are, set value, resume first thread in get_queue.
-
-    //else enqueue self into set_queue and wait
+    if(!empty(future->get_queue)){
+      future->value = val;
+      future->state = FUTURE_READY
+      ready(dequeue(future->get_queue));
+    }else{
+      //else enqueue self into set_queue and wait
+      prptr = &proctab[getpid()];
+      prptr->prstate = PR_WAIT;
+      prptr->prfut = future;
+      enqueue(getpid(), future->set_queue);
+    }
   }
 
   restore(mask);
