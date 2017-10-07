@@ -3,7 +3,7 @@
 /* Maximum number of processes in the system */
 #ifndef NPROC
 #define	NPROC		8
-#endif	
+#endif
 
 #define NUM_PAGE_TABLE_ENTRIES 4096 /* 1 entry per 1MB, so this covers 4G address space */
 
@@ -49,6 +49,7 @@ struct procent {		/* Entry in the process table		*/
 	uint32	prstklen;	/* Stack length in bytes		*/
 	char	prname[PNMLEN];	/* Process name				*/
 	sid32	prsem;		/* Semaphore on which process waits	*/
+	future_t *prfut; //future on which process waits
 	pid32	prparent;	/* ID of the creating process		*/
 	umsg32	prmsg;		/* Message sent to this process		*/
 	bool8	prhasmsg;	/* Nonzero iff msg is valid		*/
