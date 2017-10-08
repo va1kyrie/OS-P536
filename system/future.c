@@ -70,20 +70,15 @@ syscall future_get(future_t* future, int* val){
   struct procent *prptr;
   mask = disable();
 
-  if(future->state == FUTURE_WAITING && (future->mode == FUTURE_QUEUE || future->mode == FUTURE_SHARED)){
-    //if the state is waiting and the state is either shared or queue
-
-    //if shared and waiting, just enqueue
-    if(future->mode == FUTURE_SHARED){
-      prptr = &proctab[getpid()];
-      prptr->prstate = PR_WAIT;
-      prptr->prfut = future;
-      enqueue(getpid(), future->get_queue);
-      resched();
-    }
-    //if queue and waiting, also enqueue?
-    //no, check set_queue first.
-    if(future->mode == FUTURE_QUEUE){
+  //if we're in shared mode and waiting, just enqueue
+  if(future->mode == FUTURE_SHARED && future->state == FUTURE_WAITING){
+    prptr = &proctab[getpid()];
+    prptr->prstate = PR_WAIT;
+    prptr->prfut = future;
+    enqueue(getpid(), future->get_queue);
+    resched();
+  }else if(future->mode == FUTURE_QUEUE && future->state == FUTURE_WAITING){
+      //else if the state is waiting and we're in queued mode
       if(!isempty(future->set_queue)){
         ready(dequeue(future->set_queue));
         resched();
@@ -95,23 +90,20 @@ syscall future_get(future_t* future, int* val){
         resched();
       }
     }
-  }
 
   if(future->state == FUTURE_EMPTY){
     //printf("we are in the empty if statement\n");
     future->state = FUTURE_WAITING;
     if(future->mode == FUTURE_QUEUE){
-      //if there is no thread in set_queue, enqueue self and wait
-      // in other words, do nothing here, just leave the if statement
-
       //if there is at least one thread in set_queue, then dequeue the first and make it ready. then enqeue self (to be dequeued by the setting thread in question)
       if(!isempty(future->set_queue)){
         ready(dequeue(future->set_queue));
       }
+      //if there is no thread in set_queue, enqueue self and wait -- in other words, do nothing here, just leave the if statement
     }
    //if the mode is EXCLUSIVE or SHARED, the behavior is the same if we're in EMPTY mode, with one exception: we need to also check if the state is WAITING. which we do above, because we set the state here.
 
-    //because we're waiting, caller has to block
+    //because we're now waiting, caller has to block
     prptr = &proctab[getpid()];
     prptr->prstate = PR_WAIT;
     prptr->prfut = future;
