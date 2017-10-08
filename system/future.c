@@ -41,7 +41,7 @@ future_t* future_alloc(future_mode_t mode){
     //if mode is one-to-many need only get queue
     //also if mode is 1-1 we only need the get_queue
     alloc->get_queue = newqueue();
-    alloc->set_queue = NULL; //assign empty indicating value instead of null?
+    alloc->set_queue = EMPTY; //assign empty indicating value instead of null?
   }
 
   return alloc;
@@ -50,14 +50,13 @@ future_t* future_alloc(future_mode_t mode){
 //frees the future. uses freemem()
 syscall future_free(future_t* future){
   //TODO: implement this
-  if(future->get_queue != NULL){
+  pid32 proc;
+  if(future->get_queue != EMPTY){
     while(!isempty(future->get_queue)){
-      dequeue(future->get_queue);
+      proc = dequeue(future->get_queue);
     }
 
-    queuehead(future->get_queue) = NULL;
-    queuetail(future->get_queue) = NULL;
-    future->get_queue = NULL;
+    future->get_queue = EMPTY;
   }
 
   freemem((char *) future, sizeof(future_t));
