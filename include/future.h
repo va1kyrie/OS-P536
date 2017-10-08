@@ -1,9 +1,6 @@
 #ifndef _FUTURE_H_
 #define _FUTURE_H_
 
-// #define HEAD -10
-// #define TAIL -20
-
 #ifndef NFUT
 #define NFUT 100
 #endif
@@ -40,5 +37,9 @@ future_t* future_alloc(future_mode_t mode);
 syscall future_free(future_t*);
 syscall future_get(future_t*, int*);
 syscall future_set(future_t*, int);
+
+//process interfaces
+uint future_prod(future_t*,int);
+uint future_cons(future_t*);
 
 #endif /* _FUTURE_H_ */
