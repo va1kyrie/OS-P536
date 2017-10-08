@@ -8,10 +8,45 @@
 process childtest(pid32 parentid){
 	pid32 mypid = getpid();
 	printf("process %d has priority %d\n", mypid, getprio(mypid));
-	send(parentid, mypid);
+	int i;
+	for(i = 65; i < 91; i++){
+		printf("%c", i);
+	}
+	printf("\n");
+  //pri16 mychiprio = resume2(create(childtest, 1024, 40, "child2", 1, parentid));
+	send(parentid, OK);
 	suspend(mypid);
+
 	resched();
 	printf("process %d is running again\n", mypid);
+	//kill(mypid);
+	//resume2(parentid);
+	return 0;
+}
+
+process childtest2(pid32 parentid, pid32 otherchild){
+	pid32 mypid = getpid();
+	printf("process %d has priority %d\n", mypid, getprio(mypid));
+	//int i;
+	// for(i = 65; i < 91; i++){
+	// 	printf("%c", i);
+	// }
+	//printf("\n");
+	//pid32 chpid = create(childtest, 1024, 40, "childchild", 1, parentid);
+  //pri16 mychiprio = resume2(chpid);
+	//receive();
+	//printf("child process: my child %d has priority %d\n", chpid, mychiprio);
+	//chprio(chpid, 50);
+	//resume2(chpid);
+	kill(otherchild);
+	printf("otherchild dead\n");
+	send(parentid, OK);
+	//suspend(mypid);
+
+	//resched();
+	//printf("process %d is running again\n", mypid);
+	//kill(mypid);
+	//resume2(parentid);
 	return 0;
 }
 
@@ -31,14 +66,29 @@ shellcmd xsh_badprio(int nargs, char *args[]) {
 
 	pid32 parentid = getpid();
 
-	pri16 childprioinit = resume(create(childtest, 1024, 20, "child", 1, parentid));
-	printf("parent process: child prio is %d initially\n", childprioinit);
-	pid32 childpid = receive();
-	//printf("childpid == %d\n", childpid);
-	sleep(2);
-	pri16 chprio = resume(childpid);
+	pid32 childpid = create(childtest, 1024, 35, "child", 1, parentid);
+	pid32 child2 = create(childtest2, 1024, 45, "child2", 1, parentid);
+	pri16 ch1 = resume(childpid);
+	pri16 ch2 = resume(child2);
+	resched();
+	//printf("parent process: child prio is %d initially\n", childprioinit);
 
-	printf("parent process: child %d prio is %d\n", childpid, chprio);
+	receive();
+	//pri16 ch1 = resume(childpid);
+	//resched2();
+	//receive();
+
+	sleep(5);
+  ch1 = resume(childpid);
+	//receive();
+	//pid32 ch2 = resume2(child2);
+	//printf("childpid == %d\n", childpid);
+	//pri16 chprio = resume(childpid);
+
+	printf("parent process: child %d prio is %d\n", childpid, ch1);
+	printf("parent process: child %d prio is %d\n", child2, ch2);
+
+	//printf("parent process: child prio is %d\n", resume2(create(childtest, 1024, 35, "child2", 1, parentid)));
 
 	return 0;
 }
