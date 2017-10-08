@@ -75,7 +75,7 @@ syscall future_get(future_t* future, int* val){
   struct procent *prptr;
   mask = disable();
 
-  if(future->state == FUTURE_WAITING && (future->mode == FUTURE_QUEUE || future->mode == FUTURE_SHARED){
+  if(future->state == FUTURE_WAITING && (future->mode == FUTURE_QUEUE || future->mode == FUTURE_SHARED)){
     //if the state is waiting and the state is either shared or queue
 
     //if shared and waiting, just enqueue
