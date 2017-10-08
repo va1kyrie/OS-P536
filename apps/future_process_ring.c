@@ -18,7 +18,7 @@ process future_process_ring(future_t** futs, int ind, int len, int ival, int mrn
     }
   }else{
     //else multiple children
-    while(last > 0 && rnd < mrnd){
+    while(last >= 0 && rnd < mrnd){
       printf("in the while loop round %d\n", rnd);
       future_get(futs[ind], &val);
       if(last != val && val >= 0){
