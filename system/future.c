@@ -72,7 +72,6 @@ syscall future_free(future_t* future){
 
 //get the value of a future set by an operation and change the state of the future from VALID to EMPTY.
 syscall future_get(future_t* future, int* val){
-  //TODO: implement this
   intmask mask;
   struct procent *prptr;
   mask = disable();
@@ -102,8 +101,7 @@ syscall future_get(future_t* future, int* val){
         resched();
       }
     }
-  }
-  if(future->state == FUTURE_EMPTY){
+  }else if(future->state == FUTURE_EMPTY){
     future->state = FUTURE_WAITING;
     if(future->mode == FUTURE_QUEUE){
       //if there is no thread in set_queue, enqueue self and wait
@@ -168,7 +166,7 @@ syscall future_set(future_t* future, int val){
     //many-to-many relationship
 
     //check get_queue for waiting threads. if there are, set value, resume first thread in get_queue.
-    if(!empty(future->get_queue)){
+    if(!isempty(future->get_queue)){
       future->value = val;
       future->state = FUTURE_READY;
       ready(dequeue(future->get_queue));
