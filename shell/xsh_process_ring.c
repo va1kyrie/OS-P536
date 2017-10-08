@@ -145,7 +145,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   }else if(i == FUT){
     //else if future mode chosen
     future_t* futs[p];
-    //future_t* done_fut = future_alloc(FUTURE_EXCLUSIVE);
+    future_t* done_fut = future_alloc(FUTURE_EXCLUSIVE);
     for(j = 0; j < p; j++){
       futs[j] = future_alloc(FUTURE_EXCLUSIVE);
     }
