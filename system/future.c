@@ -64,11 +64,16 @@ syscall future_free(future_t* future){
   return OK;
 }
 
-//get the value of a future set by an operation and change the state of the future from VALID to EMPTY.
+/* future_get(future_t*, val*) - get the value of a future set by an operation
+ * and change the state of the future from EMPTY to WAITING if necessary. If the mode is exclusive, it either gets the value that has already been set or sets the future's state to WAITING and enqueues itself in the get_queue, where it will be woken up by the setting thread. If the mode is SHARED, it acts in much the same manner. If the mode is QUEUE, it will check if there is a thread waiting in the set_queue; if there is, it will wake it up before */
 syscall future_get(future_t* future, int* val){
   intmask mask;
   struct procent *prptr;
   mask = disable();
+
+  if(future->state == FUTURE_READY){
+    *val = future->value;
+  }
 
   //if we're in shared mode and waiting, just enqueue
   if(future->mode == FUTURE_SHARED && future->state == FUTURE_WAITING){
@@ -77,7 +82,7 @@ syscall future_get(future_t* future, int* val){
     prptr->prfut = future;
     enqueue(getpid(), future->get_queue);
     resched();
-  }else if(future->mode == FUTURE_QUEUE && future->state == FUTURE_WAITING){
+  }else if(future->mode == FUTURE_QUEUE){
     //else if the state is waiting and we're in queued mode
     if(!isempty(future->set_queue)){
       ready(dequeue(future->set_queue));
@@ -110,18 +115,15 @@ syscall future_get(future_t* future, int* val){
     resched();
   }
 
-  //printf("outside the ready check\n");
-  //printf("future_get: exclusive state == %d\n", future->state);
-  if(future->state == FUTURE_READY){
-    *val = future->value;
-    //printf("value of val = %d\n", *val);
-  }
-
   restore(mask);
   return OK;
 }
 
-//sets value in a future and changes state from EMPTY to VALID.
+/* future_set(future_t*, int) - sets the value in a future and changes state
+ * from EMPTY to READY. If the mode is SHARED, it will wake up any and all
+ * threads in the get_queue. If the mode is QUEUE, it will wake up the first
+ * thread in get_queue. If there are no threads in the get_queue, then it will
+ * queue itself in the set_queue and wait to be woken up.*/
 syscall future_set(future_t* future, int val){
 
   intmask mask;
@@ -134,7 +136,6 @@ syscall future_set(future_t* future, int val){
     if(future->state == FUTURE_WAITING ||future->state == FUTURE_EMPTY){
       future->value = val;
       future->state = FUTURE_READY;
-      //printf("future_set: exclusive set to ready (state == %d)\n", future->state);
       if(!isempty(future->get_queue)){
         ready(dequeue(future->get_queue));
       }
