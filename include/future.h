@@ -14,7 +14,7 @@ typedef enum {
 typedef enum {
   FUTURE_EXCLUSIVE,     //max. of 2 threads may be involved. 1 sets, 1 gets.
   FUTURE_SHARED,        //1-to-many relationship. 1 set, many get.
-  FUTURE_QUEUE          //many-to-many relationships. need to implement queue type
+  FUTURE_QUEUE          //many-to-many relationships
 } future_mode_t;
 
 // struct fentry {
@@ -25,7 +25,7 @@ typedef enum {
 
 typedef struct future_t {
   int value;            //value to be held in the future
-  future_state_t state; //may be EMPTY, WAITING, or VALID
+  future_state_t state; //may be EMPTY, WAITING, or READY
   future_mode_t mode;   //mode of opertaion
   pid32 pid;            //pid of thread waiting for value
   qid16 set_queue;   //for the queue types

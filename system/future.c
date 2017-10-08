@@ -3,29 +3,8 @@
 #include <xinu.h>
 #include <future.h>
 
-// //newfq() -- create new queue for futures
-// // returns a pointer to the head of the new queue
-// struct fentry *newfq(void) {
-//   //TODO: IMPLEMENT
-//
-//   struct fentry head;
-//   struct fentry tail;
-//
-//   //initialize head
-//   head.prev = HEAD;
-//   head.next = &tail;
-//   head.thread = HEAD;
-//
-//   //initialize tail
-//   tail.prev = &head;
-//   tail.next = TAIL;
-//   tail.thread = TAIL;
-//
-//   return *head;
-// }
-
-
-// allocate a new future in EMPTY state with given mode. uses getmem()
+/* future_alloc(future_mode_t) - allocate a new
+ * future in EMPTY state with given mode. */
 future_t* future_alloc(future_mode_t mode){
   future_t *alloc = (future_t*) getmem(sizeof(future_t));
 
@@ -47,7 +26,7 @@ future_t* future_alloc(future_mode_t mode){
   return alloc;
 }
 
-//frees the future. uses freemem()
+/* future_free(future_t*) - frees the future.*/
 syscall future_free(future_t* future){
   //TODO: implement this
   pid32 proc;
@@ -65,7 +44,17 @@ syscall future_free(future_t* future){
 }
 
 /* future_get(future_t*, val*) - get the value of a future set by an operation
- * and change the state of the future from EMPTY to WAITING if necessary. If the mode is exclusive, it either gets the value that has already been set or sets the future's state to WAITING and enqueues itself in the get_queue, where it will be woken up by the setting thread. If the mode is SHARED, it acts in much the same manner. If the mode is QUEUE, it will check if there is a thread waiting in the set_queue; if there is, it will wake it up before */
+ * and change the state of the future from EMPTY
+ * to WAITING if necessary. If the mode is
+ * exclusive, it either gets the value that has
+ * already been set or sets the future's state to
+ * WAITING and enqueues itself in the get_queue,
+ * where it will be woken up by the setting
+ * thread. If the mode is SHARED, it acts in much
+ * the same manner. If the mode is QUEUE, it will
+ * check if there is a thread waiting in the
+ * set_queue; if there is, it will wake it up
+ * before queuing itself in the get_queue. */
 syscall future_get(future_t* future, int* val){
   intmask mask;
   struct procent *prptr;
@@ -79,7 +68,7 @@ syscall future_get(future_t* future, int* val){
     enqueue(getpid(), future->get_queue);
     resched();
   }else if(future->mode == FUTURE_QUEUE){
-    //else if the state is waiting and we're in queued mode
+    //else if we're in queued mode
     if(!isempty(future->set_queue)){
       ready(dequeue(future->set_queue));
     }
