@@ -119,6 +119,7 @@ syscall future_get(future_t* future, int* val){
     resched();
   }
 
+  printf("outside the ready check\n");
   if(future->state == FUTURE_READY){
     *val = future->value;
     printf("value of val = %d\n", *val);
