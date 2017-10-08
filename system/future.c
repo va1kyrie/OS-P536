@@ -41,21 +41,33 @@ future_t* future_alloc(future_mode_t mode){
     alloc->get_queue = newqueue();
   }else if(mode == FUTURE_SHARED || mode == FUTURE_EXCLUSIVE){
     //if mode is one-to-many need only get queue
+    //also if mode is 1-1 we only need the get_queue
     alloc->get_queue = newqueue();
     alloc->set_queue = NULL; //assign empty indicating value instead of null?
-  }else{
-    //else it's a one-to-one relationship and we don't need the queues
-
-    //NO WE NEED THE GET QUEUE
-    //combine the two
-    // alloc->get_queue = newqueue();
-    // alloc->set_queue = NULL;
   }
+
+  return alloc;
 }
 
 //frees the future. uses freemem()
-syscall future_free(future_t*){
+syscall future_free(future_t* future){
   //TODO: implement this
+  uint32 bytes = getmem(sizeof(future_t));
+
+  if(future->get_queue != NULL){
+    while(!isempty(future->get_queue)){
+      dequeue(future->get_queue);
+
+    }
+
+    queuehead(future->get_queue) = NULL;
+    queuetail(future->get_queue) = NULL;
+    future->get_queue = NULL;
+  }
+
+  free_mem(future, bytes);
+
+  return OK;
 }
 
 //get the value of a future set by an operation and change the state of the future from VALID to EMPTY.
