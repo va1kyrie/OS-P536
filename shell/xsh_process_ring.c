@@ -158,15 +158,16 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     j=0;
     int done = 0;
     while(j<p){
+      printf("future %d done\n", j);
       future_get(done_fut, &done);
       if(done == 10){
         j++;
       }
     }
-    // for(j=0; j<p;j++){
-    //   future_free(futs[j]);
-    // }
-    // future_free(done_fut);
+    for(j=0; j<p;j++){
+      future_free(futs[j]);
+    }
+    future_free(done_fut);
 
   }
   finish = gettime(&end);
