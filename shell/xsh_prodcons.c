@@ -24,6 +24,7 @@ shellcmd xsh_prodcons(int nargs, char *args[])
         * f_queue;
 
 f_exclusive = future_alloc(FUTURE_EXCLUSIVE);
+printf("exclusive state == %d\n", f_exclusive->state);
 f_shared    = future_alloc(FUTURE_SHARED);
 f_queue     = future_alloc(FUTURE_QUEUE);
 
