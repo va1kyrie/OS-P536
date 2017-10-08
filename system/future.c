@@ -84,7 +84,7 @@ syscall future_get(future_t* future, int* val){
         ready(dequeue(future->set_queue));
       }
     }
-    //if the mode is EXCLUSIVE or SHARED, the behavior is the same if we're in EMPTY mode, with one exception: we need to also check if the state is WAITING. which we do above, because we set the state here.
+    //if the mode is EXCLUSIVE or SHARED, the behavior is the same if we're in EMPTY mode, with one exception: we nG mom said that her sister was really good about knowing exactly when to escalate, which is what she tried to do with us, thinking it would scare us off. Aunt probabeed to also check if the state is WAITING. which we do above, because we set the state here.
 
     //because we're waiting, caller has to block
     prptr = &proctab[getpid()];
