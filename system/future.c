@@ -51,8 +51,6 @@ future_t* future_alloc(future_mode_t mode){
 //frees the future. uses freemem()
 syscall future_free(future_t* future){
   //TODO: implement this
-  uint32 bytes = getmem(sizeof(future_t));
-
   if(future->get_queue != NULL){
     while(!isempty(future->get_queue)){
       dequeue(future->get_queue);
@@ -63,7 +61,7 @@ syscall future_free(future_t* future){
     future->get_queue = NULL;
   }
 
-  freemem(future, bytes);
+  freemem((char *) future, sizeof(future_t));
 
   return OK;
 }
@@ -106,7 +104,7 @@ syscall future_get(future_t* future, int* val){
       // in other words, do nothing here, just leave the if statement
 
       //if there is at least one thread in set_queue, then dequeue the first and make it ready. then enqeue self (to be dequeued by the setting thread in question)
-      if(!isempty(set_queue)){
+      if(!isempty(future->set_queue)){
         ready(dequeue(future->set_queue));
       }
     }
