@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <process_ring.h>
+#include <future.h>
 //#include "process_ring.c"
 
 shellcmd xsh_process_ring(int nargs, char *args[]){
@@ -67,6 +68,8 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         i = POLL;
       }else if(0 == strncmp("sync", args[j+1], 5)){
         i = SYNC;
+      }else if(0 == strncmp("future", args[j+1], 5)){
+        i = FUT;
       }else{
         fprintf(stderr, "%s: -i expected either 'sync' or 'poll'\n", args[0]);
         return SHELL_ERROR;
@@ -139,6 +142,32 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       semdelete(sems[j]);
     }
     semdelete(done_sem);
+  }else if(i == FUT){
+    //else if future mode chosen
+    future_t* futs[p];
+    future_t* done_fut = future_alloc(FUTURE_QUEUE);
+    for(j = 0; j < p; j++){
+      futs[j] = future_alloc(FUTURE_SHARED);
+    }
+    future_set(futs[0], val);
+
+    for(j = 0; j < p; j++){
+      name[5] = sprintf(str, "%d", j);
+      resume(create(future_process_ring, 1024, 20, name, 7, &futs, j, p, val, r, &done_fut));
+    }
+    j=0;
+    int done = 0;
+    while(j<p){
+      future_get(done_fut, &done);
+      if(done == 10){
+        j++;
+      }
+    }
+    for(j=0; j<p;j++){
+      future_free(futs[j]);
+    }
+    future_free(done_fut);
+
   }
   finish = gettime(&end);
   if (finish == SYSERR) {

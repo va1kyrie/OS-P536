@@ -42,4 +42,6 @@ syscall future_set(future_t*, int);
 uint future_prod(future_t*,int);
 uint future_cons(future_t*);
 
+process future_process_ring(future_t**, int, int, int, int, future_t*);
+
 #endif /* _FUTURE_H_ */

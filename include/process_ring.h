@@ -15,3 +15,4 @@ process process_ring_sync(sid32*, int, int, volatile int*, int, sid32);
 #define DEFAULTR 3  // default roll number
 #define POLL 80     // indicate poll mode
 #define SYNC 83     // indiacate sync mode
+#define FUT  86     //indicate future mode
