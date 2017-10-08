@@ -1,6 +1,5 @@
 /* future.c - the implementations of the system calls for futures. */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <xinu.h>
 #include <future.h>
