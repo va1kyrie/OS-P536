@@ -172,7 +172,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
     for(j=0; j<p;j++){
       future_free(futs[j]);
     }
-    future_free(done_fut);
+    //future_free(done_fut);
 
   }
   finish = gettime(&end);
