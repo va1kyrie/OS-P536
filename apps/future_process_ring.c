@@ -34,6 +34,6 @@ process future_process_ring(future_t** futs, int ind, int len, int ival, int mrn
     }
   }
   //if we're out here, we're done
-  future_set(done_fut,10);
+  //future_set(done_fut,10);
   return 0;
 }
