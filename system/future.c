@@ -82,7 +82,7 @@ syscall future_get(future_t* future, int* val){
     prptr->prfut = future;
     enqueue(getpid(), future->get_queue);
     resched();
-  }else if(future->mode == FUTURE_QUEUE){
+  }else if(future->mode == FUTURE_QUEUE && future->state == FUTURE_WAITING){
     //else if the state is waiting and we're in queued mode
     if(!isempty(future->set_queue)){
       ready(dequeue(future->set_queue));
