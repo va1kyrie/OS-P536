@@ -132,7 +132,7 @@ syscall future_set(future_t* future, int val){
   //if the mode is exclusive (1-1) then just make sure the future is waiting or empty and set the val and change the state
   //gotta remember to take the wait state off the process in the get_queue if it's waiting
   if(future->mode == FUTURE_EXCLUSIVE){
-    if(future->state == FUTURE_EMPTY || future->state == FUTURE_WAITING){
+    if(future->state == FUTURE_WAITING){
       //not convinced i need the empty check here, but for sanity's sake i'm keeping it in.
       future->value = val;
       future->state = FUTURE_READY;
@@ -146,7 +146,7 @@ syscall future_set(future_t* future, int val){
     //check if set already -- if so, throw error. (in exclusive mode too?)
     if(future->state == FUTURE_READY){
       return SYSERR;
-    }else if(future->state == FUTURE_EMPTY || future->state == FUTURE_WAITING){
+    }else if(future->state == FUTURE_WAITING){
       //else set value
       future->value = val;
       future->state = FUTURE_READY;
