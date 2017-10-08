@@ -90,3 +90,9 @@ shellcmd xsh_testresched2 (int, char *[]);
 
 //in file xsh_badprio.c
 shellcmd xsh_badprio (int, char *[]);
+
+extern shellcmd xsh_create_example(int, char *[]);
+extern shellcmd xsh_polling_example(int, char *[]);
+extern shellcmd xsh_semaphore_example(int, char *[]);
+extern shellcmd xsh_message_example(int, char *[]);
+extern shellcmd xsh_arg_example(int, char*[]);
