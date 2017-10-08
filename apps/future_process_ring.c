@@ -26,7 +26,7 @@ process future_process_ring(future_t** futs, int ind, int len, int ival, int mrn
         if(ind+1 == len){
           future_set(futs[0], val-1);
         }else{
-          future_set(futs[ind+1], val-11);
+          future_set(futs[ind+1], val-1);
         }
         last = val;
         rnd++;
