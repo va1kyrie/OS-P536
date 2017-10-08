@@ -151,6 +151,7 @@ syscall future_set(future_t* future, int val){
 
     //check if set already -- if so, throw error. (in exclusive mode too?)
     if(future->state == FUTURE_READY){
+      restore(mask);
       return SYSERR;
     }else if(future->state == FUTURE_WAITING){
       //else set value
