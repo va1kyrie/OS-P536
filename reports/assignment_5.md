@@ -9,7 +9,7 @@ The exclusive implementation of futures uses the ```get_queue``` to wait on the 
 
 If the getting thread accesses the future first, however, it sets the state to ```FUTURE_WAITING``` and queues itself in the ```get_queue``` for the future in question. The setting thread will then set the value and state per usual and dequeue and wake up the getting thread before exiting, allowing the getting thread to access the value.
 
-Conceptually, this can function a lot like the polling from Assignment 3 (and I actually use it in ```process_ring``` in much the same way.)
+Conceptually, this can function a lot like the polling from Assignment 3 (and I actually use it in ```process_ring``` in much the same way).
 
 #### FUTURE_SHARED
 Conceptually, this implementation is very similar to the exclusive mode. The main difference is that multiple threads may get the value from the future, meaning that multiple threads may queue themselves up in the ```get_queue```. If the state is ```FUTURE_EMPTY``` when a getting thread tries to access it, the thread sets the state to ```FUTURE_WAITING``` and enqueues itself. If the state is already ```FUTURE_WAITING```, the getting thread simply enqueues itself and waits.
