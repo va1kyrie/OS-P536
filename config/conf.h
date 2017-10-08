@@ -58,6 +58,7 @@ extern	struct	dentry	devtab[]; /* one entry per device */
 
 #define	NPROC	     100	/* number of user processes		*/
 #define	NSEM	     100	/* number of semaphores			*/
+#define NFUT			 100	//number of futures
 #define	IRQBASE	     32		/* base ivec for IRQ0			*/
 #define	IRQ_TIMER    4
 #define CLKFREQ      200000000	/* 200 MHz clock			*/

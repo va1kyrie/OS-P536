@@ -4,7 +4,9 @@
 // #define HEAD -10
 // #define TAIL -20
 
+#ifndef NFUT
 #define NFUT 100
+#endif
 
 typedef enum {
   FUTURE_EMPTY,         //future is allocated
