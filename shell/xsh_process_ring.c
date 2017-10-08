@@ -156,14 +156,19 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
       resume(create(future_process_ring, 1024, 20, name, 7, &futs, j, p, val, r, &done_fut));
     }
     j=0;
-    int done = 0;
-    while(j<p){
-      printf("future %d done\n", j);
-      future_get(done_fut, &done);
-      if(done == 10){
-        j++;
-      }
-    }
+    int done = 10;
+    // while(j<p){
+    //   printf("future %d done\n", j);
+    //   future_get(done_fut, &done);
+    //   if(done == 10){
+    //     j++;
+    //   }
+    // }
+
+    future_get(futs[p-1],&done);
+    while(done > 0){
+      future_get(futs[p-1],&done);
+    } //wait for future to reach 0
     for(j=0; j<p;j++){
       future_free(futs[j]);
     }
