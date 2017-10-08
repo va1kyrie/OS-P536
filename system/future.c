@@ -122,13 +122,11 @@ syscall future_set(future_t* future, int val){
   //if the mode is exclusive (1-1) then just make sure the future is waiting or empty and set the val and change the state
   //gotta remember to take the wait state off the process in the get_queue if it's waiting
   if(future->mode == FUTURE_EXCLUSIVE){
-    if(future->state == FUTURE_WAITING ||future->state == FUTURE_EMPTY){
       future->value = val;
       future->state = FUTURE_READY;
       if(!isempty(future->get_queue)){
         ready(dequeue(future->get_queue));
       }
-    }
   }
 
   if(future->mode == FUTURE_SHARED){
