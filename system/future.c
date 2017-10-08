@@ -95,7 +95,9 @@ syscall future_get(future_t* future, int* val){
         resched();
       }
     }
-  }else if(future->state == FUTURE_EMPTY){
+  }
+
+  if(future->state == FUTURE_EMPTY){
     printf("we are in the empty if statement\n");
     future->state = FUTURE_WAITING;
     if(future->mode == FUTURE_QUEUE){
@@ -115,7 +117,9 @@ syscall future_get(future_t* future, int* val){
     prptr->prfut = future;
     enqueue(getpid(), future->get_queue);
     resched();
-  }else if(future->state == FUTURE_READY){
+  }
+
+  if(future->state == FUTURE_READY){
     *val = future->value;
     printf("value of val = %d\n", *val);
   }
