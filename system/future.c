@@ -81,9 +81,27 @@ syscall future_get(future_t* future, int* val){
     //if the state is waiting and the state is either shared or queue
 
     //if shared and waiting, just enqueue
-
+    if(future->mode == FUTURE_SHARED){
+      prptr = &proctab[getpid()];
+      prptr->prstate = PR_WAIT;
+      prptr->prfut = future;
+      enqueue(getpid(), future->get_queue);
+      resched();
+    }
     //if queue and waiting, also enqueue?
     //no, check set_queue first.
+    if(future->mode == FUTURE_QUEUE){
+      if(!isempty(future->set_queue)){
+        ready(dequeue(future->set_queue));
+        resched();
+      }else{
+        prptr = &proctab[getpid()];
+        prptr->prstate = PR_WAIT;
+        prptr->prfut = future;
+        enqueue(getpid(), future->get_queue);
+        resched();
+      }
+    }
   }
   if(future->state == FUTURE_EMPTY){
     future->state = FUTURE_WAITING;
