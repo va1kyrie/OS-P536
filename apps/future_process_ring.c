@@ -4,7 +4,7 @@
 #include <process_ring.h>
 #include <future.h>
 
-process future_process_ring(future_t** futs, int ind, int len, int ival, int mrnd, future_t* done_fut){
+process future_process_ring(future_t** futs, int ind, int len, int ival, int mrnd){
   int status;
   int val;
   int last = ival+1; //starter val to indicate circle hasn't started.
@@ -19,7 +19,7 @@ process future_process_ring(future_t** futs, int ind, int len, int ival, int mrn
   }else{
     //else multiple children
     while(last >= 0 && rnd < mrnd){
-      printf("in the while loop round %d\n", rnd);
+    //  printf("in the while loop round %d\n", rnd);
       future_get(futs[ind], &val);
       if(last != val && val >= 0){
         printf("Ring Element %d : Round %d : Value %d\n", ind, rnd, val);

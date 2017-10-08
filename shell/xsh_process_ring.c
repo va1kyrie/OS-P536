@@ -145,7 +145,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
   }else if(i == FUT){
     //else if future mode chosen
     future_t* futs[p];
-    future_t* done_fut = future_alloc(FUTURE_EXCLUSIVE);
+    //future_t* done_fut = future_alloc(FUTURE_EXCLUSIVE);
     for(j = 0; j < p; j++){
       futs[j] = future_alloc(FUTURE_EXCLUSIVE);
     }
@@ -153,7 +153,7 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
 
     for(j = 0; j < p; j++){
       name[5] = sprintf(str, "%d", j);
-      resume(create(future_process_ring, 1024, 20, name, 7, &futs, j, p, val, r, &done_fut));
+      resume(create(future_process_ring, 1024, 20, name, 7, &futs, j, p, val, r));
     }
     j=0;
     int done = 10;
