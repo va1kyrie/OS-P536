@@ -64,7 +64,7 @@ syscall future_free(future_t* future){
     future->get_queue = NULL;
   }
 
-  free_mem(future, bytes);
+  freemem(future, bytes);
 
   return OK;
 }
