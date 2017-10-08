@@ -148,7 +148,9 @@ syscall future_set(future_t* future, int val){
         ready(dequeue(future->get_queue));
       }
     }
-  }else if(future->mode == FUTURE_SHARED){
+  }
+
+  if(future->mode == FUTURE_SHARED){
     //1-many relationship.
 
     //check if set already -- if so, throw error. (in exclusive mode too?)
@@ -165,7 +167,9 @@ syscall future_set(future_t* future, int val){
         ready(dequeue(future->get_queue));
       }
     }
-  }else if(future->mode == FUTURE_QUEUE){
+  }
+
+  if(future->mode == FUTURE_QUEUE){
     //many-to-many relationship
 
     //check get_queue for waiting threads. if there are, set value, resume first thread in get_queue.
