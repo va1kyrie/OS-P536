@@ -57,7 +57,6 @@ syscall future_free(future_t* future){
   if(future->get_queue != NULL){
     while(!isempty(future->get_queue)){
       dequeue(future->get_queue);
-
     }
 
     queuehead(future->get_queue) = NULL;
