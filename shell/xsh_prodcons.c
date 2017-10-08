@@ -29,8 +29,8 @@ f_shared    = future_alloc(FUTURE_SHARED);
 f_queue     = future_alloc(FUTURE_QUEUE);
 
 // Test FUTURE_EXCLUSIVE
-resume( create(future_cons, 1024, 20, "fcons1", 1, f_exclusive) );
-resume( create(future_prod, 1024, 20, "fprod1", 2, f_exclusive, 1) );
+resume(create(future_cons, 1024, 20, "fcons1", 1, f_exclusive));
+resume(create(future_prod, 1024, 20, "fprod1", 2, f_exclusive, 1));
 
 // // Test FUTURE_SHARED
 // resume( create(future_cons, 1024, 20, "fcons2", 1, f_shared) );
@@ -49,8 +49,5 @@ resume( create(future_prod, 1024, 20, "fprod1", 2, f_exclusive, 1) );
 // resume( create(future_prod, 1024, 20, "fprod5", 2, f_queue, 5) );
 // resume( create(future_prod, 1024, 20, "fprod6", 2, f_queue, 6) );
 
-future_free(f_exclusive);
-future_free(f_shared);
-future_free(f_queue);
   return (0);
 }
