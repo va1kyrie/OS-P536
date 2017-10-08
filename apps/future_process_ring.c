@@ -16,7 +16,6 @@ process future_process_ring(future_t** futs, int ind, int len, int ival, int mrn
       printf("Ring Element %d : Round %d : Value : %d\n", ind, rnd, j);
       rnd++;
     }
-    pol[ind] = 0;
   }else{
     //else multiple children
     while(last > 0 && rnd < mrnd){
