@@ -15,4 +15,4 @@ Conceptually, this implementation is very similar to the exclusive mode. The mai
 The setting thread operates the same as in the exclusive mode, but when it sets the value, if the ```get_queue``` is nonempty, the setting thread dequeues and readies each thread in the queue, instead of just the one.
 
 #### FUTURE_QUEUE
-This implementation is the most unique of the three. There may be many of both getting and setting threads, so both ```future_get``` and ```future_set``` must check the opposite queue before exiting. The getting thread, if the state is ```FUTURE_WAITING```
+This implementation is the most unique of the three. There may be many of both getting and setting threads, so both ```future_get``` and ```future_set``` must check the opposite queue before exiting. The getting thread, if the state is ```FUTURE_WAITING``` and the ```set_queue``` is nonempty, we

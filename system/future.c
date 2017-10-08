@@ -78,18 +78,17 @@ syscall future_get(future_t* future, int* val){
     enqueue(getpid(), future->get_queue);
     resched();
   }else if(future->mode == FUTURE_QUEUE && future->state == FUTURE_WAITING){
-      //else if the state is waiting and we're in queued mode
-      if(!isempty(future->set_queue)){
-        ready(dequeue(future->set_queue));
-        resched();
-      }else{
-        prptr = &proctab[getpid()];
-        prptr->prstate = PR_WAIT;
-        prptr->prfut = future;
-        enqueue(getpid(), future->get_queue);
-        resched();
-      }
+    //else if the state is waiting and we're in queued mode
+    if(!isempty(future->set_queue)){
+      ready(dequeue(future->set_queue));
     }
+    prptr = &proctab[getpid()];
+    prptr->prstate = PR_WAIT;
+    prptr->prfut = future;
+    enqueue(getpid(), future->get_queue);
+    resched();
+
+  }
 
   if(future->state == FUTURE_EMPTY){
     //printf("we are in the empty if statement\n");
