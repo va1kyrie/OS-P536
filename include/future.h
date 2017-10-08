@@ -24,7 +24,7 @@ typedef enum {
 //   pid32 thread;
 // }; //need to continue this one
 
-typedef struct {
+typedef struct future_t {
   int value;            //value to be held in the future
   future_state_t state; //may be EMPTY, WAITING, or VALID
   future_mode_t mode;   //mode of opertaion
