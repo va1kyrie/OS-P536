@@ -119,11 +119,11 @@ syscall future_get(future_t* future, int* val){
     resched();
   }
 
-  //printf("outside the ready check\n");
-  //printf("future_get: exclusive state == %d\n", future->state);
+  printf("outside the ready check\n");
+  printf("future_get: exclusive state == %d\n", future->state);
   if(future->state == FUTURE_READY){
     *val = future->value;
-    //printf("value of val = %d\n", *val);
+    printf("value of val = %d\n", *val);
   }
 
   restore(mask);
@@ -143,7 +143,7 @@ syscall future_set(future_t* future, int val){
     if(future->state == FUTURE_WAITING ||future->state == FUTURE_EMPTY){
       future->value = val;
       future->state = FUTURE_READY;
-      //printf("future_set: exclusive set to ready (state == %d)\n", future->state);
+      printf("future_set: exclusive set to ready (state == %d)\n", future->state);
       if(!isempty(future->get_queue)){
         ready(dequeue(future->get_queue));
       }
