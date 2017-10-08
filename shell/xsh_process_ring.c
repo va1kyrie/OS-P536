@@ -163,10 +163,10 @@ shellcmd xsh_process_ring(int nargs, char *args[]){
         j++;
       }
     }
-    for(j=0; j<p;j++){
-      future_free(futs[j]);
-    }
-    future_free(done_fut);
+    // for(j=0; j<p;j++){
+    //   future_free(futs[j]);
+    // }
+    // future_free(done_fut);
 
   }
   finish = gettime(&end);
