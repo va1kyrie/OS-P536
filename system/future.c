@@ -71,10 +71,6 @@ syscall future_get(future_t* future, int* val){
   struct procent *prptr;
   mask = disable();
 
-  if(future->state == FUTURE_READY){
-    *val = future->value;
-  }
-
   //if we're in shared mode and waiting, just enqueue
   if(future->mode == FUTURE_SHARED && future->state == FUTURE_WAITING){
     prptr = &proctab[getpid()];
@@ -82,7 +78,7 @@ syscall future_get(future_t* future, int* val){
     prptr->prfut = future;
     enqueue(getpid(), future->get_queue);
     resched();
-  }else if(future->mode == FUTURE_QUEUE && future->state == FUTURE_WAITING){
+  }else if(future->mode == FUTURE_QUEUE){
     //else if the state is waiting and we're in queued mode
     if(!isempty(future->set_queue)){
       ready(dequeue(future->set_queue));
@@ -113,6 +109,10 @@ syscall future_get(future_t* future, int* val){
     prptr->prfut = future;
     enqueue(getpid(), future->get_queue);
     resched();
+  }
+
+  if(future->state == FUTURE_READY){
+    *val = future->value;
   }
 
   restore(mask);
