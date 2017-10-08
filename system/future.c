@@ -116,6 +116,7 @@ syscall future_get(future_t* future, int* val){
     resched();
   }else if(future->state == FUTURE_READY){
     *val = future->value;
+    printf("value of val = %d\n", *val);
   }
 
   restore(mask);
