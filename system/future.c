@@ -120,6 +120,7 @@ syscall future_get(future_t* future, int* val){
   }
 
   printf("outside the ready check\n");
+  printf("future_get: exclusive state == %d\n", future->state);
   if(future->state == FUTURE_READY){
     *val = future->value;
     printf("value of val = %d\n", *val);
@@ -140,9 +141,9 @@ syscall future_set(future_t* future, int val){
   //gotta remember to take the wait state off the process in the get_queue if it's waiting
   if(future->mode == FUTURE_EXCLUSIVE){
     if(future->state == FUTURE_WAITING){
-      //not convinced i need the empty check here, but for sanity's sake i'm keeping it in.
       future->value = val;
       future->state = FUTURE_READY;
+      printf("future_set: exclusive set to ready (state == %d)\n", future->state);
       if(!isempty(future->get_queue)){
         ready(dequeue(future->get_queue));
       }
