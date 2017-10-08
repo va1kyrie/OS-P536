@@ -96,7 +96,7 @@ syscall future_get(future_t* future, int* val){
       }
     }
   }else if(future->state == FUTURE_EMPTY){
-    printf("we are in the empty if statement\n", );
+    printf("we are in the empty if statement\n");
     future->state = FUTURE_WAITING;
     if(future->mode == FUTURE_QUEUE){
       //if there is no thread in set_queue, enqueue self and wait
