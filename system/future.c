@@ -134,7 +134,7 @@ syscall future_set(future_t* future, int val){
     if(future->state == FUTURE_READY){
       restore(mask);
       return SYSERR;
-    }else if(future->state == FUTURE_WAITING){
+    }else if(future->state == FUTURE_WAITING || future->state == FUTURE_EMPTY){
       //else set value
       future->value = val;
       future->state = FUTURE_READY;
@@ -160,6 +160,7 @@ syscall future_set(future_t* future, int val){
       prptr->prstate = PR_WAIT;
       prptr->prfut = future;
       enqueue(getpid(), future->set_queue);
+      resched();
     }
   }
 
