@@ -150,11 +150,7 @@ syscall future_set(future_t* future, int val){
     //many-to-many relationship
 
     //check get_queue for waiting threads. if there are, set value, resume first thread in get_queue.
-    if(!isempty(future->get_queue)){
-      future->value = val;
-      future->state = FUTURE_READY;
-      ready(dequeue(future->get_queue));
-    }else{
+    if(isempty(future->get_queue)){
       //else enqueue self into set_queue and wait
       prptr = &proctab[getpid()];
       prptr->prstate = PR_WAIT;
@@ -162,6 +158,9 @@ syscall future_set(future_t* future, int val){
       enqueue(getpid(), future->set_queue);
       resched();
     }
+      future->value = val;
+      future->state = FUTURE_READY;
+      ready(dequeue(future->get_queue));
   }
 
   restore(mask);
