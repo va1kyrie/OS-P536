@@ -28,11 +28,9 @@ future_t* future_alloc(future_mode_t mode){
 
 /* future_free(future_t*) - frees the future.*/
 syscall future_free(future_t* future){
-  //TODO: implement this
-  pid32 proc;
   if(future->get_queue != EMPTY){
     while(!isempty(future->get_queue)){
-      proc = dequeue(future->get_queue);
+      ready(dequeue(future->get_queue));
     }
 
     future->get_queue = EMPTY;
