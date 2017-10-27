@@ -5,7 +5,7 @@
 #include <string.h>
 
 
-#if FS
+#ifdef FS
 #include <fs.h>
 
 static struct fsystem fsd;
@@ -214,6 +214,31 @@ void fs_printfreemask(void) {
     }
   }
   printf("\n");
+}
+
+
+int fs_open(char *filename, int flags) {
+  return SYSERR;
+}
+
+int fs_close(int fd) {
+  return SYSERR;
+}
+
+int fs_create(char *filename, int mode) {
+  return SYSERR;
+}
+
+int fs_seek(int fd, int offset) {
+  return SYSERR;
+}
+
+int fs_read(int fd, void *buf, int nbytes) {
+  return SYSERR;
+}
+
+int fs_write(int fd, void *buf, int nbytes) {
+  return SYSERR;
 }
 
 #endif /* FS */

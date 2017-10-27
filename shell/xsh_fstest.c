@@ -5,7 +5,7 @@
 #include <fs.h>
 #define SIZE 1200
 
-void testbitmask(void);
+// void fs_testbitmask(void);
 
 /**
  * @ingroup shell
@@ -15,8 +15,7 @@ void testbitmask(void);
  * @param args   array of arguments
  * @return OK for success, SYSERR for syntax error
  */
- shellcmd xsh_fstest(int nargs, char *args[])
-{
+shellcmd xsh_fstest(int nargs, char *args[]) {
     int rval;
     int fd, i, j;
     char *buf1, *buf2;
@@ -109,8 +108,7 @@ clean_up:
     return OK;
 }
 
-void
-testbitmask(void) {
+void fs_testbitmask(void) {
 
     fs_setmaskbit(31); fs_setmaskbit(95); fs_setmaskbit(159);fs_setmaskbit(223);
     fs_setmaskbit(287); fs_setmaskbit(351); fs_setmaskbit(415);fs_setmaskbit(479);
@@ -131,5 +129,4 @@ testbitmask(void) {
     fs_clearmaskbit(353); fs_clearmaskbit(352);
 
     fs_printfreemask();
-
 }

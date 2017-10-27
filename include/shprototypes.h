@@ -99,3 +99,5 @@ extern shellcmd xsh_arg_example(int, char*[]);
 
 //prodcons
 extern shellcmd xsh_prodcons(int, char*[]);
+
+extern shellcmd xsh_fstest(int nargs, char *args[]);
