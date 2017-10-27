@@ -55,7 +55,7 @@ lfl:
 		-r lflread	-g lflgetc	-p lflputc
 		-w lflwrite	-s lflseek	-n lflcontrol
 		-intr ionull
-		
+
 /* type of namespace device */
 nam:
 	on top
@@ -96,7 +96,7 @@ uart:
 
    /* Define a ram disk device */
    RAM0 is ram on mem
- 
+
    /* Define the local file system master device (one per system) */
 
    LFILESYS is lfs on ram
@@ -109,12 +109,12 @@ uart:
    LFILE3 is lfl on lfs
    LFILE4 is lfl on lfs
    LFILE5 is lfl on lfs
-	
+
    SERIAL0   is uart     on HARDWARE csr 0x101F1000 irq 12
 
    /* Loopback device  */
    LOOP0     is loopback on LOOPBACK
-	
+
 %%
 
 /* Configuration and Size Constants */
@@ -124,5 +124,6 @@ uart:
 #define	IRQBASE	     32		/* base ivec for IRQ0			*/
 #define	IRQ_TIMER    4
 #define CLKFREQ      200000000	/* 200 MHz clock			*/
+#define FS 						1		/assignment 6 file system
 
 #define	LF_DISK_DEV	RAM0
