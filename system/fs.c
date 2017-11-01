@@ -22,17 +22,13 @@ char block_cache[512];
 #define RT_BLK 2
 
 #define NUM_FD 16
-struct filetable oft[NUM_FD];
+struct filetable oft[NUM_FD]; //open file table
 int next_open_fd = 0;
 
 
 #define INODES_PER_BLOCK (fsd.blocksz / sizeof(struct inode))
 #define NUM_INODE_BLOCKS (( (fsd.ninodes % INODES_PER_BLOCK) == 0) ? fsd.ninodes / INODES_PER_BLOCK : (fsd.ninodes / INODES_PER_BLOCK) + 1)
 #define FIRST_INODE_BLOCK 2
-
-int fs_fileblock_to_diskblock(int dev, int fd, int fileblock);
-
-/* YOUR CODE GOES HERE */
 
 int fs_fileblock_to_diskblock(int dev, int fd, int fileblock) {
   int diskblock;
@@ -221,6 +217,15 @@ int fs_open(char *filename, int flags) {
   //check filename
   //if file doesn't exist, create it
   //else open - what does that entail??
+
+  //check flags; if not O_RDWR, O_RDONLY, or O_WRONLY, return error.
+  if(flags != O_RDWR || flags != O_RDONLY || flags != O_WRONLY){
+    fprintf(stderr, "Incorrect flags given\n");
+    return SYSERR;
+  }
+
+  //check filename against names of files in directory
+
   return SYSERR;
 }
 
