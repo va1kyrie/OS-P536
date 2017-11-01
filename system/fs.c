@@ -215,6 +215,8 @@ void fs_printfreemask(void) {
 
 int fs_open(char *filename, int flags) {
 
+  int oftin = -1;
+
 
   //check flags; if not O_RDWR, O_RDONLY, or O_WRONLY, return error.
   if(flags != O_RDWR || flags != O_RDONLY || flags != O_WRONLY){
@@ -223,14 +225,45 @@ int fs_open(char *filename, int flags) {
   }
 
   //check filename against names of files in directory
-  int i;
-  for(i=0; i<fsd.root_dir.numentries; i++){
-    if(strcmp(fsd.root_dir.entry[i].name, *filename) == 0){
-      //open the file cos we've found it
+  int i = 0;
+  int j = 0;
+  while(i<fsd.root_dir.numentries && strcmp(fsd.root_dir.entry[i].name, filename) != 0){
+      //do nothing
+      i++;
+  }
+
+  //check i to see if file exists
+  //if it doesn't, for now, just return an error
+  if(i >= fsd.root_dir.numentries){
+    fprintf(stderr, "File %s not found\n", filename);
+    return SYSERR;
+  }
+
+  //else the file does exist
+  //first check if file already open
+  while(j<NUM_FD && oft[j].in.id != fsd.root_dir.entry[i].inode_num){
+    j++;
+  }
+
+  //if the file is in the open table, check its state
+  if(oft[j].in.id == fsd.root_dir.entry[i].inode_num){
+    if(oft[j].state == FSTATE_OPEN){
+      //if the file's open, return an error
+      fprintf(stderr, "File %s already open\n", filename);
+      return SYSERR;
+    }else if(oft[j].state == FSTATE_CLOSED){
+      oftin = j;
     }
   }
-  //if we're out here, file doesn't exist
-  // create it
+
+  //if open file table full, return error
+  if(oftin == -1){
+    fprintf(stderr, "Open file table full; could not open file\n");
+    return SYSERR;
+  }
+
+  //now we get to opening the file
+  //crap
 
   return SYSERR;
 }
