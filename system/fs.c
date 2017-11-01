@@ -218,6 +218,9 @@ void fs_printfreemask(void) {
 
 
 int fs_open(char *filename, int flags) {
+  //check filename
+  //if file doesn't exist, create it
+  //else open - what does that entail??
   return SYSERR;
 }
 
@@ -226,14 +229,21 @@ int fs_close(int fd) {
 }
 
 int fs_create(char *filename, int mode) {
+  //create file with filename in given mode
+  //what does the mode do??
+  //check filename -- if it exists, return an error
+  //check flags are valid??
+  //create directory entries and structures
   return SYSERR;
 }
 
 int fs_seek(int fd, int offset) {
+  //search in file by offest (move offset bytes back)
   return SYSERR;
 }
 
 int fs_read(int fd, void *buf, int nbytes) {
+  //read nbytes bytes through file at fd to the buffer pointed to by *buf
   return SYSERR;
 }
 
