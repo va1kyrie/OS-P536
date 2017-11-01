@@ -234,6 +234,8 @@ int fs_create(char *filename, int mode) {
   //check filename -- if it exists, return an error
   //check flags are valid??
   //create directory entries and structures
+
+  //returns the file index of the file.
   return SYSERR;
 }
 
@@ -248,6 +250,7 @@ int fs_read(int fd, void *buf, int nbytes) {
 }
 
 int fs_write(int fd, void *buf, int nbytes) {
+  //write nbytes from *buf to the file at index fd.
   return SYSERR;
 }
 
