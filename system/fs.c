@@ -214,9 +214,7 @@ void fs_printfreemask(void) {
 
 
 int fs_open(char *filename, int flags) {
-  //check filename
-  //if file doesn't exist, create it
-  //else open - what does that entail??
+
 
   //check flags; if not O_RDWR, O_RDONLY, or O_WRONLY, return error.
   if(flags != O_RDWR || flags != O_RDONLY || flags != O_WRONLY){
@@ -225,6 +223,14 @@ int fs_open(char *filename, int flags) {
   }
 
   //check filename against names of files in directory
+  int i;
+  for(i=0; i<fsd.root_dir.numentries; i++){
+    if(strcmp(fsd.root_dir.entry[i].name, *filename) == 0){
+      //open the file cos we've found it
+    }
+  }
+  //if we're out here, file doesn't exist
+  // create it
 
   return SYSERR;
 }
