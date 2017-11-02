@@ -216,6 +216,8 @@ void fs_printfreemask(void) {
 int fs_open(char *filename, int flags) {
 
   int oftin = -1;
+  int status = -10;
+  struct inode node;
 
 
   //check flags; if not O_RDWR, O_RDONLY, or O_WRONLY, return error.
@@ -242,6 +244,10 @@ int fs_open(char *filename, int flags) {
   //else the file does exist
   //first check if file already open
   while(j<NUM_FD && oft[j].in.id != fsd.root_dir.entry[i].inode_num){
+    //if it's an empty entry in the table
+    if(oft[j].state == FSTATE_CLOSED && oftin == -1){
+      oftin = j;
+    }
     j++;
   }
 
@@ -263,7 +269,14 @@ int fs_open(char *filename, int flags) {
   }
 
   //now we get to opening the file
-  //crap
+  //ok so the file is really the inode << that's where the data is (or will be)
+  //so get the inode
+  status = fs_get_inode_by_num(0, fsd.root_dir.entry[i].inode_num, &node
+  if(status) == SYSERR){
+    fprintf(stderr, "Error retrieving inode block; could not open file\n");
+    return SYSERR;
+  }
+  //and return... the id???
 
   return SYSERR;
 }
