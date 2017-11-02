@@ -294,11 +294,26 @@ int fs_close(int fd) {
 int fs_create(char *filename, int mode) {
   //create file with filename in given mode
   //what does the mode do??
+  //if mode is anything but O_CREAT return an error
+  if(mode != O_CREAT){
+    fprintf(stderr, "Incorrect mode input given\n");
+    return SYSERR;
+  }
   //check filename -- if it exists, return an error
-  //check flags are valid??
+  int i;
+  for(i=0;i<fsd.root_dir.numentries;i++){
+    if(strcmp(fsd.root_dir.entry[i].name, filename) == 0){
+      fprintf(stderr, "File already exists\n");
+      return SYSERR;
+    }
+  }
+
+  //get block bitmask for new file
+
   //create directory entries and structures
 
-  //returns the file index of the file.
+  //returns the file index of the file?
+  //yes. yes it does.
   return SYSERR;
 }
 
