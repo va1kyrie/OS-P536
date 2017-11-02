@@ -294,6 +294,8 @@ int fs_close(int fd) {
 int fs_create(char *filename, int mode) {
   //create file with filename in given mode
   //what does the mode do??
+
+  int index = -1;
   //if mode is anything but O_CREAT return an error
   if(mode != O_CREAT){
     fprintf(stderr, "Incorrect mode input given\n");
@@ -319,11 +321,20 @@ int fs_create(char *filename, int mode) {
 
 int fs_seek(int fd, int offset) {
   //search in file by offest (move offset bytes back)
+
+  //find file
+  //open file
+  //move pointer back/forward by offset
+  //check that offset+pointerplace is valid (within the file)
   return SYSERR;
 }
 
 int fs_read(int fd, void *buf, int nbytes) {
   //read nbytes bytes through file at fd to the buffer pointed to by *buf
+
+  //find file
+  //open file
+  //read file
   return SYSERR;
 }
 
