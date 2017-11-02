@@ -276,9 +276,15 @@ int fs_open(char *filename, int flags) {
     fprintf(stderr, "Error retrieving inode block; could not open file\n");
     return SYSERR;
   }
-  //and return... the id???
+  //and return... the id??? the pointer to the node???
 
-  return SYSERR;
+  //make open file table entry and return the index
+  oft[oftin].state = FSTATE_OPEN;
+  oft[oftin].fileptr = 0;
+  oft[oftin].de = &fsd.root_dir.entry[i];
+  oft[oftin].in = node;
+
+  return oftin;
 }
 
 int fs_close(int fd) {
