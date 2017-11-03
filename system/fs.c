@@ -451,14 +451,16 @@ int fs_read(int fd, void *buf, int nbytes) {
   printf("blocksread = %d\n", blocksread);
 
   //find starting block
-  int ind = oft[fd].fileptr / MDEV_BLOCK_SIZE;
+  //int ind = oft[fd].fileptr / MDEV_BLOCK_SIZE;
+
+  int ind = 1;
 
   int blind;
   int status = -1;
   int bytesr = 0;
   int tmp = 0;
 
-  while(ind < blocksread){
+  while(ind <= blocksread){
     printf("ind = %d \n", ind);
     blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
     printf("blind = %d\n",blind);
