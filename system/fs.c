@@ -458,7 +458,8 @@ int fs_read(int fd, void *buf, int nbytes) {
   int blind;
   int status = -1;
   int bytesr = 0;
-  int tmp = 0;
+  //int tmp = 0;
+  char *tmp="";
 
   while(ind <= blocksread){
     printf("ind = %d \n", ind);
@@ -471,10 +472,8 @@ int fs_read(int fd, void *buf, int nbytes) {
       return SYSERR;
     }
 
-    printf("tmp = %d\n",tmp);
-    strncpy((buf+tmp), block_cache, MDEV_BLOCK_SIZE);
-    tmp = strlen(block_cache);
-    bytesr += tmp;
+    strncat(buf, block_cache, MDEV_BLOCK_SIZE);
+    bytesr += strlen(block_cache);
 
     printf("bytesr = %d \n", bytesr);
 
