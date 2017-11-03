@@ -372,6 +372,7 @@ int fs_seek(int fd, int offset) {
   if(oft[fd].fileptr+offset < 0){
     fprintf(stderr, "File pointer may not point before the start of the file\n");
     return SYSERR;
+  }
 
   //oh jeez how do you check the size of the file??? i don't think you can
   //well that is a huge bug but i'm not fixing it right now
