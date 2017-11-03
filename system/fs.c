@@ -461,6 +461,7 @@ int fs_read(int fd, void *buf, int nbytes) {
   while(ind < blocksread){
     printf("ind = %d \n", ind);
     blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
+    printf("blind = %d\n",blind);
     memset(block_cache, NULL, MDEV_BLOCK_SIZE+1);
     status = bs_bread(0, oft[fd].in.blocks[ind], blind, block_cache, MDEV_BLOCK_SIZE-blind);
     if(status == SYSERR){
