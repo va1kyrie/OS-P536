@@ -444,8 +444,11 @@ int fs_read(int fd, void *buf, int nbytes) {
   int blocksread = (nbytes + oft[fd].fileptr) / MDEV_BLOCK_SIZE;
 
   if((nbytes + oft[fd].fileptr) % MDEV_BLOCK_SIZE != 0){
+    printf("we getting in here?\n");
     blocksread++;
   }
+
+  printf("blocksread = %d\n", blocksread);
 
   //find starting block
   int ind = oft[fd].fileptr / MDEV_BLOCK_SIZE;
