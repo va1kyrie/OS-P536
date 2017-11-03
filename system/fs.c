@@ -467,6 +467,8 @@ int fs_read(int fd, void *buf, int nbytes) {
     tmp = strlen(block_cache);
     bytesr += tmp;
 
+    printf("bytesr = %d \n", bytesr);
+
     ind++;
   }
 
