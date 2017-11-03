@@ -313,6 +313,7 @@ int fs_create(char *filename, int mode) {
 
   int index = -1;
   int status = -1;
+  struct inode node;
   //if mode is anything but O_CREAT return an error
   if(mode != O_CREAT){
     fprintf(stderr, "Incorrect mode input given\n");
@@ -336,16 +337,22 @@ int fs_create(char *filename, int mode) {
 
   //else get an inode
 
-  status = fs_get_inode_by_num(0, fsd.root_dir.entry[i].inode_num, &node
-  if(status) == SYSERR){
+  status = fs_get_inode_by_num(0, fsd.inodes_used+1, &node
+  if(status) == SYSERR){ 
     fprintf(stderr, "Error retrieving inode block; could not open file\n");
     return SYSERR;
   }
 
-  //get block for new file
-  //check bitmask
+  //increment inodes_used if status passed
+  fsd.inodes_used++;
 
   //create directory entries and structures
+  fsd.root_dir.numentries++;
+  fsd.root_dir.entry[fsd.root_dir.numentries-1].inode_num = fsd.inodes_used;
+  fsd.root_dir.entry[fas.root_dir.numentries-1].name = filename;
+
+  //now openfiletable entry
+
 
   //returns the file index of the file?
   //yes. yes it does.
