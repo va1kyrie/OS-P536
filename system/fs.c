@@ -272,7 +272,7 @@ int fs_open(char *filename, int flags) {
   //ok so the file is really the inode << that's where the data is (or will be)
   //so get the inode
   status = fs_get_inode_by_num(0, fsd.root_dir.entry[i].inode_num, &node
-  if(status) == SYSERR){
+  if(status == SYSERR){
     fprintf(stderr, "Error retrieving inode block; could not open file\n");
     return SYSERR;
   }
@@ -299,7 +299,7 @@ int fs_close(int fd) {
     oft[fd].state = FSTATE_CLOSED;
     oft[fd].fileptr = 0;
     return OK;
-  }else if(oft[fd]state == FSTATE_CLOSED){
+  }else if(oft[fd].state == FSTATE_CLOSED){
     //else if the file is closed just exit
     return OK;
   }
@@ -416,7 +416,7 @@ int fs_read(int fd, void *buf, int nbytes) {
   char *filename = oft[fd].de.name;
 
   //open file
-  if(oft[fd].state != FD_OPEN){
+  if(oft[fd].state != FSTATE_OPEN){
     fprintf(stderr, "fs_read: File not open or not available\n");
     return SYSERR;
   }
