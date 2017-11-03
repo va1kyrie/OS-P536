@@ -85,6 +85,7 @@ shellcmd xsh_fstest(int nargs, char *args[]) {
     //read the file
     rval = fs_read(fd, buf2, rval);
     buf2[rval] = '\0';
+    printf("after read rval = %d\n", rval);
 
     if(rval == 0)
     {
