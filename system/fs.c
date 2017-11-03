@@ -349,11 +349,15 @@ int fs_create(char *filename, int mode) {
   //create directory entries and structures
   fsd.root_dir.numentries++;
   fsd.root_dir.entry[fsd.root_dir.numentries-1].inode_num = fsd.inodes_used;
-  fsd.root_dir.entry[fas.root_dir.numentries-1].name = filename;
+  fsd.root_dir.entry[fsd.root_dir.numentries-1].name = filename;
 
   //now openfiletable entry
   //this is just opening the file i think
   index = fs_open(filename, O_RDWR);
+
+  //get the inode stuff set up
+  oft[index].in.type = INODE_TYPE_FILE;
+  oft[index].in.device = 0;
 
   //returns the file index of the file?
   //yes. yes it does.
@@ -419,6 +423,8 @@ int fs_read(int fd, void *buf, int nbytes) {
 
 int fs_write(int fd, void *buf, int nbytes) {
   //write nbytes from *buf to the file at index fd.
+
+  //same as read but with O_WRONLY flag
   return SYSERR;
 }
 
