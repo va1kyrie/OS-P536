@@ -337,7 +337,7 @@ int fs_create(char *filename, int mode) {
 
   //else get an inode
 
-  status = fs_get_inode_by_num(0, fsd.inodes_used+1, &node
+  status = fs_get_inode_by_num(0, fsd.inodes_used+1, &node);
   if(status) == SYSERR){
     fprintf(stderr, "Error retrieving inode block; could not open file\n");
     return SYSERR;
