@@ -397,8 +397,10 @@ int fs_seek(int fd, int offset) {
   //oh jeez how do you check the size of the file??? i don't think you can
   //well that is a huge bug but i'm not fixing it right now
 
+  printf("original fileptr = %d \n", oft[fd].fileptr);
   //move pointer back/forward by offset
   oft[fd].fileptr += offset;
+  printf("new fileptr = %d \n", oft[fd].fileptr);
 
   //return the new file pointer
 
