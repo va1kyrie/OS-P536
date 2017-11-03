@@ -41,6 +41,7 @@ struct filetable {
   int fileptr;
   struct dirent *de;
   struct inode in;
+  int size;
 };
 
 /*Struct to store directory entry*/

@@ -365,6 +365,7 @@ int fs_create(char *filename, int mode) {
   //get the inode stuff set up
   oft[index].in.type = INODE_TYPE_FILE;
   oft[index].in.device = 0;
+  oft[index].size = 0; //size is 0 initially cos it's empty
 
   //returns the file index of the file?
   //yes. yes it does.
@@ -441,6 +442,11 @@ int fs_read(int fd, void *buf, int nbytes) {
   }
   //read file
   //get blocks to read
+
+  if(oft[fd].size < oft[fd].fileptr + nbytes){
+    fprintf(stderr, "Cannot read past end of file\n");
+    return SYSERR;
+  }
   int blocksread = (nbytes + oft[fd].fileptr) / MDEV_BLOCK_SIZE;
 
   if((nbytes + oft[fd].fileptr) % MDEV_BLOCK_SIZE != 0){
@@ -549,7 +555,8 @@ int fs_write(int fd, void *buf, int nbytes) {
     return SYSERR;
   }
 
-  oft[fd].fileptr = nbytes;
+  oft[fd].size = (oft[fd].size - oft[fd].fileptr) + nbytes;
+  oft[fd].fileptr += nbytes;
 
   //same as read but with O_WRONLY flag
 
