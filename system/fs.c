@@ -529,6 +529,7 @@ int fs_write(int fd, void *buf, int nbytes) {
       //keep track of data blocks in inode
       oft[fd].in.blocks[i++] = blind;
     }
+    blind++;
   }
 
   status = fs_put_inode_by_num(0, oft[fd].in.id, &oft[fd].in);
