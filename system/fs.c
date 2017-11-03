@@ -452,12 +452,13 @@ int fs_read(int fd, void *buf, int nbytes) {
 
   //find starting block
   int ind = oft[fd].fileptr / MDEV_BLOCK_SIZE;
+  printf("ind = %d \n", ind);
   int blind;
   int status = -1;
   int bytesr = 0;
   int tmp = 0;
 
-  while(ind < blocksread && bytesr < nbytes){
+  while(ind <= blocksread && bytesr < nbytes){
     blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
     memset(block_cache, NULL, MDEV_BLOCK_SIZE+1);
     status = bs_bread(0, oft[fd].in.blocks[ind], blind, block_cache, MDEV_BLOCK_SIZE-blind);
