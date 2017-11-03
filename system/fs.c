@@ -322,7 +322,7 @@ int fs_create(char *filename, int mode) {
   //check filename -- if it exists, return an error
   int i;
   for(i=0;i<fsd.root_dir.numentries;i++){
-    if(strcmp(fsd.root_dir.entry[i].name, filename) == 0){
+    if(strncmp(fsd.root_dir.entry[i].name, filename, FILENAMELEN) == 0){
       fprintf(stderr, "Filename already exists\n");
       return SYSERR;
     }
