@@ -221,7 +221,7 @@ int fs_open(char *filename, int flags) {
 
 
   //check flags; if not O_RDWR, O_RDONLY, or O_WRONLY, return error.
-  if(flags != O_RDWR || flags != O_RDONLY || flags != O_WRONLY){
+  if(flags != O_RDWR && flags != O_RDONLY && flags != O_WRONLY){
     fprintf(stderr, "Incorrect flags given\n");
     return SYSERR;
   }
