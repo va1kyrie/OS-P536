@@ -405,6 +405,12 @@ int fs_read(int fd, void *buf, int nbytes) {
     return SYSERR;
   }
 
+  //check nbytes is valid
+  if(nbytes < 1){
+    fprintf(stderr, "Cannot read less than 1 byte from file; invalid number of bytes to read given\n");
+    return SYSERR;
+  }
+
   //get filename so we can open the file
   //this is assuming so many things but I have no idea how else to do this
   char *filename = oft[fd].de.name;
@@ -416,6 +422,21 @@ int fs_read(int fd, void *buf, int nbytes) {
     return SYSERR;
   }
   //read file
+  //get blocks to read
+  int blocksread = (nbytes + oft[fd].fileptr) / MDEV_BLOCK_SIZE;
+
+  if((nbytes + oft[fd].fileptr) % MDEV_BLOCK_SIZE != 0){
+    blocksread++;
+  }
+
+  //find starting block
+  int ind = oft[fd].fileptr / MDEV_BLOCK_SIZE;
+
+  //read the blocks to buf
+
+  //assume more than one block is read
+  int i;
+  for(i = )
   int status = bs_bread(0, *block*, oft[index].fileptr, buf, nbytes);
   //how???
   return status;
@@ -428,9 +449,15 @@ int fs_write(int fd, void *buf, int nbytes) {
     return SYSERR;
   }
 
+  //check nbytes is valid
+  if(nbytes < 1){
+    fprintf(stderr, "Invalid number of bytes to write given; cannot write less than 1 byte\n");
+    return SYSERR;
+  }
+
   //get filename so we can open the file
   char *filename = oft[fd].de.name;
-  int index = fd_open(filename, O_WRONLY);
+  int index = fs_open(filename, O_WRONLY);
   if(index == SYSERR){
     fprintf(stderr, "Error opening file %s; cannot write to file\n", filenme);
     return SYSERR;
