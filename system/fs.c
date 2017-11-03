@@ -416,9 +416,8 @@ int fs_read(int fd, void *buf, int nbytes) {
   char *filename = oft[fd].de.name;
 
   //open file
-  int index = fs_open(filename, O_RDONLY);
-  if(index == SYSERR){
-    fprintf(stderr, "Error opening file %s; cannot read file.\n", filename);
+  if(oft[fd].state != FD_OPEN){
+    fprintf(stderr, "fs_read: File not open or not available\n");
     return SYSERR;
   }
   //read file
@@ -431,15 +430,37 @@ int fs_read(int fd, void *buf, int nbytes) {
 
   //find starting block
   int ind = oft[fd].fileptr / MDEV_BLOCK_SIZE;
+  int blind;
+  int status = -1;
+  int bytesr = 0;
+  int tmp = 0;
 
-  //read the blocks to buf
+  while(ind < blocksread){
+    blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
+    memset(block_cache, NULL, MDEV_BLOCK_SIZE);
+    status = bs_bread(0, oft[fd].in.blocks[i], blind, block_cache, MDEV_BLOCK_SIZE-blind);
+    if(status == SYSERR){
+      fprintf(stderr, "Error in reading file\n");
+      return SYSERR;
+    }
 
-  //assume more than one block is read
-  int i;
-  for(i = )
-  int status = bs_bread(0, *block*, oft[index].fileptr, buf, nbytes);
-  //how???
-  return status;
+    strcpy((buf+tmp), block_cache);
+    tmp = strlen(block_cache);
+    bytesr += tmp;
+
+    ind++;
+  }
+
+  oft[fd].fileptr = bytesr;
+  return bytesr;
+}
+
+int min(int x, int y){
+  //return the smaller value. if they are equal, the second value is returned.
+  if(x < y){
+    return x;
+  }
+  return y;
 }
 
 int fs_write(int fd, void *buf, int nbytes) {
@@ -455,18 +476,61 @@ int fs_write(int fd, void *buf, int nbytes) {
     return SYSERR;
   }
 
-  //get filename so we can open the file
-  char *filename = oft[fd].de.name;
-  int index = fs_open(filename, O_WRONLY);
-  if(index == SYSERR){
-    fprintf(stderr, "Error opening file %s; cannot write to file\n", filenme);
+  //create opens the file so we're assuming it's already open
+  if(oft[fd].state != FD_OPEN){
+    fprintf(stderr, "fs_write: File not open or not available\n");
+    return SYSERR;
+  }
+
+  int blockwrite = nbytes / MDEV_BLOCK_SIZE;
+  if(nbytes % MDEV_BLOCK_SIZE != 0){
+    blockwrite++;
+  }
+
+  int status = -1;
+  int bytesw = 0;
+  int temp = 0;
+  int blind = FIRST_INODE_BLOCK + NUM_INODE_BLOCKS;
+  int i = 0;
+  int minb;
+  int indb = nbytes;
+
+  while(i<blockwrite && blind<MDEV_BLOCK_SIZE){
+    if(fs_getmaskbit(blind) == 0){
+      memset(block_cache, NULL, MDEV_BLOCK_SIZE);
+      status = bs_bwrite(0, blind, 0, block_cache, MDEV_BLOCK_SIZE);
+      if(status == SYSERR){
+        fprintf(stderr, "Unable to free block; could not write to file\n");
+        return SYSERR;
+      }
+
+      minb = min(MDEV_BLOCK_SIZE, blockwrite);
+      memcpy(block_cache, buf, minb);
+
+      //write data to data block
+      status = bs_bwrite(0, blind, 0, block_cache, MDEV_BLOCK_SIZE);
+      if(status == SYSERR){
+        fprintf(stderr, "Error writing to block; could not write to file\n");
+        return SYSERR;
+      }
+
+      buf = (char *) buf + minb;
+      indb = indb - minb;
+      fs_setmaskbit(blind);
+      //keep track of data blocks in inode
+      oft[fd].in.blocks[i++] = j;
+    }
+  }
+
+  status = fs_put_inode_by_num(0, oft[fd].in.id, &oft[fd].in);
+  if(status == SYSERR){
+    fprintf(stderr, "Error wriing inode; could not write to file\n");
     return SYSERR;
   }
 
   //same as read but with O_WRONLY flag
-  int status = bs_bwrite(0, *block*, oft[fd].fileptr, buf, nbytes);
 
-  return status;
+  return nbytes;
 }
 
 #endif /* FS */
