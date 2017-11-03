@@ -68,7 +68,7 @@ shellcmd xsh_fstest(int nargs, char *args[]) {
         buf1[i] = (char) j;
     }
 
-    //printf("buffer initialized to: %s\n", buf1);
+    printf("buffer initialized to: %s\n", buf1);
 
     rval = fs_write(fd,buf1,SIZE);
     if(rval == 0 || rval != SIZE )
