@@ -516,7 +516,7 @@ int fs_write(int fd, void *buf, int nbytes) {
       indb = indb - minb;
       fs_setmaskbit(blind);
       //keep track of data blocks in inode
-      oft[fd].in.blocks[i++] = j;
+      oft[fd].in.blocks[i++] = blind;
     }
   }
 
