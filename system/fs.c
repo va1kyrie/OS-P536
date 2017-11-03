@@ -437,7 +437,7 @@ int fs_read(int fd, void *buf, int nbytes) {
   while(ind < blocksread){
     blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
     memset(block_cache, NULL, MDEV_BLOCK_SIZE);
-    status = bs_bread(0, oft[fd].in.blocks[i], blind, block_cache, MDEV_BLOCK_SIZE-blind);
+    status = bs_bread(0, oft[fd].in.blocks[ind], blind, block_cache, MDEV_BLOCK_SIZE-blind);
     if(status == SYSERR){
       fprintf(stderr, "Error in reading file\n");
       return SYSERR;
