@@ -68,7 +68,7 @@ shellcmd xsh_fstest(int nargs, char *args[]) {
         buf1[i] = (char) j;
     }
 
-    printf("buffer initialized to: %s\n", buf1);
+    //printf("buffer initialized to: %s\n", buf1);
 
     rval = fs_write(fd,buf1,SIZE);
     if(rval == 0 || rval != SIZE )
@@ -76,7 +76,7 @@ shellcmd xsh_fstest(int nargs, char *args[]) {
         printf("\n\r File write failed");
         goto clean_up;
     }
-    printf("rval = %d \n", rval);
+    //printf("rval = %d \n", rval);
 
     // Now my file offset is pointing at EOF file, i need to bring it back to start of file
     // Assuming here implementation of fs_seek is like "original_offset = original_offset + input_offset_from_fs_seek"
@@ -85,7 +85,7 @@ shellcmd xsh_fstest(int nargs, char *args[]) {
     //read the file
     rval = fs_read(fd, buf2, rval);
     buf2[rval] = '\0';
-    printf("after read rval = %d\n", rval);
+  //  printf("after read rval = %d\n", rval);
 
     if(rval == 0)
     {
