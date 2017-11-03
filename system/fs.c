@@ -384,7 +384,7 @@ int fs_seek(int fd, int offset) {
 
   //find file
   //fd is the entry in the open file table (i think)
-  if(oft[fd].state == FSTATE_OPEN){
+  if(oft[fd].state != FSTATE_OPEN){
     fprintf(stderr, "File must be open in order to seek through it\n");
     return SYSERR;
   }
