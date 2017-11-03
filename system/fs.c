@@ -288,6 +288,7 @@ int fs_open(char *filename, int flags) {
   oft[oftin].fileptr = 0;
   oft[oftin].de = &fsd.root_dir.entry[i];
   oft[oftin].in = node;
+  next_open_fd++;
 
   //printf("end of open, leaving \n");
   return oftin;
@@ -431,7 +432,6 @@ int fs_read(int fd, void *buf, int nbytes) {
     return SYSERR;
   }
 
-  //get filename so we can open the file
   //this is assuming so many things but I have no idea how else to do this
 
   //open file
@@ -454,7 +454,7 @@ int fs_read(int fd, void *buf, int nbytes) {
   int bytesr = 0;
   int tmp = 0;
 
-  while(ind < blocksread){
+  while(ind < blocksread && bytesr < nbytes){
     blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
     memset(block_cache, NULL, MDEV_BLOCK_SIZE+1);
     status = bs_bread(0, oft[fd].in.blocks[ind], blind, block_cache, MDEV_BLOCK_SIZE-blind);
