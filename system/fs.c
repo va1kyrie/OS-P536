@@ -396,9 +396,25 @@ int fs_read(int fd, void *buf, int nbytes) {
   //read nbytes bytes through file at fd to the buffer pointed to by *buf
 
   //find file
+  if(fd >= NUM_FD || fd < 0){
+    fprintf(stderr, "Invalid table index given; cannot read file\n");
+    return SYSERR;
+  }
+
+  //get filename so we can open the file
+  //this is assuming so many things but I have no idea how else to do this
+  char *filename = oft[fd].de.name;
+
   //open file
+  int index = fs_open(filename, O_RDONLY);
+  if(index == SYSERR){
+    fprintf(stderr, "Error opening file %s; cannot read file.\n", filename);
+    return SYSERR;
+  }
   //read file
-  return SYSERR;
+  int status = bs_bread(0, *block*, oft[index].fileptr, buf, nbytes);
+  //how???
+  return status;
 }
 
 int fs_write(int fd, void *buf, int nbytes) {
