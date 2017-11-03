@@ -474,6 +474,7 @@ int min(int x, int y){
 
 int fs_write(int fd, void *buf, int nbytes) {
   //write nbytes from *buf to the file at index fd.
+  printf("start write\n");
   if(fd >= NUM_FD || fd < 0){
     fprintf(stderr, "Invalid index given; cannot write to file\n");
     return SYSERR;
