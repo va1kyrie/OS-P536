@@ -215,7 +215,7 @@ void fs_printfreemask(void) {
 
 int fs_open(char *filename, int flags) {
 
-  printf("We are in Open\n");
+  //printf("We are in Open\n");
 
   int oftin = -1;
   int status = -10;
@@ -237,7 +237,7 @@ int fs_open(char *filename, int flags) {
       i++;
   }
 
-  printf("Done checking filenames, moving on\n");
+  //printf("Done checking filenames, moving on\n");
 
   //check i to see if file exists
   //if it doesn't, for now, just return an error
@@ -289,7 +289,7 @@ int fs_open(char *filename, int flags) {
   oft[oftin].de = &fsd.root_dir.entry[i];
   oft[oftin].in = node;
 
-  printf("end of open, leaving \n");
+  //printf("end of open, leaving \n");
   return oftin;
 }
 
@@ -368,7 +368,7 @@ int fs_create(char *filename, int mode) {
   //returns the file index of the file?
   //yes. yes it does.
   //to be specific, it returns the open file table entry.
-  printf("end of create\n");
+  //printf("end of create\n");
   return index;
 }
 
@@ -376,7 +376,7 @@ int fs_seek(int fd, int offset) {
   //search in file by offest (move offset bytes back)
 
   //check if fd is valid
-  printf("start Seek\n");
+  //printf("start Seek\n");
   if(fd < 0 || fd >= NUM_FD){
     printf("Invalid file descriptor given; cannot seek through file\n");
     return SYSERR;
@@ -397,14 +397,14 @@ int fs_seek(int fd, int offset) {
   //oh jeez how do you check the size of the file??? i don't think you can
   //well that is a huge bug but i'm not fixing it right now
 
-  printf("original fileptr = %d \n", oft[fd].fileptr);
+  //printf("original fileptr = %d \n", oft[fd].fileptr);
   //move pointer back/forward by offset
   oft[fd].fileptr += offset;
-  printf("new fileptr = %d \n", oft[fd].fileptr);
+  //printf("new fileptr = %d \n", oft[fd].fileptr);
 
   //return the new file pointer
 
-  printf("End of seek, leaving\n");
+  //printf("End of seek, leaving\n");
   return oft[fd].fileptr;
 }
 
