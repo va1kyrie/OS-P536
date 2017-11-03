@@ -233,8 +233,11 @@ int fs_open(char *filename, int flags) {
   int j = 0;
   while(i<fsd.root_dir.numentries && strncmp(fsd.root_dir.entry[i].name, filename, FILENAMELEN) != 0){
       //do nothing
+      printf("Checking filenames\n");
       i++;
   }
+
+  printf("Done checking filenames, moving on\n");
 
   //check i to see if file exists
   //if it doesn't, for now, just return an error
