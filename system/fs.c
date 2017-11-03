@@ -349,7 +349,7 @@ int fs_create(char *filename, int mode) {
   //create directory entries and structures
   fsd.root_dir.numentries++;
   fsd.root_dir.entry[fsd.root_dir.numentries-1].inode_num = fsd.inodes_used;
-  fsd.root_dir.entry[fsd.root_dir.numentries-1].name = filename;
+  strcpy(fsd.root_dir.entry[fsd.root_dir.numentries-1].name, filename, FILENAMELEN);
 
   //now openfiletable entry
   //this is just opening the file i think
@@ -444,7 +444,7 @@ int fs_read(int fd, void *buf, int nbytes) {
       return SYSERR;
     }
 
-    strcpy((buf+tmp), block_cache);
+    strcpy((buf+tmp), block_cache, MDEV_BLOCK_SIZE);
     tmp = strlen(block_cache);
     bytesr += tmp;
 
