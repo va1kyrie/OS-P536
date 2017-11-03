@@ -458,7 +458,7 @@ int fs_read(int fd, void *buf, int nbytes) {
   int bytesr = 0;
   int tmp = 0;
 
-  while(ind <= blocksread && bytesr < nbytes){
+  while(ind <= blocksread){
     blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
     memset(block_cache, NULL, MDEV_BLOCK_SIZE+1);
     status = bs_bread(0, oft[fd].in.blocks[ind], blind, block_cache, MDEV_BLOCK_SIZE-blind);
