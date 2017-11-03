@@ -399,6 +399,8 @@ int fs_seek(int fd, int offset) {
   oft[fd].fileptr += offset;
 
   //return the new file pointer
+
+  printf("End of seek, leaving\n");
   return oft[fd].fileptr;
 }
 
