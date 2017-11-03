@@ -303,7 +303,7 @@ int fs_close(int fd) {
     //else if the file is closed just exit
     return OK;
   }
-  //if we're still here, there's something wrong.  
+  //if we're still here, there's something wrong.
   return SYSERR;
 }
 
@@ -349,17 +349,38 @@ int fs_create(char *filename, int mode) {
 
   //returns the file index of the file?
   //yes. yes it does.
+  //to be specific, it returns the open file table entry.
   return SYSERR;
 }
 
 int fs_seek(int fd, int offset) {
   //search in file by offest (move offset bytes back)
 
+  //check if fd is valid
+  if(fd < 0 || fd >= NUM_FD){
+    printf("Invalid file descriptor given; cannot seek through file\n");
+    return SYSERR;
+  }
+
   //find file
-  //open file
+  //fd is the entry in the open file table (i think)
+  if(oft[fd].state == FSTATE_OPEN){
+    fprintf(stderr, "File must be open in order to seek through it\n");
+    return SYSERR;
+  }
+  //check offset
+  if(oft[fd].fileptr+offset < 0){
+    fprintf(stderr, "File pointer may not point before the start of the file\n");
+    return SYSERR;
+
+  //oh jeez how do you check the size of the file??? i don't think you can
+  //well that is a huge bug but i'm not fixing it right now
+
   //move pointer back/forward by offset
-  //check that offset+pointerplace is valid (within the file)
-  return SYSERR;
+  oft[fd].fileptr += offset;
+
+  //return the new file pointer
+  return oft[fd].fileptr;
 }
 
 int fs_read(int fd, void *buf, int nbytes) {
