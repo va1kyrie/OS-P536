@@ -413,7 +413,6 @@ int fs_read(int fd, void *buf, int nbytes) {
 
   //get filename so we can open the file
   //this is assuming so many things but I have no idea how else to do this
-  char *filename = oft[fd].de.name;
 
   //open file
   if(oft[fd].state != FSTATE_OPEN){
@@ -489,7 +488,6 @@ int fs_write(int fd, void *buf, int nbytes) {
 
   int status = -1;
   int bytesw = 0;
-  int temp = 0;
   int blind = FIRST_INODE_BLOCK + NUM_INODE_BLOCKS;
   int i = 0;
   int minb;
