@@ -538,6 +538,8 @@ int fs_write(int fd, void *buf, int nbytes) {
     return SYSERR;
   }
 
+  oft[fd].fileptr = nbytes;
+
   //same as read but with O_WRONLY flag
 
   return nbytes;
