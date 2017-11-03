@@ -498,7 +498,6 @@ int fs_write(int fd, void *buf, int nbytes) {
   }
 
   int status = -1;
-  int bytesw = 0;
   int blind = FIRST_INODE_BLOCK + NUM_INODE_BLOCKS;
   int i = 0;
   int minb;
@@ -513,7 +512,7 @@ int fs_write(int fd, void *buf, int nbytes) {
         return SYSERR;
       }
 
-      minb = min(MDEV_BLOCK_SIZE, blockwrite);
+      minb = min(MDEV_BLOCK_SIZE, indb);
       memcpy(block_cache, buf, minb);
 
       //write data to data block
