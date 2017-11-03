@@ -92,7 +92,7 @@ shellcmd xsh_fstest(int nargs, char *args[]) {
         goto clean_up;
     }
 
-    printf("\n\rContent of file %s",buf2);
+    printf("\n\rContent of file %s\n",buf2);
 
     rval = fs_close(fd);
     if(rval != OK)
