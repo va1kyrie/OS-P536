@@ -288,6 +288,22 @@ int fs_open(char *filename, int flags) {
 }
 
 int fs_close(int fd) {
+  //first check if fd is valid
+  if(fd >= NUM_FD || fd < 0){
+    fprintf(stderr, "Invalid index given; cannot close file.\n");
+    return SYSERR;
+  }
+
+  //check that file is actually open
+  if(oft[fd].state == FSTATE_OPEN){
+    oft[fd].state = FSTATE_CLOSED;
+    oft[fd].fileptr = 0;
+    return OK;
+  }else if(oft[fd]state == FSTATE_CLOSED){
+    //else if the file is closed just exit
+    return OK;
+  }
+  //if we're still here, there's something wrong.  
   return SYSERR;
 }
 
@@ -306,7 +322,7 @@ int fs_create(char *filename, int mode) {
   int i;
   for(i=0;i<fsd.root_dir.numentries;i++){
     if(strcmp(fsd.root_dir.entry[i].name, filename) == 0){
-      fprintf(stderr, "File already exists\n");
+      fprintf(stderr, "Filename already exists\n");
       return SYSERR;
     }
   }
@@ -319,9 +335,6 @@ int fs_create(char *filename, int mode) {
   }
 
   //else get an inode
-  //find a free one
-  i = 0;
-  while(i < fsd.ninodes && )
 
   status = fs_get_inode_by_num(0, fsd.root_dir.entry[i].inode_num, &node
   if(status) == SYSERR){
