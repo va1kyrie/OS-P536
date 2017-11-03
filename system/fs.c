@@ -289,6 +289,7 @@ int fs_open(char *filename, int flags) {
   oft[oftin].de = &fsd.root_dir.entry[i];
   oft[oftin].in = node;
 
+  printf("end of open, leaving \n");
   return oftin;
 }
 
