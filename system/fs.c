@@ -271,7 +271,7 @@ int fs_open(char *filename, int flags) {
   //now we get to opening the file
   //ok so the file is really the inode << that's where the data is (or will be)
   //so get the inode
-  status = fs_get_inode_by_num(0, fsd.root_dir.entry[i].inode_num, &node
+  status = fs_get_inode_by_num(0, fsd.root_dir.entry[i].inode_num, &node);
   if(status == SYSERR){
     fprintf(stderr, "Error retrieving inode block; could not open file\n");
     return SYSERR;
