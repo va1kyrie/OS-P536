@@ -229,7 +229,7 @@ int fs_open(char *filename, int flags) {
   //check filename against names of files in directory
   int i = 0;
   int j = 0;
-  while(i<fsd.root_dir.numentries && strcmp(fsd.root_dir.entry[i].name, filename) != 0){
+  while(i<fsd.root_dir.numentries && strncmp(fsd.root_dir.entry[i].name, filename, FILENAMELEN) != 0){
       //do nothing
       i++;
   }
@@ -349,7 +349,7 @@ int fs_create(char *filename, int mode) {
   //create directory entries and structures
   fsd.root_dir.numentries++;
   fsd.root_dir.entry[fsd.root_dir.numentries-1].inode_num = fsd.inodes_used;
-  strcpy(fsd.root_dir.entry[fsd.root_dir.numentries-1].name, filename, FILENAMELEN);
+  strncpy(fsd.root_dir.entry[fsd.root_dir.numentries-1].name, filename, FILENAMELEN);
 
   //now openfiletable entry
   //this is just opening the file i think
@@ -444,7 +444,7 @@ int fs_read(int fd, void *buf, int nbytes) {
       return SYSERR;
     }
 
-    strcpy((buf+tmp), block_cache, MDEV_BLOCK_SIZE);
+    strncpy((buf+tmp), block_cache, MDEV_BLOCK_SIZE);
     tmp = strlen(block_cache);
     bytesr += tmp;
 
