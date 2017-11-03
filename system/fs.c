@@ -215,6 +215,8 @@ void fs_printfreemask(void) {
 
 int fs_open(char *filename, int flags) {
 
+  printf("We are in Open\n");
+
   int oftin = -1;
   int status = -10;
   struct inode node;
