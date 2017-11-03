@@ -469,6 +469,7 @@ int fs_read(int fd, void *buf, int nbytes) {
       return SYSERR;
     }
 
+    printf("tmp = %d\n",tmp);
     strncpy((buf+tmp), block_cache, MDEV_BLOCK_SIZE);
     tmp = strlen(block_cache);
     bytesr += tmp;
