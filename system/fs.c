@@ -508,6 +508,7 @@ int fs_write(int fd, void *buf, int nbytes) {
   int indb = nbytes;
 
   while(i<blockwrite && blind<MDEV_BLOCK_SIZE){
+    printf("indb = %d \n", indb);
     if(fs_getmaskbit(blind) == 0){
       memset(block_cache, NULL, MDEV_BLOCK_SIZE);
       status = bs_bwrite(0, blind, 0, block_cache, MDEV_BLOCK_SIZE);
@@ -528,7 +529,6 @@ int fs_write(int fd, void *buf, int nbytes) {
 
       buf = (char *) buf + minb;
       indb = indb - minb;
-      printf("indb = %d \n", indb);
       fs_setmaskbit(blind);
       //keep track of data blocks in inode
       oft[fd].in.blocks[i] = blind;
