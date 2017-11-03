@@ -368,6 +368,7 @@ int fs_create(char *filename, int mode) {
   //returns the file index of the file?
   //yes. yes it does.
   //to be specific, it returns the open file table entry.
+  printf("end of create\n");
   return index;
 }
 
