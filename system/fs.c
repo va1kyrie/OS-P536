@@ -477,7 +477,7 @@ int fs_write(int fd, void *buf, int nbytes) {
   }
 
   //create opens the file so we're assuming it's already open
-  if(oft[fd].state != FD_OPEN){
+  if(oft[fd].state != FSTATE_OPEN){
     fprintf(stderr, "fs_write: File not open or not available\n");
     return SYSERR;
   }
