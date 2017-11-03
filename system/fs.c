@@ -375,6 +375,7 @@ int fs_seek(int fd, int offset) {
   //search in file by offest (move offset bytes back)
 
   //check if fd is valid
+  printf("start Seek\n");
   if(fd < 0 || fd >= NUM_FD){
     printf("Invalid file descriptor given; cannot seek through file\n");
     return SYSERR;
