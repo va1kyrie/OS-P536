@@ -296,6 +296,7 @@ int fs_create(char *filename, int mode) {
   //what does the mode do??
 
   int index = -1;
+  int status = -1;
   //if mode is anything but O_CREAT return an error
   if(mode != O_CREAT){
     fprintf(stderr, "Incorrect mode input given\n");
@@ -310,7 +311,26 @@ int fs_create(char *filename, int mode) {
     }
   }
 
-  //get block bitmask for new file
+  //check that there are inodes available
+  //if there are none, return an error
+  if(fsd.ninodes <= fsd.inodes_used){
+    fprintf(stderr, "All inodes used; could not create file\n");
+    return SYSERR;
+  }
+
+  //else get an inode
+  //find a free one
+  i = 0;
+  while(i < fsd.ninodes && )
+
+  status = fs_get_inode_by_num(0, fsd.root_dir.entry[i].inode_num, &node
+  if(status) == SYSERR){
+    fprintf(stderr, "Error retrieving inode block; could not open file\n");
+    return SYSERR;
+  }
+
+  //get block for new file
+  //check bitmask
 
   //create directory entries and structures
 
