@@ -423,9 +423,23 @@ int fs_read(int fd, void *buf, int nbytes) {
 
 int fs_write(int fd, void *buf, int nbytes) {
   //write nbytes from *buf to the file at index fd.
+  if(fd >= NUM_FD || fd < 0){
+    fprintf(stderr, "Invalid index given; cannot write to file\n");
+    return SYSERR;
+  }
+
+  //get filename so we can open the file
+  char *filename = oft[fd].de.name;
+  int index = fd_open(filename, O_WRONLY);
+  if(index == SYSERR){
+    fprintf(stderr, "Error opening file %s; cannot write to file\n", filenme);
+    return SYSERR;
+  }
 
   //same as read but with O_WRONLY flag
-  return SYSERR;
+  int status = bs_bwrite(0, *block*, oft[fd].fileptr, buf, nbytes);
+
+  return status;
 }
 
 #endif /* FS */
