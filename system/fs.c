@@ -338,7 +338,7 @@ int fs_create(char *filename, int mode) {
   //else get an inode
 
   status = fs_get_inode_by_num(0, fsd.inodes_used+1, &node
-  if(status) == SYSERR){ 
+  if(status) == SYSERR){
     fprintf(stderr, "Error retrieving inode block; could not open file\n");
     return SYSERR;
   }
@@ -352,12 +352,13 @@ int fs_create(char *filename, int mode) {
   fsd.root_dir.entry[fas.root_dir.numentries-1].name = filename;
 
   //now openfiletable entry
-
+  //this is just opening the file i think
+  index = fs_open(filename, O_RDWR);
 
   //returns the file index of the file?
   //yes. yes it does.
   //to be specific, it returns the open file table entry.
-  return SYSERR;
+  return index;
 }
 
 int fs_seek(int fd, int offset) {
