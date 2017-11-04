@@ -390,7 +390,7 @@ int fs_create(char *filename, int mode) {
   //returns the file index of the file?
   //yes. yes it does.
   //to be specific, it returns the open file table entry.
-  return index;into
+  return index;
 }
 
 /* fs_seek(fd, offset) - move the fileptr of the file at fd by offset.
