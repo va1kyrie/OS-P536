@@ -212,10 +212,16 @@ void fs_printfreemask(void) {
   printf("\n");
 }
 
+/* fs_open(filename, flags) - open the file with the name filename using the
+                              flags specified.
 
+   If the flags aren't O_RDWR, O_RDONLY, or O_WRONLY, return an error. If the
+   file doesn't exist, return an error. If the file is already open, return an
+   error. Else open the file (either reopening or adding it to the open file
+   table) and return the index of the file in the open file table.
+*/
 int fs_open(char *filename, int flags) {
 
-  //printf("We are in Open\n");
 
   int oftin = -1;
   int status = -10;
@@ -236,8 +242,6 @@ int fs_open(char *filename, int flags) {
       printf("Checking filenames\n");
       i++;
   }
-
-  //printf("Done checking filenames, moving on\n");
 
   //check i to see if file exists
   //if it doesn't, for now, just return an error
@@ -290,10 +294,18 @@ int fs_open(char *filename, int flags) {
   oft[oftin].in = node;
   next_open_fd++;
 
-  //printf("end of open, leaving \n");
   return oftin;
 }
 
+/* fs_close(fd) - close the file at fd in the open file table.
+
+   If the index given is invalid, return an error. If the file exists in the
+   table but is closed, simply return OK. If the file is open, change the state
+   to FSTATE_CLOSED and return the fileptr to 0 before returning OK.
+
+   If the three options above don't occur, simply return an error; either the
+   file doesn't exist in the open file table or something else is wrong.
+*/
 int fs_close(int fd) {
   //first check if fd is valid
   if(fd >= NUM_FD || fd < 0){
@@ -314,6 +326,14 @@ int fs_close(int fd) {
   return SYSERR;
 }
 
+/* fs_create(filename, mode) - create a file named filename using mode.
+
+   If mode isn't O_CREAT, return an error. If the file already exists, inform
+   the user and return an error. If there are no idnodes available, return an
+   error and report the filesystem is full. Else create a file, assign inodes,
+   and open the file using fs_open(). Return the open file table index of the
+   file.
+*/
 int fs_create(char *filename, int mode) {
   //create file with filename in given mode
   //what does the mode do??
@@ -370,15 +390,20 @@ int fs_create(char *filename, int mode) {
   //returns the file index of the file?
   //yes. yes it does.
   //to be specific, it returns the open file table entry.
-  //printf("end of create\n");
-  return index;
+  return index;into
 }
 
+/* fs_seek(fd, offset) - move the fileptr of the file at fd by offset.
+
+   If the file doesn't exist or isn't open, return an error. If offset would
+   move fileptr past the beginning or end of the file, return an error. Else
+   add offset to the value at fileptr and return the new fileptr value.
+
+*/
 int fs_seek(int fd, int offset) {
   //search in file by offest (move offset bytes back)
 
   //check if fd is valid
-  //printf("start Seek\n");
   if(fd < 0 || fd >= NUM_FD){
     printf("Invalid file descriptor given; cannot seek through file\n");
     return SYSERR;
@@ -408,6 +433,8 @@ int fs_seek(int fd, int offset) {
   return oft[fd].fileptr;
 }
 
+/* min(x,y) - finds the minimum value of x and y. If both are equal, return the
+              second.*/
 int min(int x, int y){
   //return the smaller value. if they are equal, the second value is returned.
   if(x < y){
@@ -416,6 +443,13 @@ int min(int x, int y){
   return y;
 }
 
+/* fs_read(fd, buf, nbytes) - read nbytes to buf from the file at open file
+                              table index fd.
+   If the file isn't open, return an error. If the file doesn't exist, return
+   an error. If the number of bytes to be read exceeds the size of the file or
+   is less than 1, return an error. Else perform the read operation and return
+   the number of bytes read.
+*/
 int fs_read(int fd, void *buf, int nbytes) {
   //read nbytes bytes through file at fd to the buffer pointed to by *buf
 
@@ -448,6 +482,7 @@ int fs_read(int fd, void *buf, int nbytes) {
   int blocksread = (nbytes + oft[fd].fileptr) / MDEV_BLOCK_SIZE;
 
   if((nbytes + oft[fd].fileptr) % MDEV_BLOCK_SIZE != 0){
+    //if the bytes bleed into the next block get the whole next block
     blocksread++;
   }
 
@@ -481,6 +516,13 @@ int fs_read(int fd, void *buf, int nbytes) {
   return bytesr;
 }
 
+/* fs_write(fd, buf, nbytes) - write nbytes of buf into the file at fd.
+
+   If the file isn't open or doesn't exist, return an error. If nbytes is less
+   than 1, return an error. Else write from buf into the file memory, update
+   the size of the file, and return the number of bytes written.
+
+*/
 int fs_write(int fd, void *buf, int nbytes) {
   //write nbytes from *buf to the file at index fd.
   if(fd >= NUM_FD || fd < 0){
