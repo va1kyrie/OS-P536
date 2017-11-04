@@ -90,6 +90,7 @@ shellcmd xsh_fstest(int nargs, char *args[]) {
     }
 
     printf("\n\rContent of file %s\n",buf2);
+    printf("size of buf2 = %d\n", strlen(buf2));
 
     rval = fs_close(fd);
     if(rval != OK)
