@@ -460,7 +460,7 @@ int fs_read(int fd, void *buf, int nbytes) {
   int status = -1;
   int bytesr = 0;
 
-  while(ind < blocksread){
+  while(ind <= blocksread){
     //printf("ind = %d \n", ind);
     blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
     //printf("blind = %d\n",blind);
