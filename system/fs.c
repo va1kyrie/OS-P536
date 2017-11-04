@@ -461,9 +461,9 @@ int fs_read(int fd, void *buf, int nbytes) {
   int bytesr = 0;
 
   while(ind <= blocksread){
-    //printf("ind = %d \n", ind);
+
     blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
-    //printf("blind = %d\n",blind);
+
     memset(block_cache, NULL, MDEV_BLOCK_SIZE+1);
     status = bs_bread(0, oft[fd].in.blocks[ind], blind, block_cache, MDEV_BLOCK_SIZE-blind);
     if(status == SYSERR){
@@ -474,8 +474,6 @@ int fs_read(int fd, void *buf, int nbytes) {
     strncat(buf, block_cache, MDEV_BLOCK_SIZE);
     bytesr += strlen(block_cache);
 
-    //printf("bytesr = %d \n", bytesr);
-
     ind++;
   }
 
@@ -485,7 +483,6 @@ int fs_read(int fd, void *buf, int nbytes) {
 
 int fs_write(int fd, void *buf, int nbytes) {
   //write nbytes from *buf to the file at index fd.
-  //printf("start write\n");
   if(fd >= NUM_FD || fd < 0){
     fprintf(stderr, "Invalid index given; cannot write to file\n");
     return SYSERR;
@@ -515,7 +512,6 @@ int fs_write(int fd, void *buf, int nbytes) {
   int indb = nbytes;
 
   while(i<blockwrite && blind<MDEV_BLOCK_SIZE){
-  //  printf("indb = %d \n", indb);
     if(fs_getmaskbit(blind) == 0){
       memset(block_cache, NULL, MDEV_BLOCK_SIZE);
       status = bs_bwrite(0, blind, 0, block_cache, MDEV_BLOCK_SIZE);
