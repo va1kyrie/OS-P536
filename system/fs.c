@@ -396,8 +396,10 @@ int fs_seek(int fd, int offset) {
     return SYSERR;
   }
 
-  //oh jeez how do you check the size of the file??? i don't think you can
-  //well that is a huge bug but i'm not fixing it right now
+  if(oft[fd].fileptr+offset > oft[fd].size){
+    fprintf(stderr, "File pointer may not point past the end of the file\n");
+    return SYSERR;
+  }
 
   //printf("original fileptr = %d \n", oft[fd].fileptr);
   //move pointer back/forward by offset
