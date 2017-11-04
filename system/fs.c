@@ -401,14 +401,10 @@ int fs_seek(int fd, int offset) {
     return SYSERR;
   }
 
-  //printf("original fileptr = %d \n", oft[fd].fileptr);
   //move pointer back/forward by offset
   oft[fd].fileptr += offset;
-  //printf("new fileptr = %d \n", oft[fd].fileptr);
 
   //return the new file pointer
-
-  //printf("End of seek, leaving\n");
   return oft[fd].fileptr;
 }
 
@@ -452,22 +448,19 @@ int fs_read(int fd, void *buf, int nbytes) {
   int blocksread = (nbytes + oft[fd].fileptr) / MDEV_BLOCK_SIZE;
 
   if((nbytes + oft[fd].fileptr) % MDEV_BLOCK_SIZE != 0){
-    //printf("we getting in here?\n");
     blocksread++;
   }
 
-  //printf("blocksread = %d\n", blocksread);
-
   //find starting block
-  //int ind = oft[fd].fileptr / MDEV_BLOCK_SIZE;
+  int ind = oft[fd].fileptr / MDEV_BLOCK_SIZE;
 
-  int ind = 1;
+  //int ind = 1;
 
   int blind;
   int status = -1;
   int bytesr = 0;
 
-  while(ind <= blocksread){
+  while(ind < blocksread){
     //printf("ind = %d \n", ind);
     blind = oft[fd].fileptr % MDEV_BLOCK_SIZE;
     //printf("blind = %d\n",blind);
